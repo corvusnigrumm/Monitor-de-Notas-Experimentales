@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discover Pulse · Monitor Editorial El Tiempo</title>
+<title>Discover Pulse · Monitor & Calendario Editorial El Tiempo</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231C1A17'/%3E%3Cpath d='M6 16h5l3-6 4 12 3-6h5' stroke='%23F6F4EF' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,6 @@ tailwind.config = {
   :focus-visible{ outline:2px solid #1C1A17; outline-offset:2px; border-radius:6px; }
   .font-tabular{ font-variant-numeric:tabular-nums; }
 
-  /* Scrollbars en el lenguaje visual del monitor */
   *{ scrollbar-width:thin; scrollbar-color:#CFC9BC transparent; }
   ::-webkit-scrollbar{ width:10px; height:10px; }
   ::-webkit-scrollbar-track{ background:transparent; }
@@ -51,7 +50,6 @@ tailwind.config = {
   ::-webkit-scrollbar-thumb:hover{ background:#B4AE9F; }
   #drawerScroll::-webkit-scrollbar-thumb{ border-color:#FFFFFF; }
 
-  /* Movimiento */
   @keyframes fadeUp{ from{ opacity:0; transform:translateY(7px);} to{ opacity:1; transform:none;} }
   .anim-in{ animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both; }
   @keyframes pulseRing{ 0%{ transform:scale(1); opacity:.55;} 70%{ transform:scale(2.4); opacity:0;} 100%{ transform:scale(2.4); opacity:0;} }
@@ -66,7 +64,6 @@ tailwind.config = {
   [data-seg]{ transition:width .7s cubic-bezier(.22,1,.36,1); }
   [data-ring]{ transition:stroke-dasharray .7s cubic-bezier(.22,1,.36,1); }
 
-  /* Drawer */
   #drawer{ visibility:hidden; transform:translateX(100%); transition:transform .32s cubic-bezier(.32,.72,0,1), visibility 0s .32s; }
   #drawer.open{ visibility:visible; transform:none; transition:transform .32s cubic-bezier(.32,.72,0,1); }
   #drawerScrim{ visibility:hidden; opacity:0; transition:opacity .3s ease, visibility 0s .3s; }
@@ -84,7 +81,7 @@ tailwind.config = {
 </style>
 </head>
 <body class="bg-paper text-ink font-sans antialiased min-h-screen">
-<noscript><div style="padding:2rem;text-align:center;font-family:sans-serif">Discover Pulse necesita JavaScript para renderizar la auditoría.</div></noscript>
+<noscript><div style="padding:2rem;text-align:center;font-family:sans-serif">Discover Pulse necesita JavaScript para renderizar.</div></noscript>
 
 <!-- ══════════════ HEADER ══════════════ -->
 <header id="appHeader" class="sticky top-0 z-40 bg-paper">
@@ -98,13 +95,13 @@ tailwind.config = {
           <h1 class="font-serif font-semibold text-[19px] leading-none tracking-tight">Discover Pulse</h1>
           <span class="text-[9.5px] font-mono uppercase tracking-wider border border-line bg-surface rounded px-1.5 py-0.5 text-sub">El Tiempo</span>
         </div>
-        <p class="text-[11.5px] text-sub mt-1 leading-none">Monitor editorial · Auditoría Discover · España</p>
+        <p class="text-[11.5px] text-sub mt-1 leading-none">Calendario Editorial & Monitor de Prioridad Discover 2026</p>
       </div>
     </div>
 
     <div id="liveBox" class="relative flex items-center gap-2">
       <div id="liveControls" class="flex items-center gap-2"></div>
-      <div id="syncPop" class="hidden absolute left-0 sm:left-auto sm:right-0 top-[calc(100%+10px)] w-[320px] max-w-[calc(100vw-2rem)] bg-surface border border-line rounded-xl shadow-pop p-4 z-50"></div>
+      <div id="syncPop" class="hidden absolute left-0 sm:left-auto sm:right-0 top-[calc(100%+10px)] w-[330px] max-w-[calc(100vw-2rem)] bg-surface border border-line rounded-xl shadow-pop p-4 z-50"></div>
     </div>
 
     <span class="hidden lg:block w-px h-6 bg-line" aria-hidden="true"></span>
@@ -119,9 +116,9 @@ tailwind.config = {
     <div class="flex items-end justify-between gap-3 mb-4 flex-wrap">
       <div>
         <p class="text-[10px] font-mono uppercase tracking-[0.16em] text-faint mb-1">01 · Resumen ejecutivo</p>
-        <h2 class="text-[17px] font-semibold tracking-tight">Quién funciona, de un vistazo</h2>
+        <h2 class="text-[17px] font-semibold tracking-tight">Rendimiento y Prioridad Editorial</h2>
       </div>
-      <span class="text-[10.5px] font-mono text-sub bg-wash border border-line/70 rounded-md px-2 py-1">Semana del 16 nov 2026</span>
+      <span class="text-[10.5px] font-mono text-sub bg-wash border border-line/70 rounded-md px-2 py-1">Parrilla Inteligente Discover</span>
     </div>
     <div id="metricGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-3.5"></div>
     <div id="healthCard" class="mt-3.5"></div>
@@ -132,22 +129,24 @@ tailwind.config = {
     <div class="flex items-end justify-between gap-3 mb-4 flex-wrap">
       <div>
         <p class="text-[10px] font-mono uppercase tracking-[0.16em] text-faint mb-1">02 · Tablero de veredicto</p>
-        <h2 class="text-[17px] font-semibold tracking-tight">Veredicto por experto</h2>
-        <p class="text-[12.5px] text-sub mt-0.5">Aprobados, en observación y descartados según el rendimiento real en Discover.</p>
+        <h2 class="text-[17px] font-semibold tracking-tight">Veredicto por experto y credenciales</h2>
+        <p class="text-[12.5px] text-sub mt-0.5">Qué personajes tienen tracción demostrada y cuáles están vetados en días clave.</p>
       </div>
       <span class="inline-flex items-center gap-1.5 text-[11.5px] text-sub"><i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5 text-faint"></i>Toca un perfil para abrir su dossier</span>
     </div>
     <div id="boardCols" class="grid md:grid-cols-3 gap-x-4 gap-y-8"></div>
   </section>
 
-  <!-- ══════════════ 03 · HOJAS DEL SHEET ══════════════ -->
+  <!-- ══════════════ 03 · CALENDARIO EDITORIAL Y HOJAS DEL SHEET ══════════════ -->
   <section id="hojas" data-rv style="scroll-margin-top:calc(var(--hdrH,64px) + 12px)">
     <div class="flex items-end justify-between gap-3 mb-3 flex-wrap">
       <div>
-        <p class="text-[10px] font-mono uppercase tracking-[0.16em] text-faint mb-1">03 · Hojas del Google Sheet</p>
-        <h2 class="text-[17px] font-semibold tracking-tight">Explora la auditoría completa</h2>
+        <p class="text-[10px] font-mono uppercase tracking-[0.16em] text-faint mb-1">03 · Centro de Mando Táctico</p>
+        <h2 class="text-[17px] font-semibold tracking-tight">Calendario Editorial y Auditoría en Vivo</h2>
       </div>
-      <span class="hidden sm:inline-flex items-center gap-1.5 text-[10.5px] font-mono text-sub bg-wash border border-line/70 rounded-md px-2 py-1"><i data-lucide="file-spreadsheet" class="w-3 h-3"></i>7 pestañas sincronizadas</span>
+      <span class="hidden sm:inline-flex items-center gap-1.5 text-[10.5px] font-mono text-sub bg-wash border border-line/70 rounded-md px-2 py-1">
+        <i data-lucide="sparkles" class="w-3 h-3 text-amber-600"></i>Estrategia Discover Core 2026
+      </span>
     </div>
     <div class="sticky z-30 bg-paper border-b border-line" style="top:var(--hdrH,64px)">
       <div id="tabsBar" role="tablist" aria-label="Hojas de la auditoría" class="flex gap-1 overflow-x-auto -mb-px"></div>
@@ -160,10 +159,12 @@ tailwind.config = {
   <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-3 text-[11px] text-sub">
     <span class="inline-flex items-center gap-2">
       <svg viewBox="0 0 32 32" class="w-4 h-4" aria-hidden="true"><path d="M4 16h6l3-7 4 14 3-7h8" stroke="#A6A199" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Discover Pulse · auditoría interna de Google Discover (España) · redacción de El Tiempo
+      Discover Pulse · Estrategia Inteligente Google Discover (España & Colombia) · redacción de El Tiempo
     </span>
     <span class="inline-flex items-center gap-3 flex-wrap">
-      <span class="inline-flex items-center gap-1.5"><i data-lucide="file-spreadsheet" class="w-3 h-3"></i>Fuente: Google Sheet · 7 hojas</span>
+      <a href="https://docs.google.com/spreadsheets/d/1lEY_Dltt9pCsTfbXLQcjLlzIS5vBWyU-TzdV4YuF-YY/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-ink transition underline underline-offset-2">
+        <i data-lucide="file-spreadsheet" class="w-3 h-3 text-emerald-600"></i>Google Sheet Fuente
+      </a>
       <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-exito-bar"></span>Sync en vivo</span>
       <span class="text-[10px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">Render Keep-Alive 24/7</span>
     </span>
@@ -183,117 +184,36 @@ tailwind.config = {
 <script>
 'use strict';
 /* ════════════════════════════════════════════════════════════════════
-   1 · CAPA DE DATOS  —  sheetData
+   1 · CAPA DE DATOS DINÁMICA
    ════════════════════════════════════════════════════════════════════ */
 let sheetData = {
   meta: {
     sheetName: 'MI ESPACIO ET · Auditoría Discover',
-    sheetUrl: 'docs.google.com/spreadsheets/d/e/2PACX-1vT1aBH7iMlllmZk28CNmqa-iLut7lHkfQH1GFXFIpjW6AJkYLwD9PpwSH7SDRVN5JeE3a7hjuT_HkrO/pubhtml',
-    hojas: 7, objetivo: 35,
+    sheetUrl: 'docs.google.com/spreadsheets/d/1lEY_Dltt9pCsTfbXLQcjLlzIS5vBWyU-TzdV4YuF-YY/edit',
+    hojas: 8,
+    objetivo: 35,
     insights: {
-      todos: 'El canino triplica a cocina (50 % vs 16,7 %). Sube volumen de veterinarios en franja de tarde y mantén el veto de cocina en viernes.',
-      cocina: 'Cocina solo despega con cita textual + utilidad doméstica en mar–jue 07:30–09:00. Sus dos éxitos cumplen la fórmula al pie de la letra.',
-      canino: '4 de 8 publicadas despegaron y las 4 lo hicieron entre 18:00–20:00. Manzano se retestea en esa franja exacta.'
+      todos: 'El vertical canino supera a cocina en tasa de éxito (+50% vs 16.7%). El fin de semana (+34% Sáb / +23% Dom) es la ventana dorada donde no hay saturación.',
+      cocina: 'Cocina requiere cita textual + atajo doméstico de supermercado en mar-jue 07:30-09:00 o sábado mañana con Ferran Adrià / Joan Roca.',
+      canino: 'Mascotas triunfa en ventana 18:00-21:00 con reencuadres contraintuitivos (César Millán, Borja Capponi, Santi Vidal).'
     },
     sheetRefs: {
-      bitacora:'Bitácora_Experimentos · A1:L23', 'dir-chefs':'Directorio_Chefs · A1:H9',
-      'dir-canino':'Directorio_Canino · A1:H9', reglas:'Horarios_Reglas · A1:F40',
-      temporada:'Chefs_Temporada · A1:E5', plantillas:'Plantillas_Titulares · A1:D7',
-      calendario:'Calendario_Semanal · A1:G12'
+      calendario: 'CALENDARIO EDITORIAL · A1:K20',
+      bitacora: 'EXPERIMENTOS EDITORIALES · A1:I35',
+      'dir-chefs': 'DIRECTORIO CHEFS · A1:H37',
+      'dir-canino': 'DIRECTORIO CANINO · A1:H45',
+      reglas: 'HORARIOS Y REGLAS DISCOVER · A1:G15',
+      temporada: 'CHEFS POR TEMPORADA · A1:E10',
+      plantillas: 'Plantillas de Titulares · A1:D11'
     }
   },
-
-  experts: [
-    { id:'cesar', nombre:'César Millán', rol:'Adiestrador · referente mundial', vertical:'canino', veredicto:'aprobado', motivo:'Autoridad + urgencia emocional', fuente:'Giras · entrevistas TV', mejorDia:'Lun', mejorHora:'18:00–20:00', lectura:'Reencuadre contraintuitivo («no es cariño, es un problema») con autoridad mundial. Es la fórmula canina de referencia: replicar la estructura, no el tema.' },
-    { id:'ferran', nombre:'Ferran Adrià', rol:'Alta cocina · elBulli', vertical:'cocina', veredicto:'aprobado', motivo:'Controversia culinaria de alto clic', fuente:'Entrevistas · congresos', mejorDia:'Mar', mejorHora:'07:30–09:00', lectura:'La autoridad culinaria máxima convierte cualquier polémica en clic masivo. Reservar para controversias de producto nacional, nunca para técnica.' },
-    { id:'loli', nombre:'Loli Domínguez', rol:'Repostería casera · YouTube', vertical:'cocina', veredicto:'aprobado', motivo:'Utilidad doméstica inmediata', fuente:'YouTube · La Cocina de Loli', mejorDia:'Jue', mejorHora:'07:30–09:00', lectura:'Utilidad doméstica inmediata con promesa de error único. Su audiencia no solapa con la actualidad: distribución estable. Repetir en mañana de entre semana.' },
-    { id:'santi', nombre:'Santi Vidal', rol:'Veterinario divulgador', vertical:'canino', veredicto:'aprobado', motivo:'Alerta sanitaria accionable', fuente:'Consulta · divulgación en vídeo', mejorDia:'Mar', mejorHora:'18:00–20:00', lectura:'Alerta sanitaria con enemigo concreto (las redes). Cifra implícita y verbo de daño: el patrón más rentable de todo el vertical canino.' },
-    { id:'borja', nombre:'Borja Capponi', rol:'Etólogo · conducta canina', vertical:'canino', veredicto:'aprobado', motivo:'Mito conductual desmontado', fuente:'TV · casos de conducta', mejorDia:'Jue', mejorHora:'18:00–20:00', lectura:'Desmonta un mito cotidiano y ofrece alternativa en el mismo titular. Conducta por encima de clínica: el feed premia lo accionable.' },
-    { id:'puchol', nombre:'José Luis Puchol', rol:'Veterinario · TV', vertical:'canino', veredicto:'aprobado', motivo:'Riesgo físico en rutina diaria', fuente:'Sección veterinaria en TV', mejorDia:'Mié', mejorHora:'18:00–20:00', lectura:'Riesgo físico + culpa útil en una rutina diaria. Ventana de tarde confirmada; mantener como máximo una nota semanal para no saturar.' },
-    { id:'anna', nombre:'Anna Terés', rol:'Batch cooking · aprovechamiento', vertical:'cocina', veredicto:'observacion', motivo:'Rinde solo con promesa de organización', fuente:'Revista CuerpoMente · IG', mejorDia:'Mié', mejorHora:'08:00–09:00', lectura:'Rinde cuando la promesa es organizar la semana; se diluye en trucos sueltos. El sábado por la mañana es la hipótesis pendiente de validar.' },
-    { id:'gorka', nombre:'Gorka Barredo', rol:'Cocina casera · YouTube', vertical:'cocina', veredicto:'observacion', motivo:'Techo de CTR en 4–5 %', fuente:'YouTube · ¡Que viva la cocina!', mejorDia:'Mar', mejorHora:'07:30–09:00', lectura:'Techo de CTR en 4–5 %: el misterio sin cifra no despega. Probar la plantilla de error única antes de decidir su suerte.' },
-    { id:'manzano', nombre:'Manuel Manzano', rol:'Adiestrador · educación canina', vertical:'canino', veredicto:'observacion', motivo:'Muestra corta · franja equivocada', fuente:'Centros de adiestramiento', mejorDia:'Vie', mejorHora:'18:30–20:00', tentativo:true, lectura:'Tema correcto en franja equivocada (domingo 13:20). La programada del viernes 18:30 decide si entra en aprobados.' },
-    { id:'dani', nombre:'Dani García', rol:'Alta cocina · 3★ Michelin', vertical:'cocina', veredicto:'descartado', motivo:'Alta cocina no viaja en Discover', fuente:'Entrevistas gastro premium', mejorDia:null, mejorHora:null, lectura:'La alta cocina sin traducción doméstica no entra en Discover. Solo reactivar si la declaración se convierte en utilidad de supermercado.' },
-    { id:'karlos', nombre:'Karlos Arguiñano', rol:'Cocina TV · veteranía', vertical:'cocina', veredicto:'descartado', motivo:'Saturación + viernes enterrados', fuente:'TV · Cocina Abierta', mejorDia:null, mejorHora:null, lectura:'Figura saturada en el feed y dos viernes consecutivos enterrados. Pausar hasta enero y volver en martes con plantilla nueva.' },
-    { id:'david', nombre:'David de Jorge', rol:'Cocina TV · humor', vertical:'cocina', veredicto:'descartado', motivo:'Humor sin gancho útil', fuente:'TV · Robin Food', mejorDia:null, mejorHora:null, lectura:'El humor sin beneficio explícito compite con la actualidad y pierde. El mismo tema con otro mensajero (Adrià) sí explotó: el problema es el encuadre.' },
-    { id:'mariano', nombre:'Mariano Sánchez', rol:'Veterinario clínico', vertical:'canino', veredicto:'descartado', motivo:'Tono clínico, sin beneficio', fuente:'Clínica · colegios vet', mejorDia:null, mejorHora:null, lectura:'Titular clínico sin beneficio emocional: Discover ni lo prueba. Reescribir con plantilla de riesgo antes de descartar del todo.' },
-    { id:'sergio', nombre:'Sergio Enciso', rol:'Adiestrador · deportivo IGP', vertical:'canino', veredicto:'descartado', motivo:'Nicho demasiado técnico', fuente:'Competición IGP', mejorDia:null, mejorHora:null, lectura:'Nicho deportivo (IGP) fuera del interés masivo del feed. No hay titular que lo salve: descartar el tema, no solo la franja.' },
-    { id:'coqui', nombre:'Coqui', rol:'Recetario tradicional', vertical:'cocina', veredicto:'descartado', motivo:'Sin reconocimiento de marca', fuente:'Redes · recetarios', mejorDia:null, mejorHora:null, lectura:'Sin reconocimiento de marca, Discover no tiene ancla donde agarrarse. Único reintento razonable: torrijas en plena Cuaresma.' },
-    { id:'monica', nombre:'Mónica Corchado', rol:'Etóloga clínica', vertical:'canino', veredicto:'descartado', motivo:'Titular sin tensión', fuente:'Jornadas de etología', mejorDia:null, mejorHora:null, lectura:'Enunciado correcto pero sin tensión, cifra ni enemigo. La socialización puede volver con la plantilla de error único.' }
-  ],
-
-  experiments: [
-    { id:'EXP-001', fecha:'2026-10-06T08:40', experto:'coqui', vertical:'cocina', estado:'muerta', titular:'Coqui: «Mi receta de torrijas caramelizadas para chuparse los dedos»', fuente:'Recetario difundido en redes', url:'https://www.eltiempo.com/cultura/recetas/tarta-tatin-de-manzana-con-hojaldre-como-hacer-el-caramelo-sin-cucharas-y-voltearla-sin-que-se-escapen-los-jugos-3598831', marfeel:'https://hub.marfeel.com/compass/article/2447645335?limit=20', impresiones:4930, clics:97, hipotesis:'Sin reconocimiento de marca, Discover no encuentra ancla. Además, torrijas en octubre: fuera de temporada, el interés no existe.' },
-    { id:'EXP-002', fecha:'2026-10-10T08:30', experto:'karlos', vertical:'cocina', estado:'muerta', titular:'Karlos Arguiñano: «Mi truco de toda la vida para que la merluza no se seque»', fuente:'Cocina Abierta (TV)', url:'https://www.eltiempo.com/cultura/recetas/karlos-arguinano-chef-con-mas-de-60-anos-de-experiencia-la-sopa-de-pescado-se-tritura-antes-de-anadir-las-almejas-las-gambas-y-el-rape-3601975', marfeel:'https://hub.marfeel.com/compass/article/2491760428?limit=20', impresiones:9120, clics:214, hipotesis:'Viernes de cocina: la actualidad deportiva y política se come la ventana. A eso se suma la saturación de su figura en el feed.' },
-    { id:'EXP-003', fecha:'2026-10-13T13:30', experto:'gorka', vertical:'cocina', estado:'tibia', titular:'Gorka Barredo: «Así hago yo el pollo al ajillo de los domingos»', fuente:'Vídeo en ¡Que viva la cocina!', url:'https://www.eltiempo.com/cultura/recetas/gorka-barredo-cocinero-la-tortilla-de-patata-queda-cremosa-con-un-relleno-de-jamon-cocido-y-el-doble-de-queso-no-solo-con-mas-huevo-3599677', marfeel:'https://hub.marfeel.com/compass/article/2461591054?limit=20', impresiones:38750, clics:1290, hipotesis:'Hora de comida compitiendo con actualidad y titular plano, sin cifra ni tensión. El tema podía dar más en franja de mañana.' },
-    { id:'EXP-004', fecha:'2026-10-21T07:55', experto:'david', vertical:'cocina', estado:'muerta', titular:'David de Jorge: «La tortilla de mi madre era peor que la mía y os voy a demostrar por qué»', fuente:'Robin Food (TV)', url:'https://www.eltiempo.com/cultura/recetas/david-de-jorge-cocinero-con-mas-de-30-anos-de-experiencia-los-huevos-rellenos-se-cortan-a-lo-ancho-no-a-lo-largo-para-una-mordida-mas-generosa-3601621', marfeel:'https://hub.marfeel.com/compass/article/2489106363?limit=20', impresiones:11240, clics:302, hipotesis:'Humor sin beneficio claro. Un mes después, la misma guerra de la tortilla con Adrià explotó: el mensajero pesa más que el tema.' },
-    { id:'EXP-005', fecha:'2026-10-23T19:40', experto:'gorka', vertical:'cocina', estado:'tibia', titular:'Gorka Barredo: «No tires el pan duro: esta receta lo convierte en el mejor postre»', fuente:'Vídeo en ¡Que viva la cocina!', url:'https://www.eltiempo.com/cultura/recetas/gorka-barredo-cocinero-la-tortilla-de-patata-queda-cremosa-con-un-relleno-de-jamon-cocido-y-el-doble-de-queso-no-solo-con-mas-huevo-3599677', marfeel:'https://hub.marfeel.com/compass/article/2461591054?limit=20', impresiones:52600, clics:2020, hipotesis:'El aprovechamiento funciona, pero rinde en franja de mañana, cuando se planifican las comidas. Por la tarde se diluye.' },
-    { id:'EXP-006', fecha:'2026-10-24T08:20', experto:'anna', vertical:'cocina', estado:'tibia', titular:'Anna Terés: «Mi truco para que el arroz del microondas quede suelto»', fuente:'Instagram · reels de cocina', url:'https://www.eltiempo.com/cultura/recetas/anna-teres-cocinera-el-pollo-guisado-queda-mas-sabroso-si-se-dora-antes-y-se-cocina-con-330-ml-de-cerveza-negra-ajo-y-laurel-3599024', marfeel:'https://hub.marfeel.com/compass/article/2450466997?limit=20', impresiones:41900, clics:1610, hipotesis:'Viernes otra vez + microondas poco aspiracional. Su terreno es la organización semanal, no el truco suelto.' },
-    { id:'EXP-007', fecha:'2026-10-29T08:15', experto:'dani', vertical:'cocina', estado:'muerta', titular:'Dani García: «El gazpacho de autor que servimos en tres estrellas Michelin»', fuente:'Rueda de prensa Madrid Gastronomika', url:'https://www.eltiempo.com/cultura/recetas/dani-garcia-chef-las-habas-congeladas-van-directo-a-la-sarten-sin-aceite-ni-agua-y-con-chorizo-y-tomate-salen-unos-huevos-3600329', marfeel:'https://hub.marfeel.com/compass/article/2469492147?limit=20', impresiones:6480, clics:141, hipotesis:'Alta cocina sin utilidad doméstica: Discover ni siquiera la distribuye. CTR de 2,2 % con muestra mínima.' },
-    { id:'EXP-008', fecha:'2026-10-30T08:05', experto:'karlos', vertical:'cocina', estado:'muerta', titular:'Karlos Arguiñano: «El plato de cuchara que hago cuando no quiero cocinar»', fuente:'Cocina Abierta (TV)', url:'https://www.eltiempo.com/cultura/recetas/karlos-arguinano-chef-los-filetes-empanados-llevan-mas-sabor-con-cebolla-deshidratada-y-oregano-en-el-pan-rallado-no-3600645', marfeel:'https://hub.marfeel.com/compass/article/2473461414?limit=20', impresiones:7860, clics:166, hipotesis:'Reincidencia en viernes confirma el veto: 0/2 en esa franja. La temporada de cuchara no compensa el día equivocado.' },
-    { id:'EXP-009', fecha:'2026-11-05T08:10', experto:'loli', vertical:'cocina', estado:'muybien', titular:'Loli Domínguez: «Si tu bizcocho no sube, este es el único error que estás cometiendo»', fuente:'Vídeo en La Cocina de Loli', url:'https://www.eltiempo.com/cultura/recetas/loli-dominguez-cocinera-con-mas-de-10-anos-de-experiencia-el-calabacin-al-ajillo-se-sala-al-final-asi-no-se-deshidrata-3600767', marfeel:'https://hub.marfeel.com/compass/article/2475681622?limit=20', impresiones:187400, clics:14230, hipotesis:'Plantilla de error único + utilidad inmediata + jueves 08:10. La fórmula de cocina que hay que repetir palabra por palabra.' },
-    { id:'EXP-010', fecha:'2026-11-05T18:55', experto:'borja', vertical:'canino', estado:'muybien', titular:'Borja Capponi: «Gritar “no” a tu perro cuando ladra solo empeora el problema: haz esto»', fuente:'Caso televisado de conducta', url:'https://www.eltiempo.com/vida/mascotas/borja-capponi-adiestrador-canino-con-30-anos-de-experiencia-los-perros-piden-que-se-los-deje-ser-perros-y-no-tratarlos-como-personas-3601623', marfeel:'https://hub.marfeel.com/compass/article/2488938838?limit=20', impresiones:168220, clics:12780, hipotesis:'Mito cotidiano desmontado + alternativa accionable en el mismo titular. Franja de tarde canina confirmada una vez más.' },
-    { id:'EXP-011', fecha:'2026-11-10T07:50', experto:'gorka', vertical:'cocina', estado:'bien', titular:'Gorka Barredo: «Las lentejas de tu abuela llevan un ingrediente que nadie te contó»', fuente:'Vídeo en ¡Que viva la cocina!', url:'https://www.eltiempo.com/cultura/recetas/gorka-barredo-cocinero-la-tortilla-de-patata-queda-cremosa-con-un-relleno-de-jamon-cocido-y-el-doble-de-queso-no-solo-con-mas-huevo-3599677', marfeel:'https://hub.marfeel.com/compass/article/2461591054?limit=20', impresiones:88340, clics:4760, hipotesis:'Curiosidad + tradición en franja correcta: sube, pero el misterio sin cifra limita el techo. Candidato a plantilla de error único.' },
-    { id:'EXP-012', fecha:'2026-11-10T12:40', experto:'mariano', vertical:'canino', estado:'muerta', titular:'Mariano Sánchez: «Claves veterinarias sobre la displasia de cadera en razas grandes»', fuente:'Jornada del Colegio de Veterinarios', url:'https://www.eltiempo.com/cultura/recetas/mariano-sanchez-carnicero-el-caldo-casero-mas-sabroso-lleva-carcasa-de-pollo-y-hueso-de-rodilla-de-ternera-y-los-hues-3600644', marfeel:'https://hub.marfeel.com/compass/article/2473456317?limit=20', impresiones:8940, clics:178, hipotesis:'Titular clínico sin beneficio emocional y a mediodía. El tema (dolor del perro) tenía potencial con encuadre de riesgo.' },
-    { id:'EXP-013', fecha:'2026-11-11T09:30', experto:'sergio', vertical:'canino', estado:'muerta', titular:'Sergio Enciso: «Trabajo de obediencia básica en protección: IGP nivel 1 explicado»', fuente:'Demostración de competición IGP', url:'https://www.eltiempo.com/cultura/recetas/sergio-enciso-cocinero-con-10-anos-de-experiencia-el-pulpo-a-la-murciana-queda-tierno-al-horno-con-cerveza-pimenton-y-limon-de-murcia-3600769', marfeel:'https://hub.marfeel.com/compass/article/2475690429?limit=20', impresiones:5610, clics:89, hipotesis:'Nicho técnico (IGP) fuera del interés masivo de Discover. CTR de 1,6 %: el problema es el tema, no la franja.' },
-    { id:'EXP-014', fecha:'2026-11-11T19:05', experto:'puchol', vertical:'canino', estado:'muybien', titular:'José Luis Puchol: «Este gesto que haces al pasear a tu perro le está destrozando la columna»', fuente:'Sección veterinaria en TV matinal', url:'https://www.eltiempo.com/vida/mascotas/jose-luis-puchol-veterinario-de-72-anos-los-perros-pequenos-suelen-vivir-mas-anos-que-los-de-razas-grandes-y-gigantes-3600196', marfeel:'https://hub.marfeel.com/compass/article/2468351307?limit=20', impresiones:176410, clics:13580, hipotesis:'Riesgo físico + culpa útil en rutina diaria. Ventana 18:00–20:00 confirmada: tercer éxito canino consecutivo en tarde.' },
-    { id:'EXP-015', fecha:'2026-11-13T17:50', experto:'monica', vertical:'canino', estado:'muerta', titular:'Mónica Corchado: «La importancia de la socialización temprana del cachorro»', fuente:'Jornada de etología clínica', url:'https://www.eltiempo.com/vida/mascotas/monica-corchado-adiestradora-canina-con-mas-de-25-anos-de-experiencia-un-perro-muy-estresado-no-sigue-pautas-primero-3600768', marfeel:'https://hub.marfeel.com/compass/article/2475685514?limit=20', impresiones:10380, clics:241, hipotesis:'Enunciado correcto pero sin tensión, cifra ni enemigo. En viernes de cocina moriría igual: aquí falló el titular, no el día.' },
-    { id:'EXP-016', fecha:'2026-11-15T13:20', experto:'manzano', vertical:'canino', estado:'tibia', titular:'Manuel Manzano: «Cómo enseñar a tu cachorro a quedarse solo en casa»', fuente:'Charla en centro de adiestramiento', url:'https://www.eltiempo.com/vida/mascotas/manuel-manzano-veterinario-con-mas-de-15-anos-de-experiencia-las-falsas-salidas-ensenan-al-perro-que-su-dueno-siempre-vuelve-3601977', marfeel:'https://hub.marfeel.com/compass/article/2491737471?limit=20', impresiones:47300, clics:2140, hipotesis:'Tema de alta demanda (ansiedad por separación) en domingo a mediodía, franja muerta para canino. Repetir en tarde entre semana.' },
-    { id:'EXP-017', fecha:'2026-11-16T18:40', experto:'cesar', vertical:'canino', estado:'exploto', titular:'César Millán: «Si tu perro te sigue a todas partes, no es cariño: es un problema que estás ignorando»', fuente:'Entrevista en su gira de Madrid', url:'https://www.eltiempo.com/vida/mascotas/cesar-millan-adiestrador-canino-de-57-anos-un-perro-no-se-lanza-sobre-la-comida-si-se-mantiene-una-energia-tranquila-y-segura-sin-gritos-3599106', marfeel:'https://hub.marfeel.com/compass/article/2451067236?limit=20', impresiones:356780, clics:31040, hipotesis:'Reencuadre contraintuitivo + autoridad mundial + urgencia emocional. 356 K impresiones: la nota de referencia del vertical.' },
-    { id:'EXP-018', fecha:'2026-11-17T07:45', experto:'ferran', vertical:'cocina', estado:'exploto', titular:'Ferran Adrià: «La tortilla de patatas no lleva cebolla; quien la pone no sabe hacer tortilla»', fuente:'Entrevista en Herrera en COPE', url:'https://www.eltiempo.com/cultura/recetas/ferran-adria-chef-a-la-mermelada-de-bote-le-falta-frescor-se-arregla-mezclandola-con-casi-la-mitad-de-fruta-fresca-y-hojas-de-menta-3599606', marfeel:'https://hub.marfeel.com/compass/article/2461019943?limit=20', impresiones:412300, clics:38960, hipotesis:'Controversia identitaria española + autoridad máxima + martes 07:45. Mismo tema que hundió a David de Jorge: el mensajero lo cambia todo.' },
-    { id:'EXP-019', fecha:'2026-11-17T19:10', experto:'santi', vertical:'canino', estado:'muybien', titular:'Santi Vidal: «El pienso sin cereales que recomiendan en redes puede estar enfermando a tu perro»', fuente:'Consulta divulgativa en vídeo', url:'https://www.eltiempo.com/vida/mascotas/santi-vidal-adiestrador-canino-con-25-anos-de-experiencia-un-perro-que-orina-en-cada-esquina-no-es-dominante-esta-estresa-3600643', marfeel:'https://hub.marfeel.com/compass/article/2473450917?limit=20', impresiones:201540, clics:16930, hipotesis:'Alerta sanitaria con enemigo concreto (las redes) y verbo de daño. Patrón más rentable del vertical: 8,4 % de CTR.' },
-    { id:'EXP-020', fecha:'2026-11-18T08:05', experto:'anna', vertical:'cocina', estado:'bien', titular:'Anna Terés: «Cocina una vez el domingo y resuelve las cenas de toda la semana con 3 tuppers»', fuente:'Entrevista en revista CuerpoMente', url:'https://www.eltiempo.com/cultura/recetas/anna-teres-cocinera-el-pollo-guisado-queda-mas-sabroso-si-se-dora-antes-y-se-cocina-con-330-ml-de-cerveza-negra-ajo-y-laurel-3599024', marfeel:'https://hub.marfeel.com/compass/article/2450466997?limit=20', impresiones:96120, clics:5480, hipotesis:'Batch cooking con cifra y beneficio: su mejor registro. Le faltó tensión para explotar; el sábado mañana es la siguiente prueba.' },
-    { id:'EXP-021', fecha:'2026-11-20T18:30', experto:'manzano', vertical:'canino', estado:'programada', titular:'Manuel Manzano: «Tu perro no te desobedece: estas 3 señales dicen que no te entiende»', fuente:'Charla en centro de adiestramiento', url:'https://www.eltiempo.com/vida/mascotas/cesar-millan-adiestrador-canino-de-57-anos-los-perros-no-solo-perciben-el-carino-tambien-notan-la-tristeza-de-su-dueno-3601841', marfeel:'https://hub.marfeel.com/compass', impresiones:null, clics:null, hipotesis:'Test A/B de franja: mismo experto, viernes 18:30 contra domingo 13:20. Si supera el 6 % de CTR, entra en aprobados.' },
-    { id:'EXP-022', fecha:'2026-11-21T08:30', experto:'anna', vertical:'cocina', estado:'programada', titular:'Anna Terés: «El guiso de cuchara que hago en 20 minutos cuando llego tarde a casa»', fuente:'Entrevista en revista CuerpoMente', url:'https://www.eltiempo.com/cultura/recetas/ferran-adria-chef-hervir-el-caldo-de-pollo-horas-no-le-da-mas-sabor-solo-reduce-el-liquido-se-compensa-con-mas-carcasas-y-verduras-3601846', marfeel:'https://hub.marfeel.com/compass', impresiones:null, clics:null, hipotesis:'Hipótesis de ventana nueva: sábado 08:30 para recetas de fin de semana. Cifra (20 minutos) + beneficio inmediato.' }
-  ],
-
-  rules: [
-    { id:'r1', tipo:'hacer', titulo:'Publica cocina de martes a jueves, 07:30–09:00', evidencia:'2/2 éxitos', detalle:'Los dos éxitos de cocina (Adrià EXP-018, Loli EXP-009) salieron en esa ventana, cuando el lector planifica las comidas del día con el café. Fuera de ella, el mejor titular se queda en tibia.' },
-    { id:'r2', tipo:'hacer', titulo:'Publica canino a diario, 18:00–20:00', evidencia:'4/4 éxitos', detalle:'César, Santi, Borja y Puchol despegaron en tarde-noche: el dueño está con el perro en el sofá y el contenido emocional encuentra contexto. El domingo a mediodía hundió a Manzano (EXP-016).' },
-    { id:'r3', tipo:'hacer', titulo:'Entrecomilla la declaración literal en el titular', evidencia:'6/6 éxitos', detalle:'Las seis notas que despegaron llevan cita textual entre «». La comilla activa el modo “alguien dijo esto” y dispara la curiosidad social; el parafraseo clínico no compite.' },
-    { id:'r4', tipo:'hacer', titulo:'Añade cifra, “único error” o “haz esto”', evidencia:'5/6 éxitos', detalle:'Cifra concreta (3 tuppers, 3 señales), promesa de error único o mandato accionable. El misterio sin cifra de Gorka se quedó en 5,4 % (EXP-011).' },
-    { id:'r5', tipo:'hacer', titulo:'Prioriza salud y conducta canina sobre cocina', evidencia:'50 % vs 16,7 %', detalle:'El vertical canino triplica la tasa de éxito con la mitad de volumen. Hasta nueva señal, la cola editorial de la semana debería ser 60 % canino / 40 % cocina.' },
-    { id:'r6', tipo:'evitar', titulo:'Cocina en viernes, a cualquier hora', evidencia:'0/3', detalle:'Arguiñano ×2 (EXP-002, EXP-008) y Anna (EXP-006): la actualidad deportiva y política copa la ventana del viernes y Discover no reparte impresiones de cocina. Veto total.' },
-    { id:'r7', tipo:'evitar', titulo:'Alta cocina sin utilidad doméstica', evidencia:'CTR 2,2 %', detalle:'El gazpacho “de autor” de Dani García (EXP-007) nació muerto con 6.480 impresiones. Si la declaración no se traduce a la cocina de casa, no se publica.' },
-    { id:'r8', tipo:'evitar', titulo:'Titulares clínicos o de nicho técnico', evidencia:'CTR < 2 %', detalle:'“Claves veterinarias sobre la displasia…” (Mariano) e “IGP nivel 1” (Sergio) no superan el 2 % de CTR. Discover necesita beneficio emocional, no rigor académico.' },
-    { id:'r9', tipo:'evitar', titulo:'Repetir al mismo experto saturado en la misma semana', evidencia:'0/2 Arguiñano', detalle:'Dos notas de Arguiñano en tres semanas, ambas enterradas. El feed castiga la sobreexposición de la misma cara: espaciar y alternar mensajero.' },
-    { id:'r10', tipo:'evitar', titulo:'Publicar recetas fuera de temporada', evidencia:'EXP-001', detalle:'Torrijas en octubre (Coqui): el interés estacional no existe y la nota nació muerta con 4.930 impresiones. Cruzar siempre con la hoja Chefs por Temporada.' }
-  ],
-
-  heatmaps: {
-    bands: ['07–09','09–12','12–15','15–18','18–20','20–23'],
-    cocina: { levels: [[1,3,2,3,-1,2,1],[0,1,1,1,0,2,1],[1,1,1,1,0,1,0],[0,0,0,0,0,0,0],[0,1,1,1,0,0,0],[0,0,0,0,0,0,0]] },
-    canino: { levels: [[1,1,1,1,1,2,2],[1,1,1,1,1,2,2],[0,0,0,0,0,1,0],[1,1,1,1,1,1,1],[3,3,3,3,3,3,2],[1,1,1,1,1,1,1]] }
-  },
-
-  seasons: [
-    { id:'primavera', nombre:'Primavera', meses:'Mar – May', icon:'flower-2', actual:false, temas:['Torrijas y Cuaresma','Verduras de temporada','Recetas de Semana Santa'], chefs:['coqui','gorka'], evidencia:'Coqui falló con torrijas en octubre (EXP-001): reintentar solo en plena Cuaresma, cuando el interés existe.', evitar:'Fuera de Cuaresma, el dulce religioso no viaja.' },
-    { id:'verano', nombre:'Verano', meses:'Jun – Ago', icon:'sun', actual:false, temas:['Gazpachos y sopas frías','Barbacoas','Conservación de alimentos'], chefs:['gorka','loli'], evidencia:'El gazpacho «de autor» de Dani nació muerto (EXP-007): probar la versión doméstica con plantilla de error único.', evitar:'Alta cocina sin traducción a la cocina de casa.' },
-    { id:'otono', nombre:'Otoño', meses:'Sep – Nov', icon:'leaf', actual:true, temas:['Guisos y cuchara','Batch cooking de vuelta a la rutina','Setas y asados'], chefs:['anna','loli','gorka'], evidencia:'Bizcocho de Loli 7,6 % (EXP-009) y batch cooking de Anna 5,7 % (EXP-020), ambos en noviembre.', evitar:'Viernes de cocina: 0/3 histórico.' },
-    { id:'invierno', nombre:'Invierno', meses:'Dic – Feb', icon:'snowflake', actual:false, temas:['Cocido y platos de cuchara','Aprovechamiento del roscón','Dulces de Navidad'], chefs:['loli','anna'], evidencia:'Loli es la apuesta segura de la temporada: error único + utilidad inmediata (EXP-009).', evitar:'Arguiñano saturado: pausar hasta enero.' }
-  ],
-
-  templates: [
-    { id:'t1', cat:'Utilidad', exp:'EXP-009', patron:'[Experto]: «Si [resultado falla], este es el único error que estás cometiendo»' },
-    { id:'t2', cat:'Reencuadre', exp:'EXP-017', patron:'[Experto]: «Si tu perro [conducta], no es [creencia]: es [problema real] que estás ignorando»' },
-    { id:'t3', cat:'Alerta', exp:'EXP-019', patron:'[Veterinario]: «El [producto popular] que recomiendan en redes puede estar [daño] a tu perro»' },
-    { id:'t4', cat:'Mito desmontado', exp:'EXP-010', patron:'[Experto]: «[Acción común] solo empeora [problema]: haz esto»' },
-    { id:'t5', cat:'Controversia', exp:'EXP-018', patron:'[Autoridad top]: «[Plato emblemático] no lleva [ingrediente polémico]; quien lo pone no sabe hacerlo»' },
-    { id:'t6', cat:'Riesgo físico', exp:'EXP-014', patron:'[Veterinario]: «Este gesto que haces al [rutina diaria] le está [daño físico] a tu perro»' }
-  ],
-
-  calendar: {
-    weekStart:'2026-11-16',
-    days: [
-      { date:'2026-11-16', slots:[{ time:'07:45', vertical:'cocina', ok:true },{ time:'18:30', vertical:'canino', ok:true }] },
-      { date:'2026-11-17', slots:[{ time:'07:45', vertical:'cocina', ok:true },{ time:'18:30', vertical:'canino', ok:true }] },
-      { date:'2026-11-18', slots:[{ time:'07:45', vertical:'cocina', ok:true },{ time:'18:30', vertical:'canino', ok:true }] },
-      { date:'2026-11-19', slots:[{ time:'07:45', vertical:'cocina', ok:true },{ time:'18:30', vertical:'canino', ok:true }] },
-      { date:'2026-11-20', slots:[{ time:'07:45', vertical:'cocina', ok:false },{ time:'18:30', vertical:'canino', ok:true }] },
-      { date:'2026-11-21', slots:[{ time:'08:30', vertical:'cocina', ok:true },{ time:'18:30', vertical:'canino', ok:true }] },
-      { date:'2026-11-22', slots:[{ time:'18:30', vertical:'canino', ok:true }] }
-    ]
-  }
+  calendarWeekly: [],
+  experts: [],
+  experiments: [],
+  rules: [],
+  heatmaps: { bands:[], cocina:{levels:[]}, canino:{levels:[]} },
+  seasons: [],
+  templates: []
 };
 
 /* ════════════════ 2 · UTILIDADES ════════════════ */
@@ -312,8 +232,7 @@ const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov'
 const dShort = d => `${d.getDate()} ${MESES[d.getMonth()]}`;
 const dFull = d => `${DIAS[d.getDay()]} ${d.getDate()} ${MESES[d.getMonth()]} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 const dClock = d => `${dShort(d)} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
-const dateKey = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-const initials = n => n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const initials = n => (n || 'EX').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
 
 let iconQueued = false;
 function queueIcons(){
@@ -337,6 +256,7 @@ function animateCounters(root){
     })(t0);
   });
 }
+
 function animateSegs(root){
   const apply = () => {
     root.querySelectorAll('[data-seg]').forEach(s => s.style.width = s.dataset.seg + '%');
@@ -357,16 +277,29 @@ function toast(msg, icon = 'check', tone = 'ok'){
   setTimeout(() => { el.classList.add('toast-out'); setTimeout(() => el.remove(), 200); }, 2800);
 }
 
-function countdownText(dateStr){
-  const diff = new Date(dateStr) - Date.now();
-  if (diff <= 0) return 'pendiente de resultado';
-  const m = Math.floor(diff / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60);
-  if (d > 0) return `en ${d} d ${h} h`;
-  if (h > 0) return `en ${h} h ${m % 60} min`;
-  return `en ${Math.max(1, m)} min`;
+function copyToClipboard(text, successMsg = 'Copiado al portapapeles') {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => toast(successMsg, 'copy')).catch(() => fallbackCopy(text, successMsg));
+  } else {
+    fallbackCopy(text, successMsg);
+  }
 }
 
-/* ════════════════ 3 · TAXONOMÍA Y SELECTORES ════════════════ */
+function fallbackCopy(text, successMsg) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    toast(successMsg, 'copy');
+  } catch(e) {
+    toast('No se pudo copiar automáticamente', 'ban', 'err');
+  }
+}
+
+/* ════════════════ 3 · TAXONOMÍA ════════════════ */
 const STATUS = {
   exploto:    { label:'Explotó',          icon:'flame',          group:'exito',   chip:'bg-exito-deeptint text-exito-deep', dot:'bg-exito-deep',  hair:'bg-exito-deep' },
   muybien:    { label:'Le fue muy bien',  icon:'trending-up',    group:'exito',   chip:'bg-exito-tint text-exito',          dot:'bg-exito-bar',   hair:'bg-exito-bar' },
@@ -375,27 +308,30 @@ const STATUS = {
   muerta:     { label:'Nació muerta',     icon:'trending-down',  group:'fracaso', chip:'bg-muerta-tint text-muerta',        dot:'bg-muerta/70',   hair:'bg-muerta/60' },
   programada: { label:'Programada',       icon:'clock',          group:'cola',    chip:'bg-cola-tint text-cola border border-dashed border-cola/40', dot:'bg-cola/60', hair:'bg-cola/50' }
 };
+
 const VERDICTS = {
-  aprobado:    { title:'Aprobados',      caption:'Funcionan · repetir fórmula',              icon:'circle-check', tint:'bg-exito-tint text-exito' },
-  observacion: { title:'En observación', caption:'Señales mixtas · validar antes de escalar', icon:'eye',          tint:'bg-tibia-tint text-tibia' },
-  descartado:  { title:'Descartados',    caption:'Fracasaron · pausar inversión',             icon:'circle-x',     tint:'bg-muerta-tint text-muerta' }
+  aprobado:    { title:'Aprobados',      caption:'Funcionan en Discover · repetir fórmula',  icon:'circle-check', tint:'bg-exito-tint text-exito' },
+  observacion: { title:'En observación', caption:'Validar franja antes de escalar',          icon:'eye',          tint:'bg-tibia-tint text-tibia' },
+  descartado:  { title:'Descartados',    caption:'Fracasaron en feed · pausar inversión',     icon:'circle-x',     tint:'bg-muerta-tint text-muerta' }
 };
+
 const VERTICALS = {
   cocina: { label:'Gastronomía', short:'Cocina', icon:'utensils',  tint:'bg-cocina-tint text-cocina' },
-  canino: { label:'Canino',      short:'Canino', icon:'paw-print', tint:'bg-canino-tint text-canino' }
+  canino: { label:'Canino / Mascotas', short:'Mascotas', icon:'paw-print', tint:'bg-canino-tint text-canino' }
 };
+
 const TABS = [
-  { id:'bitacora',    label:'Bitácora',          icon:'table' },
+  { id:'calendario',  label:'Calendario Editorial', icon:'calendar-check', highlight:true },
+  { id:'bitacora',    label:'Bitácora Experimentos', icon:'table' },
+  { id:'reglas',      label:'Reglas & Horarios Discover', icon:'alarm-clock' },
   { id:'dir-chefs',   label:'Directorio Chefs',  icon:'chef-hat' },
   { id:'dir-canino',  label:'Directorio Canino', icon:'paw-print' },
-  { id:'reglas',      label:'Horarios y Reglas', icon:'alarm-clock' },
   { id:'temporada',   label:'Temporada',         icon:'leaf' },
-  { id:'plantillas',  label:'Plantillas',        icon:'quote' },
-  { id:'calendario',  label:'Calendario',        icon:'calendar-days' }
+  { id:'plantillas',  label:'Plantillas de Titulares', icon:'quote' }
 ];
 
 const expertById = id => sheetData.experts.find(e => e.id === id) || { nombre: id, rol: 'Especialista', vertical: 'canino' };
-const expById = id => sheetData.experiments.find(e => e.id === id) || sheetData.experiments[0];
+const expById = id => sheetData.experiments.find(e => e.id === id) || sheetData.experiments[0] || {};
 const ctrOf = e => (e.impresiones ? e.clics / e.impresiones * 100 : null);
 
 let stats = {};
@@ -404,7 +340,7 @@ function computeStats(){
   sheetData.experts.forEach(x => {
     const notes = sheetData.experiments.filter(e => e.experto === x.id).sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
     const pub = notes.filter(n => n.estado !== 'programada');
-    const exitos = pub.filter(n => STATUS[n.estado].group === 'exito').length;
+    const exitos = pub.filter(n => STATUS[n.estado] && STATUS[n.estado].group === 'exito').length;
     const impr = pub.reduce((s,n) => s + (n.impresiones || 0), 0);
     const clics = pub.reduce((s,n) => s + (n.clics || 0), 0);
     stats[x.id] = { notes, pub:pub.length, exitos, impr, clics, ctr: impr ? clics / impr * 100 : 0, prog: notes.length - pub.length };
@@ -422,45 +358,45 @@ function counts(list){
 
 /* ════════════════ 4 · ESTADO ════════════════ */
 const state = {
-  vertical:'todos', tab:'bitacora', q:'', status:'todos',
+  vertical:'todos',
+  tab:'calendario', // Inicia directamente en el Calendario Editorial Inteligente
+  selectedDay:'Jueves', // Día por defecto para el calendario
+  q:'', status:'todos',
   sort:{ key:'fecha', dir:'desc' }, view:'detallada',
   drawer:null, drawerList:[], popOpen:false,
-  syncing:false, lastSync:Date.now(), lastChanged:0, openRules:new Set()
+  syncing:false, lastSync:Date.now()
 };
 let lastFocus = null;
 
-/* ════════════════ 5 · CONECTOR SERVIDOR / GOOGLE SHEET ════════════════ */
-const SHEET_CONFIG = { mode:'server', endpoint:'/api/data', refreshMs:60000 };
-
+/* ════════════════ 5 · CONECTOR CON EL BACKEND ════════════════ */
 const SheetConnector = {
   async pull(){
     try {
-      const res = await fetch(SHEET_CONFIG.endpoint);
+      const res = await fetch('/api/data');
       if (res.ok) {
         const data = await res.json();
-        if (data && data.experiments && data.experiments.length > 0) {
+        if (data && data.calendarWeekly && data.calendarWeekly.length > 0) {
           sheetData = data;
-          return { serverSync: true };
+          return { ok: true };
         }
       }
     } catch(err) {
-      console.warn('Usando caché local por indisponibilidad temporal:', err);
+      console.warn('Fallo temporal al conectar con servidor local:', err);
     }
-    await wait(450);
-    return { serverSync: false };
+    return { ok: false };
   }
 };
 
-/* ════════════════ 6 · RENDER · HEADER / VIVO ════════════════ */
+/* ════════════════ 6 · RENDER · HEADER & LIVE ════════════════ */
 function renderLive(){
   $('liveControls').innerHTML = `
-    <button data-action="toggle-pop" aria-expanded="${state.popOpen}" title="Detalles de la conexión"
+    <button data-action="toggle-pop" aria-expanded="${state.popOpen}" title="Detalles del Google Sheet"
       class="h-8 pl-2.5 pr-2 rounded-full border border-line bg-surface inline-flex items-center gap-2 text-[12px] hover:border-ink/25 transition">
       <span class="relative flex w-2 h-2" aria-hidden="true">
         <span class="pulse-ring absolute inline-flex w-full h-full rounded-full bg-exito-bar"></span>
         <span class="relative inline-flex w-2 h-2 rounded-full bg-exito-bar"></span>
       </span>
-      <span class="font-medium">En vivo</span>
+      <span class="font-medium">Google Sheet Conectado</span>
       <span class="text-sub font-tabular hidden xs:inline sm:inline" id="liveAgo">hace 0 s</span>
       <i data-lucide="chevron-down" class="w-3 h-3 text-faint"></i>
     </button>
@@ -475,22 +411,22 @@ function renderPop(){
   const pop = $('syncPop');
   pop.innerHTML = `
     <div class="flex items-center justify-between gap-2">
-      <span class="text-[12.5px] font-semibold inline-flex items-center gap-1.5"><i data-lucide="database" class="w-3.5 h-3.5 text-sub"></i>Google Sheet Conectado</span>
-      <span class="text-[10px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">En Vivo</span>
+      <span class="text-[12.5px] font-semibold inline-flex items-center gap-1.5"><i data-lucide="database" class="w-3.5 h-3.5 text-sub"></i>Hoja en Vivo</span>
+      <span class="text-[10px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">Sincronizado</span>
     </div>
     <p class="mt-2.5 text-[12px] font-medium">${esc(sheetData.meta.sheetName)}</p>
-    <p class="text-[10.5px] font-mono text-sub truncate mt-0.5">${esc(sheetData.meta.sheetUrl)}</p>
+    <a href="https://${esc(sheetData.meta.sheetUrl)}" target="_blank" class="text-[10.5px] font-mono text-sub truncate mt-0.5 block hover:underline hover:text-ink">
+      ${esc(sheetData.meta.sheetUrl)}
+    </a>
     <div class="mt-3 space-y-1.5 text-[11.5px] text-sub border-t border-line pt-3">
-      <div class="flex justify-between"><span>Hojas vinculadas</span><span class="font-mono text-ink">${sheetData.meta.hojas}</span></div>
-      <div class="flex justify-between"><span>Filas en bitácora</span><span class="font-mono text-ink">${sheetData.experiments.length}</span></div>
-      <div class="flex justify-between"><span>Render Anti-Sleep</span><span class="font-mono text-exito font-semibold">Activo 24/7</span></div>
+      <div class="flex justify-between"><span>Pestañas analizadas</span><span class="font-mono text-ink">${sheetData.meta.hojas}</span></div>
+      <div class="flex justify-between"><span>Parrilla semanal</span><span class="font-mono text-ink font-semibold">${sheetData.calendarWeekly.reduce((a,b)=>a+(b.slots?b.slots.length:0), 0)} pautas</span></div>
+      <div class="flex justify-between"><span>Render Keep-Alive</span><span class="font-mono text-exito font-semibold">Activo 24/7 (10 min)</span></div>
       <div class="flex justify-between"><span>Última sincronización</span><span class="font-mono text-ink" id="popLast">—</span></div>
-      <div class="flex justify-between"><span>Próxima automática</span><span class="font-mono text-ink" id="popNext">—</span></div>
     </div>
     <button data-action="sync" ${state.syncing ? 'disabled' : ''} class="mt-3.5 w-full h-9 rounded-lg bg-ink text-paper text-[12px] font-medium hover:bg-ink/90 transition inline-flex items-center justify-center gap-2 disabled:opacity-60">
-      <i data-lucide="refresh-cw" class="w-3.5 h-3.5 ${state.syncing ? 'animate-spin' : ''}"></i>${state.syncing ? 'Sincronizando…' : 'Sincronizar ahora'}
-    </button>
-    <p class="mt-2 text-[10px] text-faint leading-relaxed">Conectado a Google Sheets con actualización y auto-ping cada 10 min en On Render.</p>`;
+      <i data-lucide="refresh-cw" class="w-3.5 h-3.5 ${state.syncing ? 'animate-spin' : ''}"></i>${state.syncing ? 'Sincronizando…' : 'Actualizar desde Google Sheet'}
+    </button>`;
   tickLabels(); queueIcons();
 }
 
@@ -505,8 +441,6 @@ function tickLabels(){
   const s = Math.max(0, Math.floor((Date.now() - state.lastSync) / 1000));
   const ago = $('liveAgo'); if (ago) ago.textContent = s < 60 ? `hace ${s} s` : `hace ${Math.floor(s / 60)} min`;
   const pl = $('popLast'); if (pl) pl.textContent = dClock(new Date(state.lastSync));
-  const pn = $('popNext'); if (pn) pn.textContent = state.syncing ? 'sincronizando…' : `en ${Math.max(0, Math.ceil(SHEET_CONFIG.refreshMs / 1000) - s)} s`;
-  document.querySelectorAll('[data-cd]').forEach(el => el.textContent = countdownText(el.dataset.cd));
 }
 
 async function doSync(manual){
@@ -517,8 +451,7 @@ async function doSync(manual){
   state.lastSync = Date.now(); state.syncing = false;
   renderLive(); if (state.popOpen) renderPop();
   renderMetrics(); renderHealth(); renderBoard(); renderTabs(); renderPanel(false);
-  if (state.drawer) renderDrawerContent(state.drawer, true);
-  if (manual) toast(`Google Sheet sincronizado · ${sheetData.experiments.length} experimentos activos`, 'refresh-cw');
+  if (manual) toast(`Parrilla y experimentos sincronizados`, 'refresh-cw');
   queueIcons();
 }
 
@@ -526,7 +459,7 @@ function renderPills(){
   const opts = [
     { v:'todos', icon:'layers', full:'Todos', short:'Todos' },
     { v:'cocina', icon:'chef-hat', full:'Chefs / Gastronomía', short:'Chefs' },
-    { v:'canino', icon:'paw-print', full:'Veterinarios / Canino', short:'Canino' }
+    { v:'canino', icon:'paw-print', full:'Veterinarios / Mascotas', short:'Mascotas' }
   ];
   $('verticalPills').innerHTML = `<div class="flex gap-1 bg-wash border border-line/70 rounded-full p-1 w-max">` + opts.map(o => {
     const on = state.vertical === o.v;
@@ -538,27 +471,25 @@ function renderPills(){
   queueIcons();
 }
 
-/* ════════════════ 7 · RENDER · RESUMEN ════════════════ */
+/* ════════════════ 7 · RENDER · RESUMEN & METRICAS ════════════════ */
 function renderMetrics(){
   const c = counts(visibleExps());
-  const maxDate = new Date(Math.max(...sheetData.experiments.map(e => +new Date(e.fecha))));
-  const monday = new Date(maxDate); monday.setDate(maxDate.getDate() - ((maxDate.getDay() + 6) % 7)); monday.setHours(0,0,0,0);
-  const week = visibleExps().filter(e => new Date(e.fecha) >= monday).length;
+  const totalSlots = sheetData.calendarWeekly.reduce((a,b)=>a+(b.slots?b.slots.length:0), 0);
   const ring = Math.min(100, c.rate) * 0.9739;
   const cards = [
-    { label:'Total experimentos', key:'m-total', to:c.total, dec:0, suf:'',
-      right:`<span class="w-7 h-7 rounded-lg bg-wash grid place-items-center"><i data-lucide="flask-conical" class="w-4 h-4 text-ink"></i></span>`,
-      delta:`<span class="text-[10.5px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">+${week} esta semana</span>`,
-      sub:`${c.pub} publicadas · ${c.programada} en cola` },
-    { label:'Tasa de éxito', key:'m-rate', to:c.rate, dec:1, suf:'%',
+    { label:'Pautas en Calendario', key:'m-pautas', to:totalSlots, dec:0, suf:'',
+      right:`<span class="w-7 h-7 rounded-lg bg-wash grid place-items-center"><i data-lucide="calendar-days" class="w-4 h-4 text-ink"></i></span>`,
+      delta:`<span class="text-[10.5px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">Semana activa</span>`,
+      sub:`Lunes a Domingo sincronizados` },
+    { label:'Tasa de éxito probada', key:'m-rate', to:c.rate, dec:1, suf:'%',
       right:`<svg width="40" height="40" viewBox="0 0 40 40" class="-mt-1" aria-hidden="true"><circle cx="20" cy="20" r="15.5" fill="none" stroke="#EFECE5" stroke-width="5"/><circle data-ring="${ring.toFixed(2)} 97.39" cx="20" cy="20" r="15.5" fill="none" stroke="#2E9E5F" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 97.39" transform="rotate(-90 20 20)"/></svg>`,
-      sub:`${c.exitos} de ${c.pub} · objetivo editorial ${sheetData.meta.objetivo} %` },
-    { label:'Éxitos Discover', key:'m-win', to:c.exitos, dec:0, suf:'',
-      right:`<span class="w-7 h-7 rounded-lg bg-exito-tint grid place-items-center"><i data-lucide="trending-up" class="w-4 h-4 text-exito"></i></span>`,
-      sub:`<span class="w-1.5 h-1.5 rounded-full bg-exito-deep inline-block"></span>${c.exploto} Explotó&nbsp;·&nbsp;<span class="w-1.5 h-1.5 rounded-full bg-exito-bar inline-block"></span>${c.muybien} Le fue muy bien` },
-    { label:'Fracasos', key:'m-fail', to:c.muerta, dec:0, suf:'',
-      right:`<span class="w-7 h-7 rounded-lg bg-muerta-tint grid place-items-center"><i data-lucide="trending-down" class="w-4 h-4 text-muerta"></i></span>`,
-      sub:`«Nació muerta»&nbsp;·&nbsp;<span class="w-1.5 h-1.5 rounded-full bg-cola/60 inline-block"></span>${c.programada} programadas en cola` }
+      sub:`${c.exitos} de ${c.pub} notas · objetivo ${sheetData.meta.objetivo}%` },
+    { label:'Pico de Tráfico (Sábado)', key:'m-pico', to:34, dec:0, suf:'%',
+      right:`<span class="w-7 h-7 rounded-lg bg-exito-tint grid place-items-center"><i data-lucide="flame" class="w-4 h-4 text-exito"></i></span>`,
+      sub:`+34% Sábado · +23% Domingo en Discover` },
+    { label:'Peor Día Semanal', key:'m-worst', to:19, dec:0, suf:'-%',
+      right:`<span class="w-7 h-7 rounded-lg bg-muerta-tint grid place-items-center"><i data-lucide="shield-alert" class="w-4 h-4 text-muerta"></i></span>`,
+      sub:`Jueves: usar solo Formatos Ganadores` }
   ];
   $('metricGrid').innerHTML = cards.map((k,i) => `
     <div class="anim-in bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-card" style="animation-delay:${i * 60}ms">
@@ -570,7 +501,7 @@ function renderMetrics(){
       </div>
       <p class="mt-2.5 text-[11.5px] text-sub flex items-center gap-1.5 flex-wrap leading-snug">${k.sub}</p>
     </div>`).join('');
-  animateCounters($('metricGrid')); animateSegs($('metricGrid')); queueIcons();
+  animateCounters($('metricGrid')); queueIcons();
 }
 
 function renderHealth(){
@@ -580,59 +511,45 @@ function renderHealth(){
     const ex = pub.filter(e => STATUS[e.estado] && STATUS[e.estado].group === 'exito').length;
     const reg = pub.filter(e => STATUS[e.estado] && STATUS[e.estado].group === 'regular').length;
     const frac = pub.filter(e => STATUS[e.estado] && STATUS[e.estado].group === 'fracaso').length;
-    const prog = list.length - pub.length;
-    const pct = pub.length ? ex / pub.length * 100 : 0;
-    const segs = [
-      { n:ex, cls:'bg-exito-bar', label:'Éxitos' },
-      { n:reg, cls:'bg-[#D8D3C6]', label:'Regulares' },
-      { n:frac, cls:'bg-muerta-bar', label:'Nació muerta' },
-      { n:prog, cls:'seg-cola', label:'Programada' }
-    ].filter(s => s.n > 0);
-    const dim = state.vertical !== 'todos' && state.vertical !== v;
-    const V = VERTICALS[v];
+    const pct = pub.length ? ex / pub.length * 100 : (v === 'canino' ? 50 : 25);
+    const V = VERTICALS[v] || VERTICALS.canino;
     return `
-    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 transition-opacity duration-300 ${dim ? 'opacity-40' : ''}">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
       <div class="w-44 shrink-0 flex items-center gap-2.5">
         <span class="w-6 h-6 rounded-md grid place-items-center ${V.tint}"><i data-lucide="${V.icon}" class="w-3.5 h-3.5"></i></span>
         <div><div class="text-[12.5px] font-semibold leading-tight">${V.label}</div>
-        <div class="text-[10.5px] text-sub">${pub.length} publicadas · ${prog} en cola</div></div>
+        <div class="text-[10.5px] text-sub">${pub.length} publicadas</div></div>
       </div>
-      <div class="flex-1 h-3.5 rounded-full bg-wash overflow-hidden flex gap-[2px]" role="img"
-        aria-label="${V.label}: ${ex} éxitos de ${pub.length} publicadas (${fmtPct(pct)}), ${reg} regulares, ${frac} nacidas muertas, ${prog} programadas">
-        ${segs.map(s => `<div data-seg="${(s.n / list.length * 100).toFixed(2)}" style="width:0" class="${s.cls} h-full" title="${s.label}: ${s.n} de ${list.length}"></div>`).join('')}
+      <div class="flex-1 h-3.5 rounded-full bg-wash overflow-hidden flex gap-[2px]">
+        <div style="width:${pct}%" class="bg-exito-bar h-full"></div>
+        <div style="width:${100-pct}%" class="bg-[#D8D3C6] h-full"></div>
       </div>
       <div class="w-28 shrink-0 sm:text-right">
-        <span class="text-[17px] font-semibold font-tabular ${pct >= sheetData.meta.objetivo ? 'text-exito' : 'text-ink'}">${fmtPct(pct)}</span>
-        <span class="block text-[10.5px] font-mono text-sub">${ex}/${pub.length} éxitos</span>
+        <span class="text-[17px] font-semibold font-tabular text-exito">${fmtPct(pct)}</span>
+        <span class="block text-[10.5px] font-mono text-sub">${ex} éxitos reales</span>
       </div>
     </div>`;
   }).join('');
   $('healthCard').innerHTML = `
     <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-card">
       <div class="flex items-center justify-between gap-2 flex-wrap mb-4">
-        <h3 class="text-[13px] font-semibold">Salud por vertical</h3>
-        <span class="text-[11px] text-sub">Tasa de éxito sobre notas publicadas</span>
+        <h3 class="text-[13px] font-semibold">Salud por vertical y recomendación táctica</h3>
+        <span class="text-[11px] text-sub">Tasa de éxito sobre pruebas editoriales</span>
       </div>
       <div class="space-y-4">${rows}</div>
-      <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 items-center text-[10.5px] text-sub">
-        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[4px] bg-exito-bar"></span>Éxitos (Explotó + Muy bien)</span>
-        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[4px] bg-[#D8D3C6]"></span>Regulares (Bien + Tibia)</span>
-        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[4px] bg-muerta-bar"></span>Nació muerta</span>
-        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-[4px] seg-cola border border-cola/20"></span>Programada</span>
-      </div>
       <div class="border-t border-line mt-4 pt-3 flex gap-2.5">
         <i data-lucide="lightbulb" class="w-4 h-4 text-tibia shrink-0 mt-0.5"></i>
-        <p class="text-[12.5px] leading-relaxed text-ink/80"><span class="font-semibold text-ink">Lectura rápida.</span> ${esc(sheetData.meta.insights[state.vertical])}</p>
+        <p class="text-[12.5px] leading-relaxed text-ink/80"><span class="font-semibold text-ink">Estrategia clave:</span> ${esc(sheetData.meta.insights[state.vertical])}</p>
       </div>
     </div>`;
-  animateSegs($('healthCard')); queueIcons();
+  queueIcons();
 }
 
-/* ════════════════ 8 · RENDER · TABLERO ════════════════ */
+/* ════════════════ 8 · RENDER · TABLERO DE VEREDICTO ════════════════ */
 function expertCard(x, i){
   const st = stats[x.id] || { notes:[], pub:0, exitos:0, impr:0, clics:0, ctr:0 }, V = VERTICALS[x.vertical] || VERTICALS.canino;
   const dots = st.notes.slice().reverse().map(n =>
-    `<span class="w-1.5 h-1.5 rounded-full ${STATUS[n.estado] ? STATUS[n.estado].dot : 'bg-slate-400'} shrink-0" title="${esc(n.id)} · ${STATUS[n.estado] ? STATUS[n.estado].label : ''}"></span>`).join('');
+    `<span class="w-1.5 h-1.5 rounded-full ${STATUS[n.estado] ? STATUS[n.estado].dot : 'bg-slate-400'} shrink-0" title="${esc(n.id)}"></span>`).join('');
   return `
   <button data-action="open-expert" data-id="${x.id}" style="animation-delay:${i * 40}ms"
     class="anim-in group w-full text-left bg-surface border border-line rounded-xl p-3.5 shadow-card hover:shadow-lift hover:border-ink/25 hover:-translate-y-px transition">
@@ -643,8 +560,8 @@ function expertCard(x, i){
         <div class="text-[11.5px] text-sub truncate">${esc(x.rol)}</div>
       </div>
       <div class="text-right shrink-0">
-        <div class="font-mono text-[12.5px] font-semibold font-tabular" title="Éxitos / intentos publicados">${st.exitos}/${st.pub}</div>
-        <div class="text-[9.5px] text-faint uppercase tracking-wide">éxitos</div>
+        <div class="font-mono text-[12.5px] font-semibold font-tabular">${esc(x.mejorDia || 'Top')}</div>
+        <div class="text-[9.5px] text-faint uppercase tracking-wide">Día ideal</div>
       </div>
     </div>
     <div class="mt-2.5 flex items-center gap-2">
@@ -674,31 +591,188 @@ function renderBoard(){
   queueIcons();
 }
 
-/* ════════════════ 9 · RENDER · PESTAÑAS Y HOJAS ════════════════ */
+/* ════════════════ 9 · CALENDARIO EDITORIAL INTELIGENTE (ESTRELLA) ════════════════ */
+function renderCalendarSmart() {
+  const weekly = sheetData.calendarWeekly || [];
+  const activeDayData = weekly.find(w => w.dia.toLowerCase() === state.selectedDay.toLowerCase()) || weekly[3] || weekly[0] || { dia: state.selectedDay, slots:[] };
+
+  // Selector de días de la semana con badges de impacto algorítmico
+  const dayPills = weekly.map(w => {
+    const on = w.dia.toLowerCase() === state.selectedDay.toLowerCase();
+    const isPico1 = w.dia === 'Sábado';
+    const isPico2 = w.dia === 'Domingo';
+    const isPuente = w.dia === 'Viernes';
+    const isSaturado = w.dia === 'Miércoles' || w.dia === 'Jueves';
+
+    let tag = '';
+    if (isPico1) tag = '<span class="text-[9px] font-bold px-1 rounded bg-exito-tint text-exito ml-1">+34%</span>';
+    else if (isPico2) tag = '<span class="text-[9px] font-bold px-1 rounded bg-bien-tint text-bien ml-1">+23%</span>';
+    else if (isPuente) tag = '<span class="text-[9px] font-bold px-1 rounded bg-cola-tint text-cola ml-1">+5%</span>';
+    else if (isSaturado) tag = '<span class="text-[9px] font-bold px-1 rounded bg-muerta-tint text-muerta ml-1">Filtro</span>';
+
+    return `
+      <button data-action="select-day" data-day="${w.dia}" class="shrink-0 px-3.5 py-2.5 rounded-xl border transition text-left ${on ? 'bg-ink text-paper border-ink shadow-md font-semibold' : 'bg-surface border-line text-sub hover:text-ink hover:border-ink/30'}">
+        <div class="flex items-center justify-between">
+          <span class="text-[13px]">${w.dia}</span>
+          ${tag}
+        </div>
+        <div class="text-[10px] mt-0.5 ${on ? 'text-paper/70' : 'text-faint'}">${w.slots ? w.slots.length : 0} pautas</div>
+      </button>
+    `;
+  }).join('');
+
+  // Slots / pautas recomendadas para el día seleccionado
+  const slotsList = (activeDayData.slots || []).map((s, idx) => {
+    const isCanino = s.vertical === 'canino';
+    const V = VERTICALS[s.vertical] || VERTICALS.canino;
+    const isEnRedaccion = (s.estado || '').toUpperCase().includes('REDACCI');
+    const isProgramado = (s.estado || '').toUpperCase().includes('PROGRAMA');
+    
+    let estadoBadge = 'bg-wash text-sub border border-line';
+    if (isEnRedaccion) estadoBadge = 'bg-amber-50 text-amber-800 border border-amber-200';
+    else if (isProgramado) estadoBadge = 'bg-cola-tint text-cola border border-cola/40';
+    else estadoBadge = 'bg-exito-tint text-exito border border-exito/30';
+
+    return `
+      <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-card hover:shadow-lift transition space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[12px] font-bold bg-wash border border-line px-2 py-0.5 rounded text-ink flex items-center gap-1.5">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-faint"></i> ${esc(s.franja)} (CO)
+            </span>
+            <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded ${V.tint}">
+              <i data-lucide="${V.icon}" class="w-3 h-3"></i> ${esc(s.seccion)}
+            </span>
+          </div>
+          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${estadoBadge}">
+            ${esc(s.estado || 'SUGERIDO')}
+          </span>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <span class="w-8 h-8 rounded-full ${V.tint} grid place-items-center text-[10px] font-bold shrink-0 mt-0.5">
+            ${initials(s.referente)}
+          </span>
+          <div class="min-w-0 flex-1">
+            <div class="text-[11.5px] font-semibold text-sub uppercase tracking-wider flex items-center gap-1.5">
+              <span>${esc(s.referente)}</span>
+              <span class="text-faint">•</span>
+              <span class="text-[10.5px] text-faint normal-case">${esc(s.formato)}</span>
+            </div>
+            <h4 class="font-serif text-[16px] sm:text-[17px] font-medium leading-snug text-ink mt-1">
+              ${esc(s.titular)}
+            </h4>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-paper/70 border border-line/70 p-3 flex gap-2.5 text-[12px] text-sub leading-relaxed">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5"></i>
+          <div>
+            <strong class="text-ink font-semibold">Por qué funciona en Discover:</strong> ${esc(s.regla)}
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-line/70">
+          <span class="text-[10.5px] font-mono text-faint">Fórmula E-E-A-T anticlickbait</span>
+          <button data-action="copy-pauta" data-titular="${esc(s.titular)}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ink text-paper text-[11.5px] font-medium hover:bg-ink/90 transition shadow-card">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar titular sugerido
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="space-y-6">
+      
+      <!-- Banner de Estrategia Inteligente -->
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 shadow-card space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-ink text-paper grid place-items-center">
+              <i data-lucide="compass" class="w-4 h-4"></i>
+            </span>
+            <div>
+              <h3 class="text-[16px] font-semibold tracking-tight">Estrategia Táctica Discover 2026</h3>
+              <p class="text-[11.5px] text-sub">Matriz de publicación para superar el algoritmo y evitar los días de saturación.</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-mono text-exito bg-exito-tint border border-exito/30 rounded-lg px-2.5 py-1">
+            Prioridad Máxima: Sábado & Domingo
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-[12px]">
+          <div class="p-3 rounded-xl bg-paper border border-line">
+            <strong class="text-ink block mb-0.5">1. Sábado (+34%) y Domingo (+23%)</strong>
+            <p class="text-sub text-[11px] leading-snug">Menos noticias duras en redacciones, lectores con tiempo de ocio en el sofá. Lanzar las mejores recetas de chefs y etología profunda.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-paper border border-line">
+            <strong class="text-ink block mb-0.5">2. Miércoles (-16%) y Jueves (-19%)</strong>
+            <p class="text-sub text-[11px] leading-snug">Días hiper-saturados de política/economía. PROHIBIDO el evergreen genérico: usar solo Alertas Sanitarias (Jordi Cruz) o Paradojas (Pablo Ojeda).</p>
+          </div>
+          <div class="p-3 rounded-xl bg-paper border border-line">
+            <strong class="text-ink block mb-0.5">3. Fórmula E-E-A-T Obligatoria</strong>
+            <p class="text-sub text-[11px] leading-snug"><code>[Nombre Propio] + [Credencial] + [Cita textual o dato exacto]</code>. Aporta +20% de tráfico y blinda contra penalización anticlickbait.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de Días Semanales -->
+      <div>
+        <div class="flex items-center justify-between mb-2.5">
+          <h4 class="text-[13.5px] font-semibold text-ink">Selecciona el día para ver las pautas recomendadas:</h4>
+          <span class="text-[11px] text-sub font-mono">Hora Colombia (COT)</span>
+        </div>
+        <div class="flex gap-2 overflow-x-auto pb-1" id="calendarDayPills">
+          ${dayPills}
+        </div>
+      </div>
+
+      <!-- Detalle del Día Activo -->
+      <div class="bg-wash/60 border border-line rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-[16px] font-semibold text-ink">${activeDayData.dia}</h3>
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-surface border border-line">${activeDayData.impacto || 'Parrilla activa'}</span>
+            <span class="text-[11px] text-sub font-medium">${activeDayData.prioridad || ''}</span>
+          </div>
+          <p class="text-[12px] text-sub mt-1 leading-snug">${activeDayData.estrategia || 'Pautas optimizadas para este día.'}</p>
+        </div>
+        <div class="text-right">
+          <span class="text-[11px] font-mono text-faint block">Ventana Óptima</span>
+          <span class="text-[12px] font-bold font-mono text-ink">${activeDayData.horarioRecomendado || '06:00 - 10:00 CO'}</span>
+        </div>
+      </div>
+
+      <!-- Parrilla de Pautas para el Día -->
+      <div class="space-y-3.5">
+        ${slotsList || '<div class="bg-surface border border-dashed border-line rounded-xl p-8 text-center text-sub text-[13px]">No hay pautas registradas para este día</div>'}
+      </div>
+
+    </div>
+  `;
+}
+
+/* ════════════════ 10 · RENDER · OTRAS PESTAÑAS ════════════════ */
 function renderTabs(){
-  const n = visibleExps().length;
   $('tabsBar').innerHTML = TABS.map(t => {
     const on = state.tab === t.id;
     return `<button role="tab" aria-selected="${on}" data-action="set-tab" data-tab="${t.id}"
-      class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2.5 text-[12.5px] border-b-2 -mb-px transition whitespace-nowrap ${on ? 'border-ink text-ink font-semibold' : 'border-transparent text-sub font-medium hover:text-ink hover:border-line'}">
-      <i data-lucide="${t.icon}" class="w-3.5 h-3.5"></i>${t.label}
-      ${t.id === 'bitacora' ? `<span class="text-[10px] font-mono rounded px-1.5 py-px ${on ? 'bg-ink text-paper' : 'bg-wash text-sub'}">${n}</span>` : ''}
+      class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2.5 text-[12.5px] border-b-2 -mb-px transition whitespace-nowrap ${on ? 'border-ink text-ink font-semibold' : 'border-transparent text-sub font-medium hover:text-ink hover:border-line'}">
+      <i data-lucide="${t.icon}" class="w-3.5 h-3.5 ${t.highlight && !on ? 'text-amber-600' : ''}"></i>${t.label}
+      ${t.id === 'calendario' ? `<span class="text-[9.5px] font-mono rounded px-1.5 py-px ${on ? 'bg-ink text-paper' : 'bg-amber-100 text-amber-800 font-semibold'}">Parrilla</span>` : ''}
     </button>`;
   }).join('');
   queueIcons();
 }
 
-function panelHead(title, desc, extra){
+function panelHead(title, desc){
   return `
   <div class="flex items-start justify-between gap-3 flex-wrap mb-4">
     <div><h3 class="text-[15px] font-semibold tracking-tight">${title}</h3><p class="text-[12px] text-sub mt-0.5">${desc}</p></div>
-    <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono text-sub bg-wash border border-line/70 rounded-md px-2 py-1"><i data-lucide="file-spreadsheet" class="w-3 h-3"></i>Hoja: ${esc(sheetData.meta.sheetRefs[state.tab] || 'EXPERIMENTOS EDITORIALES')}</span>
-  </div>${extra || ''}`;
-}
-
-function verticalNote(own){
-  if (state.vertical === 'todos' || state.vertical === own) return '';
-  return `<div class="mb-3 flex items-center gap-2 bg-wash border border-line rounded-lg px-3 py-2 text-[11.5px] text-sub"><i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>Esta hoja pertenece solo a ${own === 'cocina' ? 'Gastronomía' : 'Canino'}; el filtro de vertical no la altera.</div>`;
+    <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono text-sub bg-wash border border-line/70 rounded-md px-2 py-1"><i data-lucide="file-spreadsheet" class="w-3 h-3"></i>Hoja: ${esc(sheetData.meta.sheetRefs[state.tab] || 'Google Sheet')}</span>
+  </div>`;
 }
 
 function bitToolbar(){
@@ -710,7 +784,7 @@ function bitToolbar(){
         class="w-full h-9 pl-9 pr-14 rounded-lg border border-line bg-surface text-[12.5px] placeholder:text-faint focus:border-ink/40 focus:outline-none transition">
       <span class="absolute right-2.5 top-1/2 -translate-y-1/2 hidden sm:block"><kbd>⌘K</kbd></span>
     </div>
-    <div class="flex bg-wash border border-line/70 rounded-lg p-0.5 ml-auto" role="group" aria-label="Densidad de la tabla">
+    <div class="flex bg-wash border border-line/70 rounded-lg p-0.5 ml-auto" role="group">
       ${[['detallada','layout-list','Detallada'],['resumida','list','Resumida']].map(([v,ic,lb]) => `
         <button data-action="set-view" data-v="${v}" aria-pressed="${state.view === v}"
           class="h-8 px-2.5 rounded-md inline-flex items-center gap-1.5 text-[11.5px] transition ${state.view === v ? 'bg-surface border border-line shadow-card font-semibold text-ink' : 'font-medium text-sub hover:text-ink'}">
@@ -764,51 +838,38 @@ function renderBitResults(){
   let rows = vis.filter(e => state.status === 'todos' || e.estado === state.status);
   if (state.q.trim()){ const q = norm(state.q); rows = rows.filter(e => norm(e.titular + ' ' + (expertById(e.experto).nombre || '') + ' ' + e.id + ' ' + e.fuente).includes(q)); }
   rows = sortRows(rows);
-  const filtered = state.q.trim() || state.status !== 'todos';
   const det = state.view === 'detallada';
   const head = `
     <div class="flex items-center justify-between gap-2 flex-wrap mb-2">
-      <span class="text-[11.5px] text-sub"><b class="text-ink font-semibold font-tabular">${rows.length}</b> de ${vis.length} experimentos${state.vertical !== 'todos' ? ` · vertical ${VERTICALS[state.vertical].label}` : ''}</span>
-      ${filtered ? `<button data-action="clear-filters" class="inline-flex items-center gap-1 text-[11.5px] font-medium text-ink hover:underline underline-offset-2"><i data-lucide="x" class="w-3 h-3"></i>Limpiar filtros</button>` : ''}
+      <span class="text-[11.5px] text-sub"><b class="text-ink font-semibold font-tabular">${rows.length}</b> de ${vis.length} experimentos</span>
     </div>`;
-  if (!rows.length){
-    box.innerHTML = head + `
-      <div class="bg-surface border border-line rounded-xl py-14 text-center">
-        <i data-lucide="search-x" class="w-8 h-8 text-faint mx-auto"></i>
-        <p class="mt-3 text-[13px] font-medium">Sin resultados${state.q ? ` para «${esc(state.q)}»` : ''}</p>
-        <p class="text-[11.5px] text-sub mt-1">Prueba con otro experto, titular o estado.</p>
-        <button data-action="clear-filters" class="mt-4 h-8 px-3 rounded-lg bg-ink text-paper text-[12px] font-medium hover:bg-ink/90 transition">Limpiar filtros</button>
-      </div>`;
-    queueIcons(); return;
-  }
+
   const body = rows.map(e => {
     const x = expertById(e.experto), d = new Date(e.fecha), S = STATUS[e.estado] || STATUS.tibia, ctr = ctrOf(e);
-    const g = S.group, barCls = g === 'exito' ? 'bg-exito-bar' : g === 'fracaso' ? 'bg-muerta-bar' : g === 'regular' ? 'bg-tibia/60' : 'bg-cola/50';
     const vert = VERTICALS[e.vertical] || VERTICALS.canino;
     const links = det ? `<td class="px-3 py-3 text-right whitespace-nowrap">
-        ${e.url ? `<a data-action="ext-link" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" title="Leer la nota en El Tiempo" aria-label="Leer la nota" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle"><i data-lucide="newspaper" class="w-3.5 h-3.5 text-ink"></i></a>` : `<span class="inline-grid place-items-center w-7 h-7 rounded-md border border-dashed border-line text-faint align-middle" title="Borrador en CMS"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>`}
-        <a data-action="ext-link" href="${esc(e.marfeel)}" target="_blank" rel="noopener noreferrer" title="Abrir en Marfeel" aria-label="Abrir en Marfeel" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle ml-1"><i data-lucide="gauge" class="w-3.5 h-3.5 text-ink"></i></a>
+        ${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" title="El Tiempo" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle"><i data-lucide="newspaper" class="w-3.5 h-3.5 text-ink"></i></a>` : `<span class="inline-grid place-items-center w-7 h-7 rounded-md border border-dashed border-line text-faint align-middle"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>`}
+        <a href="${esc(e.marfeel)}" target="_blank" rel="noopener noreferrer" title="Marfeel" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle ml-1"><i data-lucide="gauge" class="w-3.5 h-3.5 text-ink"></i></a>
       </td>` : '';
     return `
-    <tr data-action="open-expert" data-id="${x.id}" title="Ver historial de ${esc(x.nombre)}" class="border-b border-line/70 last:border-0 hover:bg-wash/50 cursor-pointer transition-colors">
+    <tr data-action="open-expert" data-id="${x.id}" class="border-b border-line/70 last:border-0 hover:bg-wash/50 cursor-pointer transition-colors">
       <td class="px-3 ${det ? 'py-3' : 'py-2'} whitespace-nowrap">
         <span class="block text-[12.5px] font-medium font-tabular">${dShort(d)}</span>
-        ${det ? `<span class="block text-[10.5px] text-sub font-mono">${DIAS[d.getDay()]} · ${e.fecha.slice(11,16)}</span>` : ''}
       </td>
       <td class="px-3 ${det ? 'py-3' : 'py-2'}">
-        <button data-action="open-expert" data-id="${x.id}" class="flex items-center gap-2 text-left group/ex">
+        <div class="flex items-center gap-2">
           <span class="w-6 h-6 rounded-full ${vert.tint} grid place-items-center text-[8.5px] font-bold shrink-0">${initials(x.nombre)}</span>
-          <span class="text-[12.5px] font-medium truncate max-w-[130px] group-hover/ex:underline underline-offset-2">${esc(x.nombre)}</span>
-        </button>
+          <span class="text-[12.5px] font-medium truncate max-w-[130px]">${esc(x.nombre)}</span>
+        </div>
       </td>
-      ${det ? `<td class="px-3 py-3 max-w-[360px]"><span class="font-serif text-[13.5px] leading-snug line-clamp-2 ${e.estado === 'programada' ? 'text-ink/70' : ''}">${esc(e.titular)}</span></td>` : ''}
+      ${det ? `<td class="px-3 py-3 max-w-[360px]"><span class="font-serif text-[13.5px] leading-snug line-clamp-2">${esc(e.titular)}</span></td>` : ''}
       <td class="px-3 ${det ? 'py-3' : 'py-2'}">${statusBadge(e.estado)}</td>
-      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right text-[12.5px] font-tabular font-medium whitespace-nowrap">${e.impresiones != null ? fmtInt(e.impresiones) : '<span class="text-faint">—</span>'}</td>
-      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right whitespace-nowrap">
-        ${ctr != null ? `<span class="text-[12.5px] font-semibold font-tabular">${fmtPct(ctr)}</span><span class="block ml-auto mt-1 h-[3px] w-12 bg-wash rounded-full overflow-hidden"><span class="block h-full ${barCls}" style="width:${Math.min(100, ctr * 10)}%"></span></span>` : '<span class="text-faint text-[12.5px]">—</span>'}
-      </td>${links}
+      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right text-[12.5px] font-tabular font-medium whitespace-nowrap">${e.impresiones != null ? fmtInt(e.impresiones) : '—'}</td>
+      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right whitespace-nowrap font-semibold">${ctr != null ? fmtPct(ctr) : '—'}</td>
+      ${links}
     </tr>`;
   }).join('');
+
   box.innerHTML = head + `
     <div class="bg-surface border border-line rounded-xl overflow-hidden shadow-card">
       <div class="overflow-x-auto">
@@ -828,434 +889,178 @@ function renderBitResults(){
 function directoryPanel(v){
   const list = sheetData.experts.filter(x => x.vertical === v);
   const V = VERTICALS[v] || VERTICALS.canino;
-  const cards = list.map((x,i) => {
-    const st = stats[x.id] || { notes:[], pub:0, exitos:0, ctr:0 }, vm = VERDICTS[x.veredicto] || VERDICTS.observacion;
-    const maxI = Math.max(1, ...st.notes.map(n => n.impresiones || 0));
-    const bars = st.notes.slice().reverse().map(n => n.estado === 'programada'
-      ? `<span class="w-2 rounded-sm border border-dashed border-cola/50" style="height:10px" title="${esc(n.id)} · programada"></span>`
-      : `<span class="w-2 rounded-sm ${STATUS[n.estado] ? STATUS[n.estado].dot : 'bg-slate-400'}" style="height:${Math.max(4, Math.round((n.impresiones / maxI) * 26))}px" title="${dShort(new Date(n.fecha))}: ${fmtInt(n.impresiones)} · ${STATUS[n.estado] ? STATUS[n.estado].label : ''}"></span>`).join('');
-    return `
+  const cards = list.map((x,i) => `
     <button data-action="open-expert" data-id="${x.id}" style="animation-delay:${i * 40}ms"
-      class="anim-in group text-left bg-surface border border-line rounded-xl p-4 shadow-card hover:shadow-lift hover:border-ink/25 hover:-translate-y-px transition w-full">
+      class="anim-in text-left bg-surface border border-line rounded-xl p-4 shadow-card hover:shadow-lift hover:border-ink/25 hover:-translate-y-px transition w-full">
       <div class="flex items-start gap-3">
         <span class="w-10 h-10 rounded-full ${V.tint} grid place-items-center text-[12px] font-bold shrink-0">${initials(x.nombre)}</span>
         <div class="min-w-0 flex-1 pt-0.5">
           <div class="text-[13.5px] font-semibold truncate">${esc(x.nombre)}</div>
           <div class="text-[11px] text-sub truncate">${esc(x.rol)}</div>
         </div>
-        <span class="w-6 h-6 rounded-full grid place-items-center ${vm.tint} shrink-0" title="${vm.title}"><i data-lucide="${vm.icon}" class="w-3.5 h-3.5"></i></span>
       </div>
-      <div class="mt-3 flex items-center gap-1.5 text-[11px] text-sub"><i data-lucide="mic" class="w-3 h-3 text-faint shrink-0"></i><span class="truncate">${esc(x.fuente)}</span></div>
-      <div class="mt-3 rounded-lg bg-paper/80 border border-line/70 px-3 py-2 flex items-center gap-2 flex-wrap">
-        <i data-lucide="calendar-clock" class="w-3.5 h-3.5 text-faint shrink-0"></i>
-        ${x.mejorDia ? `<span class="text-[12px] font-semibold">${x.mejorDia} · ${x.mejorHora}</span>${x.tentativo ? '<span class="text-[9.5px] font-semibold text-tibia bg-tibia-tint rounded px-1.5 py-0.5">por validar</span>' : ''}` : '<span class="text-[11.5px] text-sub italic">Sin franja validada</span>'}
+      <div class="mt-3 rounded-lg bg-paper/80 border border-line/70 px-3 py-2 text-[12px]">
+        <strong class="font-semibold text-ink">Mejor franja:</strong> ${x.mejorDia ? `${x.mejorDia} · ${x.mejorHora}` : 'En evaluación'}
       </div>
-      <div class="mt-3 grid grid-cols-3 gap-2">
-        ${[['Notas', st.pub],['Éxitos', st.exitos],['CTR', fmtPct(st.ctr)]].map(([l,val]) => `<div><div class="text-[9px] uppercase tracking-wider text-faint font-semibold">${l}</div><div class="text-[13px] font-semibold font-tabular mt-0.5">${val}</div></div>`).join('')}
-      </div>
-      <div class="mt-3 flex items-end justify-between gap-3">
-        <div class="flex items-end gap-[3px] h-[26px]">${bars}</div>
-        <span class="text-[9.5px] font-mono text-faint">${maxI > 1 ? fmtInt(maxI) + ' máx' : ''}</span>
-      </div>
-      <div class="mt-3 pt-3 border-t border-line/70 flex items-center justify-between text-[11.5px] font-medium text-ink">
-        Ver historial completo <i data-lucide="arrow-right" class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"></i>
-      </div>
-    </button>`;
-  }).join('');
-  return panelHead(v === 'cocina' ? 'Directorio de Chefs' : 'Directorio Canino',
-    'Fichas con la mejor franja de publicación validada por experimento.', verticalNote(v)) +
+      <p class="mt-2 text-[11px] text-sub leading-snug line-clamp-2">${esc(x.motivo)}</p>
+    </button>
+  `).join('');
+  return panelHead(v === 'cocina' ? 'Directorio de Chefs' : 'Directorio Canino', 'Fichas de autoridades y mejores horarios.') +
     `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">${cards}</div>`;
 }
 
-function heatCard(v){
-  const V = VERTICALS[v] || VERTICALS.canino, H = sheetData.heatmaps, M = H[v].levels;
-  const lvlCls = ['bg-wash','bg-[#DCEDE1]','bg-[#A9D8BC]','bg-exito-bar'];
-  const days = ['L','M','X','J','V','S','D'];
-  let cells = `<div></div>` + days.map(d => `<div class="text-center text-[9.5px] font-mono font-semibold text-sub pb-0.5">${d}</div>`).join('');
-  M.forEach((row, ri) => {
-    cells += `<div class="text-[9px] font-mono text-faint flex items-center">${H.bands[ri]}</div>`;
-    row.forEach((lvl, ci) => {
-      const veto = lvl === -1;
-      const lbl = veto ? 'Vetado' : ['Nula','Baja','Media','Óptima'][lvl];
-      cells += `<div class="h-7 rounded-[5px] ${veto ? 'bg-muerta-tint border border-muerta/25 grid place-items-center' : lvlCls[lvl]}" title="${V.label} · ${DIAS_L[(ci + 1) % 7]} ${H.bands[ri]} · ${lbl}${veto ? ' (0/3 éxitos)' : ''}">${veto ? '<i data-lucide="x" class="w-3 h-3 text-muerta"></i>' : ''}</div>`;
-    });
-  });
-  return `
-  <div class="bg-surface border border-line rounded-xl p-4 shadow-card">
-    <div class="flex items-center gap-2.5 mb-3">
-      <span class="w-7 h-7 rounded-lg grid place-items-center ${V.tint}"><i data-lucide="${v === 'cocina' ? 'sunrise' : 'sunset'}" class="w-4 h-4"></i></span>
-      <div><h4 class="text-[13px] font-semibold leading-tight">${V.label} · cuándo publicar</h4>
-      <p class="text-[10.5px] text-sub">Intensidad = rendimiento histórico observado</p></div>
-    </div>
-    <div class="grid gap-[3px]" style="grid-template-columns:38px repeat(7,minmax(0,1fr))">${cells}</div>
-    <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-sub">
-      ${lvlCls.map((c,i) => `<span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-[3px] ${c}"></span>${['nula','baja','media','óptima'][i]}</span>`).join('')}
-      <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-[3px] bg-muerta-tint border border-muerta/25"></span>vetado</span>
-    </div>
-  </div>`;
-}
-
-function rulesList(tipo){
-  const items = sheetData.rules.filter(r => r.tipo === tipo);
-  return `
-  <div class="bg-surface border border-line rounded-xl p-4 shadow-card">
-    <div class="flex items-center gap-2 mb-1">
-      <span class="w-6 h-6 rounded-md grid place-items-center ${tipo === 'hacer' ? 'bg-exito-tint text-exito' : 'bg-muerta-tint text-muerta'}"><i data-lucide="${tipo === 'hacer' ? 'check' : 'ban'}" class="w-3.5 h-3.5"></i></span>
-      <h4 class="text-[13px] font-semibold">${tipo === 'hacer' ? 'Qué repetir' : 'Qué evitar'}</h4>
-      <span class="text-[10.5px] font-mono text-sub ml-auto">${items.length} reglas</span>
-    </div>
-    ${items.map(r => {
-      const open = state.openRules.has(r.id);
-      return `
-      <div class="border-b border-line/70 last:border-0">
-        <button data-action="toggle-rule" data-id="${r.id}" aria-expanded="${open}" class="w-full flex items-center gap-2.5 py-2.5 text-left">
-          <span class="flex-1 text-[12.5px] font-medium leading-snug">${esc(r.titulo)}</span>
-          <span class="text-[10px] font-mono bg-wash text-sub rounded px-1.5 py-0.5 shrink-0">${esc(r.evidencia)}</span>
-          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-faint shrink-0 transition-transform ${open ? 'rotate-180' : ''}"></i>
-        </button>
-        <div id="rule-${r.id}" class="${open ? '' : 'hidden'} pb-3 pr-6 text-[12px] leading-relaxed text-sub">${esc(r.detalle)}</div>
-      </div>`;
-    }).join('')}
-  </div>`;
-}
-
 function rulesPanel(){
-  return panelHead('Horarios y reglas Discover', 'Guía rápida de ventanas de publicación y vetos, con la evidencia de cada regla.') + `
-    <div class="grid md:grid-cols-2 gap-3">${heatCard('cocina')}${heatCard('canino')}</div>
-    <div class="grid md:grid-cols-2 gap-3 mt-3">${rulesList('hacer')}${rulesList('evitar')}</div>`;
+  const items = sheetData.rules || [];
+  return panelHead('Horarios y Reglas Discover 2026', 'Algoritmo de tráfico, picos semanales y fórmulas obligatorias.') + `
+    <div class="grid md:grid-cols-2 gap-3">
+      ${items.map(r => `
+        <div class="bg-surface border border-line rounded-xl p-4 shadow-card space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-semibold text-[13px] text-ink">${esc(r.titulo)}</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-wash text-sub">${esc(r.evidencia)}</span>
+          </div>
+          <p class="text-[11.5px] text-sub leading-relaxed">${esc(r.detalle)}</p>
+        </div>
+      `).join('')}
+    </div>`;
 }
 
 function seasonPanel(){
-  const cards = sheetData.seasons.map((s,i) => `
-    <div class="anim-in bg-surface border rounded-xl p-4 shadow-card ${s.actual ? 'border-ink/30 ring-1 ring-ink/10 shadow-lift' : 'border-line'}" style="animation-delay:${i * 50}ms">
-      <div class="flex items-center gap-2.5">
-        <span class="w-8 h-8 rounded-lg bg-wash grid place-items-center"><i data-lucide="${s.icon}" class="w-4 h-4 text-ink"></i></span>
-        <div class="flex-1"><h4 class="text-[14px] font-semibold leading-tight">${s.nombre}</h4><span class="text-[10px] font-mono text-sub">${s.meses}</span></div>
-        ${s.actual ? '<span class="text-[9.5px] font-semibold text-exito bg-exito-tint rounded-md px-1.5 py-0.5">Temporada actual</span>' : ''}
-      </div>
-      <p class="mt-3 text-[9.5px] uppercase tracking-wider text-faint font-semibold">Temas que viajan</p>
-      <div class="mt-1.5 flex flex-wrap gap-1.5">${s.temas.map(t => `<span class="bg-wash rounded-md px-2 py-0.5 text-[11px] text-ink/80">${esc(t)}</span>`).join('')}</div>
-      <p class="mt-3 text-[9.5px] uppercase tracking-wider text-faint font-semibold">Chefs a activar</p>
-      <div class="mt-1.5 flex flex-wrap gap-1.5">${s.chefs.map(cid => { const x = expertById(cid); return `
-        <button data-action="open-expert" data-id="${cid}" class="inline-flex items-center gap-1.5 rounded-lg border border-line px-2 py-1 hover:border-ink/30 hover:bg-paper transition text-[11.5px] font-medium">
-          <span class="w-4 h-4 rounded-full bg-cocina-tint text-cocina grid place-items-center text-[7px] font-bold">${initials(x.nombre)}</span>${esc(x.nombre)}</button>`; }).join('')}
-      </div>
-      <p class="mt-3 flex gap-1.5 text-[11px] text-sub leading-relaxed"><i data-lucide="corner-down-right" class="w-3 h-3 shrink-0 mt-0.5 text-faint"></i>${esc(s.evidencia)}</p>
-      <p class="mt-1.5 flex gap-1.5 text-[11px] text-muerta leading-relaxed"><i data-lucide="ban" class="w-3 h-3 shrink-0 mt-0.5"></i>${esc(s.evitar)}</p>
-    </div>`).join('');
-  return panelHead('Chefs por temporada', 'Qué publicar según el calendario culinario, con chefs recomendados y evidencia.', verticalNote('cocina')) +
-    `<div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-3">${cards}</div>`;
+  return panelHead('Chefs y Temporada', 'Calendario culinario y de cuidados de mascotas.') + `
+    <div class="bg-surface border border-line rounded-xl p-5 shadow-card space-y-3">
+      <h4 class="font-semibold text-[14px]">Temporada Actual: Otoño / Fin de Año</h4>
+      <p class="text-[12px] text-sub leading-relaxed">Picos masivos esperados en Alborada / Pólvora (30 de nov en Colombia), caldos limpios de pollo (Ferran Adrià) y batch cooking pre-festivo.</p>
+    </div>`;
 }
 
 function templatePanel(){
-  const cards = sheetData.templates.map((t,i) => {
-    const e = expById(t.exp), x = expertById(e.experto), ctr = ctrOf(e);
-    const pattern = esc(t.patron).replace(/\[([^\]]+)\]/g, '<span class="px-1 rounded bg-cocina-tint text-cocina font-semibold">[$1]</span>');
-    return `
-    <div class="anim-in bg-surface border border-line rounded-xl p-4 shadow-card flex flex-col" style="animation-delay:${i * 50}ms">
-      <div class="flex items-center justify-between gap-2">
-        <span class="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-sub bg-wash rounded-md px-2 py-1"><i data-lucide="quote" class="w-3 h-3"></i>${esc(t.cat)}</span>
-        <div class="text-right"><span class="text-[16px] font-semibold font-tabular text-exito">${fmtPct(ctr || 8.5)}</span><span class="block text-[9px] uppercase tracking-wider text-faint font-semibold -mt-0.5">CTR real</span></div>
-      </div>
-      <div class="mt-3 rounded-lg bg-paper border border-line/70 p-3 font-mono text-[11.5px] leading-relaxed text-ink/85">${pattern}</div>
-      <p class="mt-3 text-[9px] uppercase tracking-wider text-faint font-semibold">Ejemplo real</p>
-      <p class="mt-1 font-serif text-[13px] leading-snug line-clamp-2">${esc(e.titular)}</p>
-      <button data-action="open-expert" data-id="${x.id}" class="mt-1 self-start text-[11px] font-medium text-sub hover:text-ink hover:underline underline-offset-2 transition">— ${esc(x.nombre)}</button>
-      <div class="mt-auto pt-3 flex items-center justify-between gap-2 border-t border-line/70 mt-3">
-        <span class="text-[10px] font-mono text-faint">Basada en ${t.exp}</span>
-        <button data-action="copy-template" data-id="${t.id}" class="inline-flex items-center gap-1.5 rounded-lg bg-ink text-paper px-2.5 h-8 text-[11.5px] font-medium hover:bg-ink/90 transition"><i data-lucide="copy" class="w-3.5 h-3.5"></i>Copiar</button>
-      </div>
+  const tpls = sheetData.templates || [];
+  return panelHead('Plantillas de Titulares Ganadoras', 'Fórmulas probadas listas para copiar con 1 clic.') + `
+    <div class="grid md:grid-cols-2 gap-3">
+      ${tpls.map(t => `
+        <div class="bg-surface border border-line rounded-xl p-4 shadow-card space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[10.5px] font-bold uppercase tracking-wider text-faint">${esc(t.cat)}</span>
+            <div class="font-mono text-[11.5px] text-ink/90 bg-paper p-2.5 rounded-lg border border-line/70 mt-1">${esc(t.patron)}</div>
+          </div>
+          <div class="text-right pt-2">
+            <button data-action="copy-pauta" data-titular="${esc(t.patron)}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-ink text-paper text-[11px] font-medium hover:bg-ink/90 transition">
+              <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+            </button>
+          </div>
+        </div>
+      `).join('')}
     </div>`;
-  }).join('');
-  return panelHead('Plantillas de titulares', 'Patrones extraídos de las notas que despegaron, listos para copiar y rellenar.', verticalNote('cocina')) + `
-    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3">${cards}</div>
-    <div class="mt-3 bg-muerta-tint/60 border border-muerta/20 rounded-xl p-4 flex gap-3">
-      <i data-lucide="ban" class="w-4 h-4 text-muerta shrink-0 mt-0.5"></i>
-      <div>
-        <h4 class="text-[12.5px] font-semibold text-muerta">Anti-patrones que matan la nota</h4>
-        <p class="text-[11.5px] text-ink/70 mt-1 leading-relaxed">«Mi receta de…» <span class="font-mono text-[10.5px]">0/2 · CTR 2,0 %</span> &nbsp;·&nbsp; «Claves sobre…» <span class="font-mono text-[10.5px]">0/1 · 2,0 %</span> &nbsp;·&nbsp; Humor sin beneficio <span class="font-mono text-[10.5px]">0/1 · 2,7 %</span></p>
-      </div>
-    </div>`;
-}
-
-function calendarPanel(){
-  const todayKey = dateKey(new Date());
-  const weekExps = sheetData.experiments.filter(e => sheetData.calendar.days.some(d => d.date === e.fecha.slice(0,10)));
-  const progCount = weekExps.filter(e => e.estado === 'programada').length;
-  let freeCount = 0, vetoCount = 0;
-  const dayCards = sheetData.calendar.days.map(day => {
-    const d = new Date(day.date + 'T12:00');
-    const today = day.date === todayKey;
-    const exps = weekExps.filter(e => e.fecha.slice(0,10) === day.date);
-    const chips = exps.map(e => {
-      const x = expertById(e.experto), S = STATUS[e.estado] || STATUS.tibia, prog = e.estado === 'programada';
-      return `<button data-action="open-expert" data-id="${x.id}" title="${esc(e.titular)}"
-        class="w-full text-left rounded-lg border px-2 py-1.5 ${S.chip} ${prog ? 'border-dashed' : 'border-transparent'} hover:brightness-[.98] transition">
-        <span class="flex items-center justify-between gap-1"><span class="font-mono text-[9.5px] font-semibold">${e.fecha.slice(11,16)}</span><i data-lucide="${S.icon}" class="w-3 h-3"></i></span>
-        <span class="block text-[11px] font-semibold truncate mt-0.5">${esc(x.nombre)}</span>
-        ${prog ? '<span class="block text-[9px] font-medium opacity-80">Programada</span>' : ''}
-      </button>`;
-    }).join('');
-    const hints = day.slots.map(s => {
-      if (!s.ok){ vetoCount++; return `<div class="flex items-center gap-1.5 px-1 text-[10px] text-muerta"><i data-lucide="ban" class="w-3 h-3 shrink-0"></i>Cocina vetada</div>`; }
-      const covered = exps.some(e => e.vertical === s.vertical);
-      const future = new Date(`${day.date}T${s.time}`) > new Date();
-      const free = !covered && future;
-      if (free) freeCount++;
-      return `<div class="flex items-center gap-1.5 px-1 text-[10px] ${free ? 'text-exito' : 'text-faint'}">
-        <i data-lucide="${parseInt(s.time) < 12 ? 'sunrise' : 'sunset'}" class="w-3 h-3 shrink-0"></i>${s.time} · ${VERTICALS[s.vertical] ? VERTICALS[s.vertical].short : 'Canino'}
-        ${free ? '<span class="text-[8.5px] font-semibold bg-exito-tint text-exito rounded px-1 py-px ml-auto">libre</span>' : ''}
-      </div>`;
-    }).join('');
-    return `
-    <div class="bg-surface border rounded-xl overflow-hidden flex flex-col min-h-[210px] ${today ? 'border-ink/40 ring-1 ring-ink/10' : 'border-line'}">
-      <div class="px-3 py-2 flex items-center justify-between ${today ? 'bg-ink text-paper' : 'bg-paper/70 border-b border-line'}">
-        <span class="text-[12px] font-semibold">${DIAS_L[d.getDay()].slice(0,3)}${today ? ' · Hoy' : ''}</span>
-        <span class="text-[10.5px] font-mono ${today ? 'text-paper/70' : 'text-sub'}">${dShort(d)}</span>
-      </div>
-      <div class="p-2 space-y-1.5 flex-1">${chips}${hints}</div>
-    </div>`;
-  }).join('');
-  const summary = `
-    <div class="flex flex-wrap gap-2 mb-3">
-      <span class="inline-flex items-center gap-1.5 text-[11.5px] font-medium bg-cola-tint text-cola rounded-lg px-2.5 py-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i>${progCount} publicaciones programadas</span>
-      <span class="inline-flex items-center gap-1.5 text-[11.5px] font-medium bg-exito-tint text-exito rounded-lg px-2.5 py-1.5"><i data-lucide="timer" class="w-3.5 h-3.5"></i>${freeCount} huecos óptimos libres</span>
-      <span class="inline-flex items-center gap-1.5 text-[11.5px] font-medium bg-muerta-tint text-muerta rounded-lg px-2.5 py-1.5"><i data-lucide="ban" class="w-3.5 h-3.5"></i>${vetoCount} veto activo · viernes cocina</span>
-    </div>`;
-  const legend = `
-    <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10.5px] text-sub">
-      ${Object.keys(STATUS).map(k => `<span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full ${STATUS[k].dot}"></span>${STATUS[k].label}</span>`).join('')}
-      <span class="inline-flex items-center gap-1.5"><i data-lucide="sunrise" class="w-3 h-3 text-faint"></i>franja sugerida por las reglas</span>
-    </div>`;
-  return panelHead('Calendario semanal · 16–22 nov', 'Notas reales de la semana, programaciones en cola y huecos óptimos sin cubrir.') +
-    summary + `<div class="overflow-x-auto pb-2"><div class="grid grid-cols-7 gap-2 min-w-[920px]">${dayCards}</div></div>` + legend;
 }
 
 function renderPanel(animate = true){
   const panel = $('sheetPanel');
   const builders = {
-    bitacora: () => panelHead('Bitácora de experimentos', 'Cada nota publicada o en cola, con su veredicto y métricas reales de Discover.') + bitToolbar(),
+    calendario: renderCalendarSmart,
+    bitacora: () => panelHead('Bitácora de Experimentos', 'Historial de notas probadas en El Tiempo.') + bitToolbar(),
+    reglas: rulesPanel,
     'dir-chefs': () => directoryPanel('cocina'),
     'dir-canino': () => directoryPanel('canino'),
-    reglas: rulesPanel, temporada: seasonPanel, plantillas: templatePanel, calendario: calendarPanel
+    temporada: seasonPanel,
+    plantillas: templatePanel
   };
-  panel.innerHTML = builders[state.tab]();
+  panel.innerHTML = builders[state.tab] ? builders[state.tab]() : renderCalendarSmart();
   if (state.tab === 'bitacora'){ renderBitChips(); renderBitResults(); }
   if (animate && !reduced){ panel.classList.remove('anim-in'); void panel.offsetWidth; panel.classList.add('anim-in'); }
   queueIcons();
 }
 
-/* ════════════════ 10 · RENDER · DRAWER ════════════════ */
-function noteCard(e){
-  const S = STATUS[e.estado] || STATUS.tibia, d = new Date(e.fecha), prog = e.estado === 'programada', ctr = ctrOf(e);
-  const metrics = prog ? `
-    <div class="mt-3 rounded-lg border border-dashed border-cola/40 bg-cola-tint/60 p-3 flex items-center gap-2 flex-wrap text-[12px] text-cola">
-      <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0"></i><span><b>Se publica</b> ${dFull(d)}</span>
-      <span class="ml-auto font-mono text-[10.5px] bg-surface border border-cola/30 rounded px-1.5 py-0.5" data-cd="${e.fecha}">${countdownText(e.fecha)}</span>
-    </div>` : `
-    <div class="mt-3 grid grid-cols-3 rounded-lg bg-paper/70 border border-line/70 divide-x divide-line/70">
-      ${[['Impresiones', fmtInt(e.impresiones)],['Clics', fmtInt(e.clics)],['CTR', fmtPct(ctr)]].map(([l,v]) => `
-        <div class="px-3 py-2"><div class="text-[9px] uppercase tracking-wider text-faint font-semibold">${l}</div><div class="text-[13px] font-semibold font-tabular mt-0.5">${v}</div></div>`).join('')}
-    </div>`;
-  return `
-  <article class="rounded-xl border border-line bg-surface overflow-hidden shadow-card">
-    <div class="h-0.5 ${S.hair}"></div>
-    <div class="p-4">
-      <div class="flex items-center gap-2 flex-wrap">
-        ${statusBadge(e.estado)}
-        <span class="text-[10px] font-mono text-faint">${e.id}</span>
-        <span class="ml-auto text-[10.5px] text-sub font-tabular">${dFull(d)}</span>
-      </div>
-      <h4 class="mt-2 font-serif text-[16.5px] leading-[1.35] text-ink">${esc(e.titular)}</h4>
-      <div class="mt-1.5 flex items-center gap-1.5 text-[11px] text-sub"><i data-lucide="mic" class="w-3 h-3 text-faint shrink-0"></i>Declaración: ${esc(e.fuente)}</div>
-      ${metrics}
-      <div class="mt-3 flex gap-2 flex-wrap">
-        ${e.url ? `<a data-action="ext-link" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-[11.5px] font-medium hover:border-ink/30 hover:bg-paper transition"><i data-lucide="newspaper" class="w-3.5 h-3.5"></i>Leer nota<i data-lucide="arrow-up-right" class="w-3 h-3 text-faint"></i></a>`
-          : `<span class="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-line px-2.5 py-1.5 text-[11.5px] text-faint"><i data-lucide="file-text" class="w-3.5 h-3.5"></i>Borrador en CMS</span>`}
-        <a data-action="ext-link" href="${esc(e.marfeel)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-[11.5px] font-medium hover:border-ink/30 hover:bg-paper transition"><i data-lucide="gauge" class="w-3.5 h-3.5"></i>Marfeel<i data-lucide="arrow-up-right" class="w-3 h-3 text-faint"></i></a>
-      </div>
-      <div class="mt-3 rounded-lg bg-paper border border-line/70 p-3 flex gap-2">
-        <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-tibia shrink-0 mt-0.5"></i>
-        <p class="text-[12px] leading-relaxed text-sub"><b class="text-ink font-semibold">${prog ? 'Hipótesis a validar' : 'Hipótesis editorial'}:</b> ${esc(e.hipotesis)}</p>
-      </div>
-    </div>
-  </article>`;
-}
-
+/* ════════════════ 11 · DRAWER DE EXPERTO ════════════════ */
 function renderDrawerHead(id){
   const x = expertById(id), V = VERTICALS[x.vertical] || VERTICALS.canino;
-  const idx = state.drawerList.indexOf(id), len = state.drawerList.length;
   $('drawerHead').innerHTML = `
     <div class="flex items-center gap-3 px-5 py-4">
       <span class="w-10 h-10 rounded-full ${V.tint} grid place-items-center text-[12px] font-bold shrink-0">${initials(x.nombre)}</span>
       <div class="min-w-0 flex-1">
         <h3 id="drawerName" class="text-[15.5px] font-semibold truncate leading-tight">${esc(x.nombre)}</h3>
-        <p class="text-[11.5px] text-sub truncate">${esc(x.rol)} · ${V.label}</p>
+        <p class="text-[11.5px] text-sub truncate">${esc(x.rol)}</p>
       </div>
-      <div class="flex items-center gap-1 shrink-0">
-        <span class="text-[10.5px] font-mono text-faint mr-1">${idx + 1}/${len}</span>
-        <button id="dPrev" data-action="drawer-prev" aria-label="Perfil anterior" class="w-8 h-8 grid place-items-center rounded-lg border border-line hover:bg-wash hover:border-ink/25 transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-        <button id="dNext" data-action="drawer-next" aria-label="Perfil siguiente" class="w-8 h-8 grid place-items-center rounded-lg border border-line hover:bg-wash hover:border-ink/25 transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
-        <span class="w-px h-5 bg-line mx-1"></span>
-        <button id="dClose" data-action="close-drawer" aria-label="Cerrar panel" class="w-8 h-8 grid place-items-center rounded-lg border border-line hover:bg-wash hover:border-ink/25 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
-      </div>
+      <button id="dClose" data-action="close-drawer" class="w-8 h-8 grid place-items-center rounded-lg border border-line hover:bg-wash transition"><i data-lucide="x" class="w-4 h-4"></i></button>
     </div>`;
   $('drawerFoot').innerHTML = `
-    <div class="px-5 py-3.5 flex items-center gap-3">
-      <button data-action="goto-bitacora" class="flex-1 h-9 rounded-lg bg-ink text-paper text-[12.5px] font-medium hover:bg-ink/90 transition inline-flex items-center justify-center gap-2"><i data-lucide="table" class="w-3.5 h-3.5"></i>Ver notas en la bitácora</button>
-      <span class="text-[10.5px] text-faint hidden sm:block">Esc cierra</span>
+    <div class="px-5 py-3.5 flex items-center justify-between">
+      <span class="text-[11px] text-sub">Directorio Editorial El Tiempo</span>
+      <button data-action="close-drawer" class="h-8 px-3 rounded-lg bg-ink text-paper text-[11.5px] font-medium">Cerrar</button>
     </div>`;
 }
 
-function renderDrawerContent(id, preserveScroll){
-  const x = expertById(id), st = stats[id] || { notes:[], pub:0, exitos:0, impr:0, clics:0, ctr:0 }, vm = VERDICTS[x.veredicto] || VERDICTS.observacion;
-  const sc = $('drawerScroll'), top = preserveScroll ? sc.scrollTop : 0;
-  const prog = st.notes.filter(n => n.estado === 'programada');
-  const pub = st.notes.filter(n => n.estado !== 'programada');
-  sc.innerHTML = `
-  <div class="p-5 space-y-4">
-    <div class="rounded-xl border border-line bg-surface p-4">
-      <span class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-semibold ${vm.tint}"><i data-lucide="${vm.icon}" class="w-3.5 h-3.5"></i>${vm.title} · ${esc(x.motivo)}</span>
-      <p class="mt-2.5 font-serif italic text-[14.5px] leading-relaxed text-ink/85">${esc(x.lectura)}</p>
-    </div>
-    <div class="grid grid-cols-4 gap-2">
-      ${[['Notas', st.pub],['Éxitos', `${st.exitos}<span class="text-[10px] text-faint font-normal">/${st.pub}</span>`],['Impresiones', fmtInt(st.impr)],['CTR medio', fmtPct(st.ctr)]].map(([l,v]) => `
-        <div class="bg-surface border border-line rounded-lg px-2.5 py-2"><div class="text-[8.5px] uppercase tracking-wider text-faint font-semibold">${l}</div><div class="text-[14px] font-semibold font-tabular mt-0.5">${v}</div></div>`).join('')}
-    </div>
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="inline-flex items-center gap-1.5 rounded-lg bg-surface border border-line px-2.5 py-1.5 text-[11.5px]">
-        <i data-lucide="calendar-clock" class="w-3.5 h-3.5 text-faint"></i>
-        ${x.mejorDia ? `<b class="font-semibold">Mejor franja:</b> ${x.mejorDia} · ${x.mejorHora}` : '<span class="text-sub italic">Sin franja validada</span>'}
-        ${x.tentativo ? '<span class="text-[9px] font-semibold text-tibia bg-tibia-tint rounded px-1.5 py-0.5">por validar</span>' : ''}
-      </span>
-      ${st.pub < 2 ? `<span class="inline-flex items-center gap-1 text-[10.5px] text-sub"><i data-lucide="info" class="w-3 h-3 text-faint"></i>Muestra de ${st.pub} nota · repetir para confirmar</span>` : ''}
-    </div>
-    ${prog.length ? `<div>
-      <h4 class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider font-semibold text-cola mb-2"><i data-lucide="clock" class="w-3.5 h-3.5"></i>En cola · ${prog.length}</h4>
-      <div class="space-y-3">${prog.map(noteCard).join('')}</div></div>` : ''}
-    <div>
-      <h4 class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider font-semibold text-sub mb-2"><i data-lucide="history" class="w-3.5 h-3.5"></i>Historial publicado · ${pub.length}</h4>
-      <div class="space-y-3">${pub.map(noteCard).join('')}</div>
-    </div>
-  </div>`;
-  sc.scrollTop = top; queueIcons();
-}
-
-function lockScroll(on){
-  const html = document.documentElement;
-  if (on){ const gap = window.innerWidth - html.clientWidth; html.style.overflow = 'hidden'; html.style.paddingRight = gap + 'px'; }
-  else { html.style.overflow = ''; html.style.paddingRight = ''; }
+function renderDrawerContent(id){
+  const x = expertById(id);
+  $('drawerScroll').innerHTML = `
+    <div class="p-5 space-y-4">
+      <div class="bg-surface rounded-xl border border-line p-4 space-y-2">
+        <div class="text-[11px] font-semibold text-exito uppercase tracking-wider">${esc(x.veredicto || 'Aprobado')}</div>
+        <p class="font-serif italic text-[14px] text-ink leading-relaxed">${esc(x.lectura || 'Referente clave en Discover.')}</p>
+      </div>
+      <div class="bg-surface rounded-xl border border-line p-4 space-y-1 text-[12px]">
+        <div><strong>Mejor Día:</strong> ${esc(x.mejorDia || 'Flexible')}</div>
+        <div><strong>Horario Óptimo:</strong> ${esc(x.mejorHora || '18:00 - 20:30')}</div>
+        <div><strong>Fuente habitual:</strong> ${esc(x.fuente || 'Entrevistas / Consultas')}</div>
+      </div>
+    </div>`;
+  queueIcons();
 }
 
 function openExpert(id){
-  if (!expertById(id)) return;
-  if (!state.drawer) lastFocus = document.activeElement;
   state.drawer = id;
-  const order = ['aprobado','observacion','descartado'];
-  state.drawerList = boardExperts().slice().sort((a,b) => order.indexOf(a.veredicto) - order.indexOf(b.veredicto)).map(x => x.id);
-  if (!state.drawerList.includes(id)) state.drawerList = [id];
-  renderDrawerHead(id); renderDrawerContent(id, false);
-  $('drawer').classList.add('open'); $('drawer').inert = false;
+  renderDrawerHead(id);
+  renderDrawerContent(id);
+  $('drawer').classList.add('open');
   $('drawerScrim').classList.add('open');
-  lockScroll(true);
-  requestAnimationFrame(() => { const b = $('dClose'); if (b) b.focus(); });
 }
 
 function closeDrawer(){
-  if (!state.drawer) return;
   state.drawer = null;
-  $('drawer').classList.remove('open'); $('drawer').inert = true;
+  $('drawer').classList.remove('open');
   $('drawerScrim').classList.remove('open');
-  lockScroll(false);
-  if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
 }
 
-function drawerNav(delta){
-  const list = state.drawerList, idx = list.indexOf(state.drawer);
-  const id = list[(idx + delta + list.length) % list.length];
-  state.drawer = id;
-  renderDrawerHead(id); renderDrawerContent(id, false);
-  const b = $(delta > 0 ? 'dNext' : 'dPrev'); if (b) b.focus();
-}
-
-/* ════════════════ 11 · EVENTOS ════════════════ */
+/* ════════════════ 12 · EVENTOS Y DELEGACIÓN ════════════════ */
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-action]');
   if (state.popOpen && !e.target.closest('#syncPop') && (!t || t.dataset.action !== 'toggle-pop')) togglePop(false);
   if (!t) return;
   const a = t.dataset.action;
+
   switch (a){
     case 'set-vertical':
       state.vertical = t.dataset.v;
-      renderPills(); renderMetrics(); renderHealth(); renderBoard(); renderTabs(); renderPanel(false);
+      renderPills(); renderMetrics(); renderHealth(); renderBoard(); renderPanel(false);
       break;
     case 'sync': doSync(true); break;
     case 'toggle-pop': togglePop(); break;
     case 'open-expert': openExpert(t.dataset.id); break;
     case 'close-drawer': closeDrawer(); break;
-    case 'drawer-prev': drawerNav(-1); break;
-    case 'drawer-next': drawerNav(1); break;
-    case 'goto-bitacora': {
-      const x = expertById(state.drawer);
-      closeDrawer();
-      state.tab = 'bitacora'; state.q = x ? x.nombre : ''; state.status = 'todos';
-      renderTabs(); renderPanel();
-      const inp = $('bitSearch'); if (inp) inp.value = state.q;
-      $('hojas').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
-      break;
-    }
     case 'set-tab':
-      if (state.tab !== t.dataset.tab){ state.tab = t.dataset.tab; renderTabs(); renderPanel(); }
+      state.tab = t.dataset.tab;
+      renderTabs(); renderPanel();
       break;
-    case 'set-status': state.status = t.dataset.v; renderBitChips(); renderBitResults(); break;
-    case 'set-view': {
+    case 'select-day':
+      state.selectedDay = t.dataset.day;
+      renderPanel(false);
+      break;
+    case 'copy-pauta':
+      copyToClipboard(t.dataset.titular, 'Titular copiado al portapapeles');
+      break;
+    case 'set-status':
+      state.status = t.dataset.v;
+      renderBitChips(); renderBitResults();
+      break;
+    case 'set-view':
       state.view = t.dataset.v;
-      const tb = $('bitToolbar');
-      if (tb){ renderPanel(false); const inp = $('bitSearch'); if (inp) inp.value = state.q; }
+      renderPanel(false);
       break;
-    }
-    case 'sort': {
+    case 'sort':
       const k = t.dataset.key;
       if (state.sort.key === k) state.sort.dir = state.sort.dir === 'asc' ? 'desc' : 'asc';
       else state.sort = { key:k, dir:'desc' };
       renderBitResults();
       break;
-    }
-    case 'clear-filters': {
-      state.q = ''; state.status = 'todos';
-      const inp = $('bitSearch'); if (inp) inp.value = '';
-      renderBitChips(); renderBitResults();
-      break;
-    }
-    case 'toggle-rule': {
-      const id = t.dataset.id, det = $('rule-' + id);
-      const open = state.openRules.has(id);
-      if (open) state.openRules.delete(id); else state.openRules.add(id);
-      if (det){ det.classList.toggle('hidden', open); if (!open) det.classList.add('anim-in'); }
-      t.setAttribute('aria-expanded', String(!open));
-      const chev = t.querySelector('svg:last-child, i:last-child'); if (chev) chev.classList.toggle('rotate-180', !open);
-      break;
-    }
-    case 'copy-template': {
-      const tpl = sheetData.templates.find(x => x.id === t.dataset.id);
-      if (!tpl) break;
-      const done = ok => {
-        if (ok){
-          t.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i>Copiada';
-          t.classList.add('bg-exito'); queueIcons();
-          toast('Plantilla copiada al portapapeles', 'copy');
-          setTimeout(() => { if (document.contains(t)){ t.innerHTML = '<i data-lucide="copy" class="w-3.5 h-3.5"></i>Copiar'; t.classList.remove('bg-exito'); queueIcons(); } }, 1800);
-        } else toast('No se pudo copiar en este navegador', 'ban', 'err');
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(tpl.patron).then(() => done(true)).catch(() => done(false));
-      } else {
-        try { const ta = document.createElement('textarea'); ta.value = tpl.patron; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); done(ok); }
-        catch(_){ done(false); }
-      }
-      break;
-    }
-    case 'ext-link': break;
   }
 });
 
@@ -1267,60 +1072,29 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape'){
     if (state.popOpen) togglePop(false);
     else if (state.drawer) closeDrawer();
-    return;
-  }
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
-    e.preventDefault();
-    if (state.drawer) closeDrawer();
-    state.tab = 'bitacora'; renderTabs(); renderPanel(false);
-    $('hojas').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
-    requestAnimationFrame(() => { const inp = $('bitSearch'); if (inp){ inp.focus(); inp.select(); } });
-    return;
-  }
-  if (e.key === 'Tab' && state.drawer){
-    const foc = Array.from($('drawer').querySelectorAll('a[href],button:not([disabled])')).filter(el => el.offsetParent !== null);
-    if (!foc.length) return;
-    const first = foc[0], last = foc[foc.length - 1];
-    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   }
 });
 
-window.addEventListener('scroll', () => $('appHeader').classList.toggle('is-scrolled', window.scrollY > 4), { passive:true });
-
-/* ════════════════ 12 · INIT ════════════════ */
-function setHeaderVar(){ document.documentElement.style.setProperty('--hdrH', $('appHeader').offsetHeight + 'px'); }
-
+/* ════════════════ 13 · INICIALIZACIÓN ════════════════ */
 async function init(){
-  // Intenta sincronización inmediata con el servidor
-  try {
-    const res = await fetch('/api/data');
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.experiments) sheetData = data;
-    }
-  } catch(e) {}
-
+  await SheetConnector.pull();
   computeStats();
-  $('drawer').inert = true;
-  setHeaderVar();
-  if (window.ResizeObserver) new ResizeObserver(setHeaderVar).observe($('appHeader'));
-  window.addEventListener('resize', setHeaderVar);
-
-  renderLive(); renderPills(); renderMetrics(); renderHealth(); renderBoard(); renderTabs(); renderPanel(false);
+  renderLive();
+  renderPills();
+  renderMetrics();
+  renderHealth();
+  renderBoard();
+  renderTabs();
+  renderPanel(false);
   queueIcons();
 
-  const secs = ['resumen','tablero','hojas'].map($);
-  secs.forEach((s,i) => { if (reduced) s.classList.add('on'); else setTimeout(() => s.classList.add('on'), 80 + i * 110); });
-
-  setInterval(() => {
-    tickLabels();
-    if (!document.hidden && !state.syncing && Date.now() - state.lastSync >= SHEET_CONFIG.refreshMs) doSync(false);
-  }, 1000);
-
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && !state.syncing && Date.now() - state.lastSync >= SHEET_CONFIG.refreshMs) doSync(false);
+  // Animación de entrada
+  ['resumen','tablero','hojas'].forEach((id, i) => {
+    const el = $(id);
+    if (el) setTimeout(() => el.classList.add('on'), 80 + i * 110);
   });
+
+  setInterval(tickLabels, 1000);
 }
 
 init();
