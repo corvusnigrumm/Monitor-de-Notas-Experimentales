@@ -1,0 +1,10 @@
+PROYECTO: MONITOR DE NOTAS EXPERIMENTALES & DIRECTORIO EDITORIAL
+CONECTADO A: https://docs.google.com/spreadsheets/d/e/2PACX-1vT1aBH7iMlllmZk28CNmqa-iLut7lHkfQH1GFXFIpjW6AJkYLwD9PpwSH7SDRVN5JeE3a7hjuT_HkrO/pubhtml
+
+Archivos principales del aplicativo:
+- server.js: Servidor Node.js Express con sincronización y auto-ping Keep-Alive.
+- public/index.html: Interfaz web de usuario (SPA) con Tailwind CSS y Chart.js.
+- public/app.js: Lógica interactiva, filtros, modales y consumo de APIs.
+- public/style.css: Estilos visuales y temas.
+- render.yaml: Configuración lista para despliegue en On Render.
+- README.md: Guía paso a paso para ejecutar y mantener activo 24/7 en Render.

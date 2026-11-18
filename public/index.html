@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor de Notas Experimentales & Directorio Editorial</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#16a34a',
+              600: '#15803d',
+              700: '#166534',
+            },
+            accent: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="h-full bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
+  <div class="min-h-full flex flex-col">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          
+          <!-- Logo & Title -->
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+              <i class="fa-solid fa-flask-vial text-lg"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h1 class="text-base font-bold tracking-tight text-slate-900 dark:text-white">NOTAS EXPERIMENTALES</h1>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">
+                  <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  En Vivo
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Directorio de Chefs, Veterinarios & Algoritmo Discover</p>
+            </div>
+          </div>
+
+          <!-- Main Nav Tabs -->
+          <nav class="hidden md:flex items-center space-x-1" id="nav-tabs">
+            <button data-tab="tab-experimentos" class="nav-btn active px-3.5 py-2 rounded-lg text-sm font-medium transition-all">
+              <i class="fa-solid fa-chart-line mr-1.5"></i> Experimentos
+            </button>
+            <button data-tab="tab-reglas" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all">
+              <i class="fa-solid fa-compass mr-1.5"></i> Reglas Discover 2026
+            </button>
+            <button data-tab="tab-directorios" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all">
+              <i class="fa-solid fa-address-book mr-1.5"></i> Directorios & Creadores
+            </button>
+            <button data-tab="tab-keepalive" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-all relative">
+              <i class="fa-solid fa-shield-heart mr-1.5 text-rose-500"></i> Render Anti-Sleep
+              <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+            </button>
+          </nav>
+
+          <!-- Header Right Actions -->
+          <div class="flex items-center space-x-2">
+            <!-- Sync Button -->
+            <button id="btn-sync" title="Sincronizar datos con Google Sheets" class="inline-flex items-center px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fa-solid fa-arrows-rotate mr-1.5" id="sync-icon"></i>
+              <span class="hidden sm:inline">Sincronizar</span>
+            </button>
+
+            <!-- Sheet Link Button -->
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT1aBH7iMlllmZk28CNmqa-iLut7lHkfQH1GFXFIpjW6AJkYLwD9PpwSH7SDRVN5JeE3a7hjuT_HkrO/pubhtml" target="_blank" rel="noopener noreferrer" title="Abrir Google Sheet en pestaña nueva" class="p-2 text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fa-solid fa-table"></i>
+            </a>
+
+            <!-- Dark Mode Toggle -->
+            <button id="btn-theme" title="Alternar modo claro / oscuro" class="p-2 text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fa-solid fa-moon dark:hidden"></i>
+              <i class="fa-solid fa-sun hidden dark:inline"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mobile Tabs -->
+      <div class="md:hidden flex overflow-x-auto border-t border-slate-200 dark:border-slate-800 px-4 py-2 space-x-1">
+        <button data-tab="tab-experimentos" class="nav-btn active px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">
+          <i class="fa-solid fa-chart-line mr-1"></i> Experimentos
+        </button>
+        <button data-tab="tab-reglas" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">
+          <i class="fa-solid fa-compass mr-1"></i> Reglas Discover
+        </button>
+        <button data-tab="tab-directorios" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">
+          <i class="fa-solid fa-address-book mr-1"></i> Directorios
+        </button>
+        <button data-tab="tab-keepalive" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">
+          <i class="fa-solid fa-shield-heart mr-1 text-rose-500"></i> Render Anti-Sleep
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+      <!-- ======================================================== -->
+      <!-- TAB 1: NOTAS EXPERIMENTALES (PRINCIPAL)                   -->
+      <!-- ======================================================== -->
+      <section id="tab-experimentos" class="tab-pane active space-y-6">
+
+        <!-- Top Banner & Quick Sync Status -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-gradient-to-r from-slate-900 to-indigo-950 dark:from-slate-900 dark:to-slate-950 text-white rounded-2xl p-5 shadow-lg border border-slate-800">
+          <div>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-2">
+              <i class="fa-solid fa-bullseye mr-1.5"></i> Laboratorio de Audiencia & E-E-A-T
+            </span>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Desempeño de Notas Experimentales</h2>
+            <p class="text-sm text-slate-300 mt-1 max-w-2xl">
+              Monitoreo analítico de pruebas editoriales en El Tiempo: entidades reconocidas, citas técnicas, patrones de titulares y rendimiento en Google Discover y SEO.
+            </p>
+          </div>
+          <div class="flex flex-col sm:items-end text-xs text-slate-400 bg-slate-800/60 rounded-xl p-3 border border-slate-700/50 backdrop-blur">
+            <div class="flex items-center space-x-1.5 text-slate-200 font-medium">
+              <i class="fa-solid fa-database text-emerald-400"></i>
+              <span>Google Sheet Conectado</span>
+            </div>
+            <div class="mt-1 text-slate-400" id="sync-timestamp">Última sinc: Cargando...</div>
+          </div>
+        </div>
+
+        <!-- KPI STATS CARDS -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          
+          <!-- Card Total -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition">
+            <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider">Total Pruebas</span>
+              <div class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 text-xs">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-extrabold text-slate-900 dark:text-white" id="kpi-total">--</div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Notas experimentadas</p>
+          </div>
+
+          <!-- Card Explotó -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-emerald-200 dark:border-emerald-900/50 shadow-sm bg-gradient-to-b from-emerald-50/50 to-transparent dark:from-emerald-950/20">
+            <div class="flex items-center justify-between text-emerald-700 dark:text-emerald-400 mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider">Explotó SEO/Disc.</span>
+              <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-300 text-xs">
+                <i class="fa-solid fa-fire"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400" id="kpi-exploto">--</div>
+            <p class="text-[11px] text-emerald-700 dark:text-emerald-400/80 mt-1">Tráfico masivo</p>
+          </div>
+
+          <!-- Card Le fue muy bien -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-blue-200 dark:border-blue-900/50 shadow-sm bg-gradient-to-b from-blue-50/50 to-transparent dark:from-blue-950/20">
+            <div class="flex items-center justify-between text-blue-700 dark:text-blue-400 mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider">Muy Bien</span>
+              <div class="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-900/60 flex items-center justify-center text-blue-600 dark:text-blue-300 text-xs">
+                <i class="fa-solid fa-chart-line-up"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-extrabold text-blue-600 dark:text-blue-400" id="kpi-muybien">--</div>
+            <p class="text-[11px] text-blue-700 dark:text-blue-400/80 mt-1">Rendimiento alto</p>
+          </div>
+
+          <!-- Card Regular / Decente -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-amber-200 dark:border-amber-900/50 shadow-sm bg-gradient-to-b from-amber-50/50 to-transparent dark:from-amber-950/20">
+            <div class="flex items-center justify-between text-amber-700 dark:text-amber-400 mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider">Regular / Decente</span>
+              <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-900/60 flex items-center justify-center text-amber-600 dark:text-amber-300 text-xs">
+                <i class="fa-solid fa-arrows-split-up-and-left"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-extrabold text-amber-600 dark:text-amber-400" id="kpi-regular">--</div>
+            <p class="text-[11px] text-amber-700 dark:text-amber-400/80 mt-1">Tráfico medio</p>
+          </div>
+
+          <!-- Card Nació Muerta -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-rose-200 dark:border-rose-900/50 shadow-sm bg-gradient-to-b from-rose-50/50 to-transparent dark:from-rose-950/20">
+            <div class="flex items-center justify-between text-rose-700 dark:text-rose-400 mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider">Nació Muerta</span>
+              <div class="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-300 text-xs">
+                <i class="fa-solid fa-skull"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-extrabold text-rose-600 dark:text-rose-400" id="kpi-muerta">--</div>
+            <p class="text-[11px] text-rose-700 dark:text-rose-400/80 mt-1">Sin tracción inicial</p>
+          </div>
+
+          <!-- Card Tasa de Éxito -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-indigo-200 dark:border-indigo-900/50 shadow-sm bg-gradient-to-b from-indigo-50/50 to-transparent dark:from-indigo-950/20">
+            <div class="flex items-center justify-between text-indigo-700 dark:text-indigo-400 mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider">Tasa Éxito</span>
+              <div class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 flex items-center justify-center text-indigo-600 dark:text-indigo-300 text-xs">
+                <i class="fa-solid fa-percent"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400" id="kpi-exito">--</div>
+            <p class="text-[11px] text-indigo-700 dark:text-indigo-400/80 mt-1">Explotó + Muy Bien</p>
+          </div>
+
+        </div>
+
+        <!-- CHARTS & SUMMARY SECTION -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Chart: Rendimiento Donut -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center">
+                <i class="fa-solid fa-chart-pie mr-2 text-indigo-500"></i> Balance de Desempeño
+              </h3>
+              <span class="text-xs text-slate-400">Distribución %</span>
+            </div>
+            <div class="relative h-56 flex items-center justify-center">
+              <canvas id="chart-performance"></canvas>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs">
+              <div class="flex items-center space-x-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="text-slate-600 dark:text-slate-300">Explotó Discover</span>
+              </div>
+              <div class="flex items-center space-x-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                <span class="text-slate-600 dark:text-slate-300">Muy bien</span>
+              </div>
+              <div class="flex items-center space-x-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span class="text-slate-600 dark:text-slate-300">Regular / Decente</span>
+              </div>
+              <div class="flex items-center space-x-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                <span class="text-slate-600 dark:text-slate-300">Nació muerta</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart: Entidades Más Exitosas -->
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center">
+                  <i class="fa-solid fa-crown mr-2 text-amber-500"></i> Desempeño por Referente / Entidad
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Pruebas realizadas con cada figura clave</p>
+              </div>
+              <span class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                Fórmula de Entidad
+              </span>
+            </div>
+            <div class="relative h-64">
+              <canvas id="chart-entities"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SEARCH, FILTERS & CONTROLS -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            
+            <!-- Free Text Search -->
+            <div class="lg:col-span-2 relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <input type="text" id="filter-search" placeholder="Buscar por titular, chef, veterinario, aprendizaje..." class="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition">
+            </div>
+
+            <!-- Filter Status -->
+            <div>
+              <select id="filter-status" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option value="all">Todos los Desempeños</option>
+                <option value="exploto">🔥 Explotó SEO/Discover</option>
+                <option value="muy_bien">⚡ Le fue muy bien</option>
+                <option value="regular">⚖️ Regular / Decente</option>
+                <option value="muerta">💀 Nació totalmente muerta</option>
+              </select>
+            </div>
+
+            <!-- Filter Category -->
+            <div>
+              <select id="filter-category" class="w-full px-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option value="all">Todas las Categorías</option>
+              </select>
+            </div>
+
+            <!-- View Toggle & Reset -->
+            <div class="flex items-center space-x-2">
+              <div class="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 flex-1">
+                <button id="btn-view-cards" title="Vista de Tarjetas" class="flex-1 py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center transition active-view">
+                  <i class="fa-solid fa-table-cells mr-1"></i> Cards
+                </button>
+                <button id="btn-view-table" title="Vista de Tabla" class="flex-1 py-1.5 px-2 rounded-md text-xs font-semibold flex items-center justify-center transition text-slate-500 hover:text-slate-900 dark:hover:text-white">
+                  <i class="fa-solid fa-table-list mr-1"></i> Tabla
+                </button>
+              </div>
+              <button id="btn-filter-reset" title="Limpiar Filtros" class="p-2 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                <i class="fa-solid fa-filter-circle-xmark"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Counter Bar -->
+          <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <span id="counter-results">Mostrando 0 experimentos</span>
+            <div class="flex items-center space-x-3">
+              <span class="inline-flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span>Explotó</span>
+              <span class="inline-flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></span>Muy bien</span>
+              <span class="inline-flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 mr-1.5"></span>Regular</span>
+              <span class="inline-flex items-center"><span class="w-2 h-2 rounded-full bg-rose-500 mr-1.5"></span>Muerta</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXPERIMENTS CARDS CONTAINER -->
+        <div id="container-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dinámicamente renderizado -->
+        </div>
+
+        <!-- EXPERIMENTS TABLE CONTAINER -->
+        <div id="container-table" class="hidden bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-left text-xs sm:text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 font-semibold uppercase tracking-wider text-[11px]">
+                <tr>
+                  <th class="py-3 px-4">Fecha & Entidad</th>
+                  <th class="py-3 px-4">Titular de la Nota</th>
+                  <th class="py-3 px-4">Categoría</th>
+                  <th class="py-3 px-4">Rendimiento</th>
+                  <th class="py-3 px-4">Hallazgo / Hipótesis</th>
+                  <th class="py-3 px-4 text-right">Enlaces</th>
+                </tr>
+              </thead>
+              <tbody id="table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                <!-- Filas dinámicas -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 2: REGLAS Y HORARIOS DISCOVER 2026                   -->
+      <!-- ======================================================== -->
+      <section id="tab-reglas" class="tab-pane hidden space-y-6">
+        
+        <!-- Header Discover -->
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-6 shadow-lg border border-blue-800">
+          <div class="flex items-center space-x-2 text-blue-300 text-xs font-semibold uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-compass"></i> Inteligencia Algorítmica 2026
+          </div>
+          <h2 class="text-2xl font-bold">Horarios Óptimos y Reglas E-E-A-T Discover</h2>
+          <p class="text-sm text-blue-100 mt-1 max-w-3xl">
+            Estrategia validada tras los updates del algoritmo de Google Discover: ventanas horarias de máxima tracción en España (CET) y Colombia (COT), impacto de fin de semana y fórmulas anticlickbait.
+          </p>
+        </div>
+
+        <!-- Metric highlights -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="discover-kpis">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 text-center">
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Pico Fin de Semana</div>
+            <div class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1" id="rule-pico">+54%</div>
+            <div class="text-[11px] text-slate-400">Tráfico combinado</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 text-center">
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Sábado (Día #1)</div>
+            <div class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1" id="rule-sabado">+34%</div>
+            <div class="text-[11px] text-slate-400">Menos notas, más lectores</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 text-center">
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Domingo (Día #2)</div>
+            <div class="text-2xl font-extrabold text-blue-600 dark:text-blue-400 mt-1" id="rule-domingo">+23%</div>
+            <div class="text-[11px] text-slate-400">Batch cooking & lectura</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 text-center">
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Boost Nombre Propio</div>
+            <div class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1" id="rule-boost">+20%</div>
+            <div class="text-[11px] text-slate-400">Entidades verificadas</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 text-center">
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Jueves (Peor Día)</div>
+            <div class="text-2xl font-extrabold text-rose-600 dark:text-rose-400 mt-1" id="rule-peor">-19%</div>
+            <div class="text-[11px] text-slate-400">Saturación informativa</div>
+          </div>
+        </div>
+
+        <!-- Rules Detailed List -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">
+              <i class="fa-solid fa-clock mr-2 text-indigo-500"></i> Calendario y Ventanas Óptimas por Día
+            </h3>
+            <span class="text-xs text-slate-400">Cruces España - Colombia</span>
+          </div>
+          <div id="rules-container" class="space-y-3">
+            <!-- Render dinámico de reglas -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: DIRECTORIOS DE CHEFS, VETERINARIOS & TITULARES    -->
+      <!-- ======================================================== -->
+      <section id="tab-directorios" class="tab-pane hidden space-y-6">
+        
+        <!-- Sub navigation for directories -->
+        <div class="flex border-b border-slate-200 dark:border-slate-800 space-x-4">
+          <button id="subtab-btn-chefs" class="subtab-btn active pb-3 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400">
+            <i class="fa-solid fa-utensils mr-1.5"></i> Directorio de Chefs
+          </button>
+          <button id="subtab-btn-canine" class="subtab-btn pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400">
+            <i class="fa-solid fa-dog mr-1.5"></i> Directorio Canino & Veterinarios
+          </button>
+          <button id="subtab-btn-templates" class="subtab-btn pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Plantillas de Titulares
+          </button>
+        </div>
+
+        <!-- Subpanel 1: Chefs -->
+        <div id="subpanel-chefs" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Chefs y Creadores Gastronómicos</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Referentes de alta autoridad para recetas y trucos culinarios</p>
+            </div>
+            <input type="text" id="search-chefs" placeholder="Filtrar chefs..." class="px-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div id="chefs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Chefs cards -->
+          </div>
+        </div>
+
+        <!-- Subpanel 2: Canine -->
+        <div id="subpanel-canine" class="hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Directorio Canino & Especialistas</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Etólogos clínicos, veterinarios y adiestradores verificados</p>
+            </div>
+            <input type="text" id="search-canine" placeholder="Filtrar especialistas..." class="px-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div id="canine-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Canine cards -->
+          </div>
+        </div>
+
+        <!-- Subpanel 3: Templates -->
+        <div id="subpanel-templates" class="hidden space-y-4">
+          <div class="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 rounded-xl p-4">
+            <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-200 flex items-center">
+              <i class="fa-solid fa-lightbulb mr-2 text-amber-500"></i> Fórmulas de Titulares con Mayor CTR en Discover
+            </h4>
+            <p class="text-xs text-indigo-700 dark:text-indigo-300 mt-1">
+              Estructura ganadora obligatoria: <strong>[Nombre Propio]</strong> + <strong>[Credencial]</strong> + <strong>[Dato o truco exacto sin clickbait ciego]</strong>.
+            </p>
+          </div>
+          <div id="templates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Templates cards -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 4: RENDER & ANTI-INACTIVIDAD (KEEP-ALIVE)             -->
+      <!-- ======================================================== -->
+      <section id="tab-keepalive" class="tab-pane hidden space-y-6">
+        
+        <div class="bg-gradient-to-r from-emerald-900 to-teal-900 text-white rounded-2xl p-6 shadow-lg border border-emerald-800">
+          <div class="flex items-center space-x-2 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-heart-pulse"></i> Sistema Anti-Sleep 24/7 para Render
+          </div>
+          <h2 class="text-2xl font-bold">Mecanismo Activo Anti-Inactividad</h2>
+          <p class="text-sm text-emerald-100 mt-1 max-w-3xl">
+            En el plan gratuito de Render, las aplicaciones entran en modo de suspensión (Sleep) tras 15 minutos sin peticiones entrantes. Este módulo ejecuta un <strong>auto-ping cada 10 minutos</strong> hacia sí misma para mantenerse activa permanentemente.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Control Panel -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center">
+              <i class="fa-solid fa-sliders mr-2 text-indigo-500"></i> Configuración de Keep-Alive
+            </h3>
+            
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+                  URL de la Aplicación en Render
+                </label>
+                <input type="text" id="keepalive-url" placeholder="https://mi-aplicacion.onrender.com" class="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                <p class="text-[11px] text-slate-400 mt-1">
+                  En Render se detecta automáticamente a través de la variable <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-emerald-600 dark:text-emerald-400">RENDER_EXTERNAL_URL</code>.
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Estado del Auto-Ping:</span>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300" id="keepalive-badge">
+                  <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span> Activo
+                </span>
+              </div>
+
+              <div class="flex space-x-2 pt-2">
+                <button id="btn-save-keepalive" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition shadow-sm">
+                  <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar URL
+                </button>
+                <button id="btn-test-ping" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold py-2 px-3 rounded-lg transition">
+                  <i class="fa-solid fa-paper-plane mr-1"></i> Probar Ping
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-xs space-y-1.5 text-slate-500 dark:text-slate-400">
+              <div class="flex justify-between">
+                <span>Total Pings Enviados:</span>
+                <span class="font-bold text-slate-800 dark:text-slate-200" id="stat-total-pings">0</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Último Ping:</span>
+                <span class="font-bold text-slate-800 dark:text-slate-200" id="stat-last-ping">Ninguno</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Tiempo Activo (Uptime):</span>
+                <span class="font-bold text-slate-800 dark:text-slate-200" id="stat-uptime">0 min</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deployment Instructions for Render -->
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center">
+              <i class="fa-solid fa-rocket mr-2 text-emerald-500"></i> Pasos para Subir a Render y Asegurar 24/7
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              
+              <!-- Paso 1 -->
+              <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-lg border border-slate-100 dark:border-slate-800 space-y-1">
+                <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center">
+                  <span class="w-5 h-5 rounded-full bg-indigo-500 text-white inline-flex items-center justify-center mr-2 text-[10px]">1</span>
+                  Subir Código a GitHub
+                </div>
+                <p class="text-slate-500 dark:text-slate-400">
+                  Crea un repositorio en GitHub con esta carpeta y haz un <code class="font-mono text-indigo-600 dark:text-indigo-400">git push</code>.
+                </p>
+              </div>
+
+              <!-- Paso 2 -->
+              <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-lg border border-slate-100 dark:border-slate-800 space-y-1">
+                <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center">
+                  <span class="w-5 h-5 rounded-full bg-indigo-500 text-white inline-flex items-center justify-center mr-2 text-[10px]">2</span>
+                  Crear Web Service en Render
+                </div>
+                <p class="text-slate-500 dark:text-slate-400">
+                  En render.com selecciona <strong>New Web Service</strong>, conecta tu repositorio. Build command: <code class="font-mono text-indigo-600 dark:text-indigo-400">npm install</code>, Start: <code class="font-mono text-indigo-600 dark:text-indigo-400">npm start</code>.
+                </p>
+              </div>
+
+              <!-- Paso 3 -->
+              <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-lg border border-slate-100 dark:border-slate-800 space-y-1">
+                <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center">
+                  <span class="w-5 h-5 rounded-full bg-emerald-500 text-white inline-flex items-center justify-center mr-2 text-[10px]">3</span>
+                  Auto-Detección Keep-Alive
+                </div>
+                <p class="text-slate-500 dark:text-slate-400">
+                  Render inyecta automáticamente <code class="font-mono text-emerald-600 dark:text-emerald-400">RENDER_EXTERNAL_URL</code>. El servidor se auto-pingea cada 10 min de forma transparente.
+                </p>
+              </div>
+
+              <!-- Paso 4 -->
+              <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-lg border border-slate-100 dark:border-slate-800 space-y-1">
+                <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center">
+                  <span class="w-5 h-5 rounded-full bg-emerald-500 text-white inline-flex items-center justify-center mr-2 text-[10px]">4</span>
+                  Respaldo UptimeRobot (Opcional)
+                </div>
+                <p class="text-slate-500 dark:text-slate-400">
+                  Para garantía del 100%, agrega en <a href="https://uptimerobot.com" target="_blank" class="underline text-emerald-600">UptimeRobot.com</a> un monitor HTTP a <code class="font-mono text-emerald-600">/api/health</code> cada 5 minutos gratis.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Ping History Table -->
+            <div class="pt-2">
+              <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                Historial de Auto-Pings Recientes
+              </h4>
+              <div class="overflow-x-auto max-h-44 border border-slate-100 dark:border-slate-800 rounded-lg">
+                <table class="min-w-full text-xs">
+                  <thead class="bg-slate-50 dark:bg-slate-800 text-slate-500">
+                    <tr>
+                      <th class="py-1.5 px-3 text-left">Hora</th>
+                      <th class="py-1.5 px-3 text-left">URL</th>
+                      <th class="py-1.5 px-3 text-left">Estado</th>
+                      <th class="py-1.5 px-3 text-right">Latencia</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ping-history-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-300">
+                    <tr>
+                      <td colspan="4" class="py-3 text-center text-slate-400">Sin registros de pings aún</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-4">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <div class="flex items-center space-x-2">
+          <span>Laboratorio Editorial & Discover 2026</span>
+          <span>•</span>
+          <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT1aBH7iMlllmZk28CNmqa-iLut7lHkfQH1GFXFIpjW6AJkYLwD9PpwSH7SDRVN5JeE3a7hjuT_HkrO/pubhtml" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline">Google Sheet Fuente</a>
+        </div>
+        <div class="mt-2 sm:mt-0 flex items-center space-x-3">
+          <span class="inline-flex items-center text-slate-400">
+            <i class="fa-solid fa-server mr-1 text-emerald-500"></i> Listo para On Render
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 flex items-center p-4 max-w-xs text-xs rounded-xl shadow-xl transition-all transform translate-y-20 opacity-0 pointer-events-none bg-slate-900 text-white border border-slate-700">
+      <i id="toast-icon" class="fa-solid fa-circle-check mr-2 text-emerald-400 text-sm"></i>
+      <span id="toast-message">Mensaje</span>
+    </div>
+
+    <!-- MODAL DETALLE DE EXPERIMENTO -->
+    <div id="modal-experiment" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4 animate-scaleIn">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div class="flex items-center space-x-2">
+            <span id="modal-badge-status" class="px-2.5 py-0.5 rounded-full text-xs font-bold">Estado</span>
+            <span id="modal-badge-cat" class="px-2 py-0.5 rounded text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Categoría</span>
+          </div>
+          <button id="modal-close" class="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" id="modal-date-entity">Fecha y Entidad</div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-1 leading-snug" id="modal-title">Titular de la nota</h3>
+        </div>
+
+        <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
+          <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5 flex items-center">
+            <i class="fa-solid fa-lightbulb mr-1.5 text-amber-500"></i> Hallazgos y Análisis Editorial
+          </h4>
+          <p class="text-xs text-slate-600 dark:text-slate-300 whitespace-pre-wrap leading-relaxed" id="modal-findings">
+            Hallazgos del experimento
+          </p>
+        </div>
+
+        <div class="flex items-center justify-end space-x-3 pt-2">
+          <a id="modal-link-article" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-white transition">
+            <i class="fa-solid fa-newspaper mr-1.5 text-indigo-500"></i> Leer Nota en El Tiempo
+          </a>
+          <a id="modal-link-marfeel" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3.5 py-2 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition">
+            <i class="fa-solid fa-chart-simple mr-1.5"></i> Abrir en Marfeel Compass
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
