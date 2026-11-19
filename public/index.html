@@ -330,7 +330,12 @@ const TABS = [
   { id:'plantillas',  label:'Plantillas de Titulares', icon:'quote' }
 ];
 
-const expertById = id => sheetData.experts.find(e => e.id === id) || { nombre: id, rol: 'Especialista', vertical: 'canino' };
+const expertById = (id, fallbackName, fallbackVert) => {
+  if (!id) return { id:'desconocido', nombre: fallbackName || 'Referente', rol: 'Referente Editorial', vertical: fallbackVert || 'canino', veredicto: 'observacion' };
+  const found = sheetData.experts.find(e => e.id === id || (fallbackName && e.nombre.toLowerCase() === fallbackName.toLowerCase()) || (e.nombre.toLowerCase().includes(id.toLowerCase())));
+  if (found) return found;
+  return { id, nombre: fallbackName || id, rol: 'Referente Editorial', vertical: fallbackVert || 'canino', veredicto: 'observacion' };
+};
 const expById = id => sheetData.experiments.find(e => e.id === id) || sheetData.experiments[0] || {};
 const ctrOf = e => (e.impresiones ? e.clics / e.impresiones * 100 : null);
 
@@ -338,7 +343,7 @@ let stats = {};
 function computeStats(){
   stats = {};
   sheetData.experts.forEach(x => {
-    const notes = sheetData.experiments.filter(e => e.experto === x.id).sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
+    const notes = sheetData.experiments.filter(e => e.experto === x.id || (e.expertoNombre && e.expertoNombre.toLowerCase().includes(x.nombre.toLowerCase()))).sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
     const pub = notes.filter(n => n.estado !== 'programada');
     const exitos = pub.filter(n => STATUS[n.estado] && STATUS[n.estado].group === 'exito').length;
     const impr = pub.reduce((s,n) => s + (n.impresiones || 0), 0);
@@ -550,18 +555,22 @@ function expertCard(x, i){
   const st = stats[x.id] || { notes:[], pub:0, exitos:0, impr:0, clics:0, ctr:0 }, V = VERTICALS[x.vertical] || VERTICALS.canino;
   const dots = st.notes.slice().reverse().map(n =>
     `<span class="w-1.5 h-1.5 rounded-full ${STATUS[n.estado] ? STATUS[n.estado].dot : 'bg-slate-400'} shrink-0" title="${esc(n.id)}"></span>`).join('');
+  const isTop = (x.estadoDiscover || '').toUpperCase().includes('TOP');
+  const isDesech = (x.estadoDiscover || '').toUpperCase().includes('DESECH') || (x.estadoDiscover || '').toUpperCase().includes('NO DESPEG');
+  const badgeCls = isTop ? 'bg-exito-tint text-exito border-exito/30' : (isDesech ? 'bg-muerta-tint text-muerta border-muerta/30' : 'bg-wash text-sub border-line');
+
   return `
   <button data-action="open-expert" data-id="${x.id}" style="animation-delay:${i * 40}ms"
     class="anim-in group w-full text-left bg-surface border border-line rounded-xl p-3.5 shadow-card hover:shadow-lift hover:border-ink/25 hover:-translate-y-px transition">
     <div class="flex items-center gap-2.5">
       <span class="w-9 h-9 rounded-full ${V.tint} grid place-items-center text-[11px] font-bold shrink-0">${initials(x.nombre)}</span>
       <div class="min-w-0 flex-1">
-        <div class="text-[13.5px] font-semibold truncate">${esc(x.nombre)}</div>
+        <div class="text-[13.5px] font-semibold truncate text-ink">${esc(x.nombre)}</div>
         <div class="text-[11.5px] text-sub truncate">${esc(x.rol)}</div>
       </div>
       <div class="text-right shrink-0">
-        <div class="font-mono text-[12.5px] font-semibold font-tabular">${esc(x.mejorDia || 'Top')}</div>
-        <div class="text-[9.5px] text-faint uppercase tracking-wide">Día ideal</div>
+        <div class="font-mono text-[10.5px] font-bold px-1.5 py-0.5 rounded border ${badgeCls}">${esc(x.estadoDiscover || x.mejorDia || 'Top')}</div>
+        <div class="text-[9px] text-faint uppercase tracking-wide mt-0.5">${x.estadoDiscover ? 'Discover' : 'Día ideal'}</div>
       </div>
     </div>
     <div class="mt-2.5 flex items-center gap-2">
@@ -637,6 +646,9 @@ function renderCalendarSmart() {
       <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-card hover:shadow-lift transition space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-2">
+            <span class="font-mono text-[10.5px] font-bold bg-wash border border-line px-2 py-0.5 rounded text-ink flex items-center gap-1">
+              <i data-lucide="calendar" class="w-3 h-3 text-faint"></i> Pauta ${idx + 1}/2
+            </span>
             <span class="font-mono text-[12px] font-bold bg-wash border border-line px-2 py-0.5 rounded text-ink flex items-center gap-1.5">
               <i data-lucide="clock" class="w-3.5 h-3.5 text-faint"></i> ${esc(s.franja)} (CO)
             </span>
@@ -836,36 +848,60 @@ function renderBitResults(){
   const box = $('bitResults'); if (!box) return;
   const vis = visibleExps();
   let rows = vis.filter(e => state.status === 'todos' || e.estado === state.status);
-  if (state.q.trim()){ const q = norm(state.q); rows = rows.filter(e => norm(e.titular + ' ' + (expertById(e.experto).nombre || '') + ' ' + e.id + ' ' + e.fuente).includes(q)); }
+  if (state.q.trim()){ const q = norm(state.q); rows = rows.filter(e => norm(e.titular + ' ' + (e.expertoNombre || '') + ' ' + (expertById(e.experto).nombre || '') + ' ' + e.id + ' ' + (e.fuente || '') + ' ' + (e.seccion || '') + ' ' + (e.hipotesis || '')).includes(q)); }
   rows = sortRows(rows);
   const det = state.view === 'detallada';
   const head = `
-    <div class="flex items-center justify-between gap-2 flex-wrap mb-2">
-      <span class="text-[11.5px] text-sub"><b class="text-ink font-semibold font-tabular">${rows.length}</b> de ${vis.length} experimentos</span>
+    <div class="flex items-center justify-between gap-2 flex-wrap mb-2.5">
+      <div class="flex items-center gap-2">
+        <span class="text-[12px] text-sub"><b class="text-ink font-semibold font-tabular">${rows.length}</b> de ${vis.length} experimentos auditados en Google Sheets</span>
+        <span class="text-[10px] font-mono text-exito bg-exito-tint border border-exito/30 rounded px-1.5 py-0.5">100% Sincronizado</span>
+      </div>
+      <div class="text-[11px] text-faint font-mono">Pestaña: EXPERIMENTOS EDITORIALES</div>
     </div>`;
 
   const body = rows.map(e => {
-    const x = expertById(e.experto), d = new Date(e.fecha), S = STATUS[e.estado] || STATUS.tibia, ctr = ctrOf(e);
+    const x = expertById(e.experto, e.expertoNombre, e.vertical), d = new Date(e.fecha), S = STATUS[e.estado] || STATUS.tibia, ctr = ctrOf(e);
     const vert = VERTICALS[e.vertical] || VERTICALS.canino;
     const links = det ? `<td class="px-3 py-3 text-right whitespace-nowrap">
-        ${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" title="El Tiempo" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle"><i data-lucide="newspaper" class="w-3.5 h-3.5 text-ink"></i></a>` : `<span class="inline-grid place-items-center w-7 h-7 rounded-md border border-dashed border-line text-faint align-middle"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>`}
-        <a href="${esc(e.marfeel)}" target="_blank" rel="noopener noreferrer" title="Marfeel" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle ml-1"><i data-lucide="gauge" class="w-3.5 h-3.5 text-ink"></i></a>
+        ${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" title="Ver nota en El Tiempo" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle shadow-sm" onclick="event.stopPropagation()"><i data-lucide="newspaper" class="w-3.5 h-3.5 text-ink"></i></a>` : `<span class="inline-grid place-items-center w-7 h-7 rounded-md border border-dashed border-line text-faint align-middle"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></span>`}
+        ${e.marfeel ? `<a href="${esc(e.marfeel)}" target="_blank" rel="noopener noreferrer" title="Ver auditoría Marfeel Compass" class="inline-grid place-items-center w-7 h-7 rounded-md border border-line hover:border-ink/30 hover:bg-paper transition align-middle ml-1 shadow-sm" onclick="event.stopPropagation()"><i data-lucide="gauge" class="w-3.5 h-3.5 text-ink"></i></a>` : `<span class="inline-flex items-center text-[9.5px] font-mono uppercase px-1.5 py-0.5 rounded bg-wash border border-line text-faint ml-1">Prog</span>`}
       </td>` : '';
     return `
     <tr data-action="open-expert" data-id="${x.id}" class="border-b border-line/70 last:border-0 hover:bg-wash/50 cursor-pointer transition-colors">
       <td class="px-3 ${det ? 'py-3' : 'py-2'} whitespace-nowrap">
-        <span class="block text-[12.5px] font-medium font-tabular">${dShort(d)}</span>
+        <span class="block text-[12px] font-medium font-tabular">${dShort(d)}</span>
+        <span class="text-[10px] text-faint font-mono">${esc(e.fechaOriginal || '')}</span>
       </td>
       <td class="px-3 ${det ? 'py-3' : 'py-2'}">
         <div class="flex items-center gap-2">
-          <span class="w-6 h-6 rounded-full ${vert.tint} grid place-items-center text-[8.5px] font-bold shrink-0">${initials(x.nombre)}</span>
-          <span class="text-[12.5px] font-medium truncate max-w-[130px]">${esc(x.nombre)}</span>
+          <span class="w-6 h-6 rounded-full ${vert.tint} grid place-items-center text-[8.5px] font-bold shrink-0">${initials(e.expertoNombre || x.nombre)}</span>
+          <div class="min-w-0">
+            <span class="text-[12.5px] font-semibold text-ink truncate max-w-[130px] block">${esc(e.expertoNombre || x.nombre)}</span>
+            <span class="text-[10px] text-sub truncate block">${esc(e.seccion || x.rol)}</span>
+          </div>
         </div>
       </td>
-      ${det ? `<td class="px-3 py-3 max-w-[360px]"><span class="font-serif text-[13.5px] leading-snug line-clamp-2">${esc(e.titular)}</span></td>` : ''}
-      <td class="px-3 ${det ? 'py-3' : 'py-2'}">${statusBadge(e.estado)}</td>
-      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right text-[12.5px] font-tabular font-medium whitespace-nowrap">${e.impresiones != null ? fmtInt(e.impresiones) : '—'}</td>
-      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right whitespace-nowrap font-semibold">${ctr != null ? fmtPct(ctr) : '—'}</td>
+      ${det ? `<td class="px-3 py-3 max-w-[420px]">
+        <div class="font-serif text-[13.5px] font-medium leading-snug line-clamp-2 text-ink">${esc(e.titular)}</div>
+        <div class="mt-1 flex flex-wrap items-center gap-1.5 text-[10.5px]">
+          <span class="inline-flex items-center gap-1 font-mono text-[9.5px] bg-wash text-sub px-1.5 py-0.5 rounded border border-line/60">
+            <i data-lucide="${e.vertical === 'canino' ? 'paw-print' : 'utensils'}" class="w-2.5 h-2.5"></i> ${esc(e.tipoExperimento || e.fuente)}
+          </span>
+        </div>
+        ${e.hipotesis ? `
+          <div class="mt-1.5 text-[11px] text-ink/80 bg-paper/90 rounded-md px-2 py-1.5 border border-line/60 flex items-start gap-1.5 leading-snug">
+            <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5"></i>
+            <div><strong class="text-ink font-semibold">Hallazgo:</strong> <span class="italic">${esc(e.hipotesis)}</span></div>
+          </div>
+        ` : ''}
+      </td>` : ''}
+      <td class="px-3 ${det ? 'py-3' : 'py-2'} whitespace-nowrap">
+        ${statusBadge(e.estado)}
+        ${e.rendimientoOriginal && e.rendimientoOriginal !== S.label ? `<span class="block text-[9.5px] text-faint mt-0.5 font-mono truncate max-w-[120px]">${esc(e.rendimientoOriginal)}</span>` : ''}
+      </td>
+      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right text-[12px] font-tabular font-medium whitespace-nowrap">${e.impresiones != null ? fmtInt(e.impresiones) : '—'}</td>
+      <td class="px-3 ${det ? 'py-3' : 'py-2'} text-right whitespace-nowrap font-semibold text-[12px]">${ctr != null ? fmtPct(ctr) : '—'}</td>
       ${links}
     </tr>`;
   }).join('');
@@ -873,10 +909,10 @@ function renderBitResults(){
   box.innerHTML = head + `
     <div class="bg-surface border border-line rounded-xl overflow-hidden shadow-card">
       <div class="overflow-x-auto">
-        <table class="w-full ${det ? 'min-w-[880px]' : 'min-w-[620px]'}">
+        <table class="w-full ${det ? 'min-w-[940px]' : 'min-w-[620px]'}">
           <thead class="bg-paper/70 border-b border-line">
-            <tr>${thSort('fecha','Fecha')}${thSort('experto','Experto')}${det ? '<th class="px-3 py-2.5 text-left uppercase tracking-wider text-[10px] font-semibold text-sub">Titular</th>' : ''}
-            <th class="px-3 py-2.5 text-left uppercase tracking-wider text-[10px] font-semibold text-sub">Estado</th>
+            <tr>${thSort('fecha','Fecha')}${thSort('experto','Experto / Entidad')}${det ? '<th class="px-3 py-2.5 text-left uppercase tracking-wider text-[10px] font-semibold text-sub">Titular, Tipo & Hallazgos</th>' : ''}
+            <th class="px-3 py-2.5 text-left uppercase tracking-wider text-[10px] font-semibold text-sub">Rendimiento Real</th>
             ${thSort('impr','Impresiones', true)}${thSort('ctr','CTR', true)}${det ? '<th class="px-3 py-2.5 text-right uppercase tracking-wider text-[10px] font-semibold text-sub">Enlaces</th>' : ''}</tr>
           </thead>
           <tbody>${body}</tbody>
@@ -889,24 +925,44 @@ function renderBitResults(){
 function directoryPanel(v){
   const list = sheetData.experts.filter(x => x.vertical === v);
   const V = VERTICALS[v] || VERTICALS.canino;
-  const cards = list.map((x,i) => `
+  const cards = list.map((x,i) => {
+    const isTop = (x.estadoDiscover || '').toUpperCase().includes('TOP');
+    const isDesech = (x.estadoDiscover || '').toUpperCase().includes('DESECH') || (x.estadoDiscover || '').toUpperCase().includes('NO DESPEG');
+    const badgeCls = isTop ? 'bg-exito-tint text-exito border-exito/40' : (isDesech ? 'bg-muerta-tint text-muerta border-muerta/40' : 'bg-wash text-sub border-line');
+
+    return `
     <button data-action="open-expert" data-id="${x.id}" style="animation-delay:${i * 40}ms"
-      class="anim-in text-left bg-surface border border-line rounded-xl p-4 shadow-card hover:shadow-lift hover:border-ink/25 hover:-translate-y-px transition w-full">
-      <div class="flex items-start gap-3">
-        <span class="w-10 h-10 rounded-full ${V.tint} grid place-items-center text-[12px] font-bold shrink-0">${initials(x.nombre)}</span>
-        <div class="min-w-0 flex-1 pt-0.5">
-          <div class="text-[13.5px] font-semibold truncate">${esc(x.nombre)}</div>
-          <div class="text-[11px] text-sub truncate">${esc(x.rol)}</div>
+      class="anim-in text-left bg-surface border border-line rounded-xl p-4 shadow-card hover:shadow-lift hover:border-ink/25 hover:-translate-y-px transition w-full flex flex-col justify-between">
+      <div>
+        <div class="flex items-start gap-3">
+          <span class="w-10 h-10 rounded-full ${V.tint} grid place-items-center text-[12px] font-bold shrink-0">${initials(x.nombre)}</span>
+          <div class="min-w-0 flex-1 pt-0.5">
+            <div class="text-[13.5px] font-semibold truncate text-ink">${esc(x.nombre)}</div>
+            <div class="text-[11px] text-sub truncate">${esc(x.rol)}</div>
+          </div>
         </div>
+        <div class="mt-3 flex items-center justify-between text-[11px] bg-paper/80 border border-line/70 rounded-lg px-2.5 py-1.5">
+          <span class="text-sub font-medium">Estado Discover:</span>
+          <span class="font-mono font-bold uppercase tracking-wide px-2 py-0.5 rounded border text-[10px] ${badgeCls}">${esc(x.estadoDiscover || 'EN EVALUACIÓN')}</span>
+        </div>
+        ${x.mejorDia ? `
+          <div class="mt-2 text-[11.5px] text-sub">
+            <strong class="font-semibold text-ink">Día ideal:</strong> ${esc(x.mejorDia)} ${x.mejorHora ? `· ${esc(x.mejorHora)}` : ''}
+          </div>
+        ` : ''}
+        <p class="mt-2 text-[11.5px] text-sub leading-snug line-clamp-3">${esc(x.lectura || x.motivo)}</p>
       </div>
-      <div class="mt-3 rounded-lg bg-paper/80 border border-line/70 px-3 py-2 text-[12px]">
-        <strong class="font-semibold text-ink">Mejor franja:</strong> ${x.mejorDia ? `${x.mejorDia} · ${x.mejorHora}` : 'En evaluación'}
-      </div>
-      <p class="mt-2 text-[11px] text-sub leading-snug line-clamp-2">${esc(x.motivo)}</p>
-    </button>
-  `).join('');
-  return panelHead(v === 'cocina' ? 'Directorio de Chefs' : 'Directorio Canino', 'Fichas de autoridades y mejores horarios.') +
-    `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">${cards}</div>`;
+      ${x.canalUrl ? `
+        <div class="mt-3 pt-2.5 border-t border-line/60 flex items-center justify-between text-[11px] text-faint">
+          <span>${esc(x.fuente || 'Canal')}</span>
+          <span class="inline-flex items-center gap-1 text-ink font-medium hover:underline">Ver ficha <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+        </div>
+      ` : ''}
+    </button>`;
+  }).join('');
+
+  return panelHead(v === 'cocina' ? 'Directorio de Chefs Activos' : 'Directorio Canino Activo', `Perfiles verificados con estado en Discover (${list.length} expertos registrados con rendimiento auditado).`) +
+    `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">${cards || '<div class="col-span-full border border-dashed border-line rounded-xl p-8 text-center text-sub">Sin perfiles registrados con estado activo.</div>'}</div>`;
 }
 
 function rulesPanel(){
@@ -991,17 +1047,45 @@ function renderDrawerHead(id){
 
 function renderDrawerContent(id){
   const x = expertById(id);
+  const st = stats[x.id] || { notes:[] };
+  const isTop = (x.estadoDiscover || '').toUpperCase().includes('TOP');
+  const isDesech = (x.estadoDiscover || '').toUpperCase().includes('DESECH') || (x.estadoDiscover || '').toUpperCase().includes('NO DESPEG');
+  const badgeCls = isTop ? 'bg-exito-tint text-exito border border-exito/30' : (isDesech ? 'bg-muerta-tint text-muerta border border-muerta/30' : 'bg-wash text-sub border border-line');
+
+  const notesHtml = st.notes.length ? `
+    <div class="space-y-2 pt-2 border-t border-line">
+      <span class="text-[11.5px] font-semibold text-ink uppercase tracking-wider block">Notas en Bitácora (${st.notes.length})</span>
+      ${st.notes.map(n => `
+        <div class="p-2.5 rounded-lg bg-surface border border-line text-[11.5px] space-y-1">
+          <div class="flex items-center justify-between gap-1">
+            <span class="font-mono text-[10px] text-faint">${esc(n.fechaOriginal || '')}</span>
+            ${statusBadge(n.estado)}
+          </div>
+          <p class="font-serif text-[12.5px] text-ink leading-snug">${esc(n.titular)}</p>
+          ${n.hipotesis ? `<p class="text-[11px] text-sub italic">“${esc(n.hipotesis)}”</p>` : ''}
+          ${n.url ? `<a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10.5px] text-ink font-medium hover:underline mt-1">Ver en El Tiempo <i data-lucide="external-link" class="w-3 h-3"></i></a>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+
   $('drawerScroll').innerHTML = `
     <div class="p-5 space-y-4">
       <div class="bg-surface rounded-xl border border-line p-4 space-y-2">
-        <div class="text-[11px] font-semibold text-exito uppercase tracking-wider">${esc(x.veredicto || 'Aprobado')}</div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10.5px] font-bold uppercase tracking-wider ${badgeCls} px-2 py-0.5 rounded">${esc(x.estadoDiscover || x.veredicto || 'En Evaluación')}</span>
+          <span class="text-[11px] font-mono text-sub">Potencial: ${esc(x.potencialDiscover || 'Medio')}</span>
+        </div>
         <p class="font-serif italic text-[14px] text-ink leading-relaxed">${esc(x.lectura || 'Referente clave en Discover.')}</p>
       </div>
-      <div class="bg-surface rounded-xl border border-line p-4 space-y-1 text-[12px]">
-        <div><strong>Mejor Día:</strong> ${esc(x.mejorDia || 'Flexible')}</div>
-        <div><strong>Horario Óptimo:</strong> ${esc(x.mejorHora || '18:00 - 20:30')}</div>
-        <div><strong>Fuente habitual:</strong> ${esc(x.fuente || 'Entrevistas / Consultas')}</div>
+      <div class="bg-surface rounded-xl border border-line p-4 space-y-1.5 text-[12px]">
+        <div><strong class="text-ink">Mejor Día:</strong> <span class="text-sub">${esc(x.mejorDia || 'Flexible')}</span></div>
+        <div><strong class="text-ink">Horario Óptimo:</strong> <span class="text-sub">${esc(x.mejorHora || '18:00 - 20:30 CO')}</span></div>
+        <div><strong class="text-ink">Fuente / Canal:</strong> <span class="text-sub">${esc(x.fuente || 'Entrevistas / Consultas')}</span></div>
+        ${x.audiencia ? `<div><strong class="text-ink">Audiencia / Suscriptores:</strong> <span class="text-sub font-mono font-medium">${esc(x.audiencia)}</span></div>` : ''}
+        ${x.canalUrl ? `<div class="pt-1"><a href="${esc(x.canalUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] text-ink font-semibold hover:underline">Abrir Canal / Red Oficial <i data-lucide="external-link" class="w-3 h-3"></i></a></div>` : ''}
       </div>
+      ${notesHtml}
     </div>`;
   queueIcons();
 }
