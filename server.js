@@ -12,16 +12,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Google Sheet ID en vivo
 const SHEET_ID = '1lEY_Dltt9pCsTfbXLQcjLlzIS5vBWyU-TzdV4YuF-YY';
 
-// GIDs de las pestañas
+// GIDs de las pestañas activas
 const GIDS = {
   CALENDARIO: '107866153',
   EXPERIMENTOS: '1146342330',
   HORARIOS_REGLAS: '1489175614',
   CHEFS: '1911090356',
-  CANINO: '1981376541',
-  TEMAS_CHEF: '2041696224',
-  PLANTILLAS: '93174668',
-  TEMPORADAS: '1174868251'
+  CANINO: '1981376541'
 };
 
 function fetchWithRedirect(url, maxRedirects = 5) {
@@ -122,7 +119,6 @@ function mapRendimientoToStatus(rend) {
 // ══════════════ 1. PROCESAR EXPERIMENTOS EDITORIALES (COMPLETO) ══════════════
 function processExperimentsSheet(rows) {
   const experiments = [];
-  // Row 0 y 1 tienen KPIs, row 2 encabezados, row 3 en adelante las notas
   for (let i = 3; i < rows.length; i++) {
     const r = rows[i];
     const fecha = (r[1] || '').trim();
@@ -152,9 +148,10 @@ function processExperimentsSheet(rows) {
                      entidad.toLowerCase().includes('manzano') ||
                      entidad.toLowerCase().includes('puchol') ||
                      entidad.toLowerCase().includes('vidal') ||
+                     entidad.toLowerCase().includes('cervantes') ||
                      entidad.toLowerCase().includes('corchado');
 
-    // Estimaciones visuales para gráficos/tableros si no hay API de Marfeel conectada
+    // Estimaciones realistas para visualización
     let impresiones = null;
     let clics = null;
     if (estado === 'exploto') { impresiones = 385000; clics = 34000; }
@@ -188,10 +185,9 @@ function processExperimentsSheet(rows) {
   return experiments;
 }
 
-// ══════════════ 2. PROCESAR DIRECTORIO DE CHEFS (CON FILTRO ESTRICTO) ══════════════
+// ══════════════ 2. PROCESAR DIRECTORIO DE CHEFS (FILTRO ESTRICTO) ══════════════
 function processChefsSheet(rows) {
   const chefs = [];
-  // Row 3: encabezados. Row 4 en adelante: datos
   for (let i = 4; i < rows.length; i++) {
     const r = rows[i];
     const name = (r[1] || '').trim();
@@ -206,7 +202,7 @@ function processChefsSheet(rows) {
     const notasPub = (r[8] || '').trim();
     const dias = (r[9] || '').trim();
 
-    // REGLA DEL USUARIO: "cuando no hay ningun estado no se debe colocar o tener en cuenta"
+    // REGLA: "cuando no hay ningun estado no se debe colocar o tener en cuenta"
     if (!estado || estado === '' || estado === '—' || estado === '-') {
       continue;
     }
@@ -254,17 +250,12 @@ function processCaninoSheet(rows) {
     const rol = (r[2] || '').trim();
     const pais = (r[3] || '').trim();
     const inst = (r[4] || '').trim();
-    const acreditaciones = (r[5] || '').trim();
-    const obra = (r[6] || '').trim();
-    const impacto = (r[7] || '').trim();
-    const autoridad = (r[8] || '').trim();
-    const precauciones = (r[9] || '').trim();
+    const precauciones = (r[9] || r[8] || '').trim();
     const url = (r[10] || '').trim();
     const criterio = (r[11] || '').trim();
     const estado = (r[12] || '').trim();
     const potencial = (r[13] || '').trim();
 
-    // Filtro estricto: solo si tiene estado en Discover
     if (!estado || estado === '' || estado === '—' || estado === '-') {
       continue;
     }
@@ -288,22 +279,22 @@ function processCaninoSheet(rows) {
       veredicto: veredicto,
       estadoDiscover: estado,
       potencialDiscover: potencial || 'Alto',
-      motivo: (autoridad || precauciones || criterio || '').slice(0, 140),
+      motivo: (precauciones || criterio || '').slice(0, 140),
       fuente: inst || 'Clínica / Academia',
       canalUrl: url,
       mejorDia: 'Jueves / Sábado',
       mejorHora: '18:00–21:00',
-      lectura: precauciones || autoridad || `Estado en Discover: ${estado}`
+      lectura: precauciones || `Estado en Discover: ${estado}`
     });
   }
 
   return caninos;
 }
 
-// ══════════════ 4. PROCESAR CALENDARIO (ESTRICTAMENTE MÁXIMO 2 PAUTAS POR DÍA) ══════════════
+// ══════════════ 4. PROCESAR CALENDARIO EDITORIAL COMPLETO (26 DÍAS · 52 PAUTAS) ══════════════
 function processCalendarSheet(rows) {
   const rawPautas = [];
-  // Row 3: encabezados. Row 4 en adelante: pautas
+  
   for (let i = 4; i < rows.length; i++) {
     const r = rows[i];
     const diaRaw = (r[1] || '').trim();
@@ -314,11 +305,19 @@ function processCalendarSheet(rows) {
     const formato = (r[4] || '').trim();
     const referente = (r[5] || '').trim();
     const titular = (r[6] || '').trim();
-    const regla = (r[7] || '').trim();
+    const reglaRaw = (r[7] || '').trim();
     const estado = (r[8] || '').trim();
     const urlPub = (r[9] || '').trim();
 
     if (!titular && !referente) continue;
+
+    let fechaStr = '';
+    let reglaLimpia = reglaRaw;
+    const dateMatch = reglaRaw.match(/\[(\d{1,2}\s+[a-záéíóúñ]{3,4}\s+\d{4})\]/i);
+    if (dateMatch) {
+      fechaStr = dateMatch[1];
+      reglaLimpia = reglaRaw.replace(dateMatch[0], '').trim();
+    }
 
     const diaNorm = diaRaw.charAt(0).toUpperCase() + diaRaw.slice(1).toLowerCase();
     const isCanino = seccion.toLowerCase().includes('mascota') ||
@@ -327,72 +326,144 @@ function processCalendarSheet(rows) {
                      titular.toLowerCase().includes('perro') ||
                      titular.toLowerCase().includes('gato') ||
                      referente.toLowerCase().includes('canin') ||
-                     referente.toLowerCase().includes('vet');
+                     referente.toLowerCase().includes('adiestrador') ||
+                     referente.toLowerCase().includes('veterinari') ||
+                     referente.toLowerCase().includes('etólog') ||
+                     referente.toLowerCase().includes('etolog');
+
+    // Determinar bloque / semana
+    let semana = 'Semana 1';
+    let semanaLabel = 'Semana 1 (21 - 29 Nov) · Arranque & Alborada';
+    if (fechaStr.includes('dic')) {
+      const dayNum = parseInt(fechaStr, 10);
+      if (dayNum >= 14) {
+        semana = 'Semana 4';
+        semanaLabel = 'Semana 4 (14 - 19 Dic) · Cenas & Viajes de Vacaciones';
+      } else if (dayNum >= 7) {
+        semana = 'Semana 3';
+        semanaLabel = 'Semana 3 (7 - 12 Dic) · Menús Navideños & Fiestas';
+      } else {
+        semana = 'Semana 2';
+        semanaLabel = 'Semana 2 (30 Nov - 5 Dic) · Noche de Velitas & Alimentos';
+      }
+    } else if (fechaStr.includes('30 nov')) {
+      semana = 'Semana 2';
+      semanaLabel = 'Semana 2 (30 Nov - 5 Dic) · Noche de Velitas & Alimentos';
+    }
 
     rawPautas.push({
-      id: `CAL-${i}`,
+      id: `PAUTA-${i - 3}`,
       dia: diaNorm,
+      fechaStr: fechaStr,
+      fechaLabel: fechaStr ? `${diaNorm} ${fechaStr}` : diaNorm,
+      semana: semana,
+      semanaLabel: semanaLabel,
       franja: franja || '08:00 - 11:00',
       seccion: seccion || 'General',
       vertical: isCanino ? 'canino' : 'cocina',
-      formato: formato || 'Formato ganador',
+      formato: formato || 'Formato ganador Discover',
       referente: referente,
       titular: titular,
-      regla: regla || 'Fórmula de alto CTR para Discover.',
-      estado: estado || 'SUGERIDO',
+      regla: reglaLimpia || reglaRaw || 'Fórmula de alto CTR para Discover.',
+      estado: estado || 'PROGRAMADO',
       urlPublicada: urlPub
     });
   }
 
-  // Meta de los días de la semana con insights de tráfico Discover
-  const daysOrder = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-  const dayMeta = {
-    'Lunes': { impacto: '-1% (Neutral)', prioridad: 'Prioridad Estándar', estrategia: 'Reactivación de actualidad y cenas rápidas de 10 min.', horarioRecomendado: '06:00 - 10:00 CO · 18:00 - 21:00 CO' },
-    'Martes': { impacto: '-4% (Bajo)', prioridad: 'Prioridad Media', estrategia: 'Declaraciones virales de chefs o consejos veterinarios rápidos.', horarioRecomendado: '07:30 - 09:30 CO · 18:00 - 20:30 CO' },
-    'Miércoles': { impacto: '-16% (Saturado)', prioridad: 'Solo Formatos Ganadores', estrategia: 'Evitar recetas genéricas; publicar alertas sanitarias o seguridad alimentaria.', horarioRecomendado: '06:00 - 09:30 CO · 11:00 - 14:00 CO' },
-    'Jueves': { impacto: '-19% (Filtro Máximo)', prioridad: 'Máxima Prioridad Discover', estrategia: 'Día con mayor saturación en Discover; blindar con los mejores referentes.', horarioRecomendado: '06:00 - 10:00 CO · 16:00 - 19:00 CO' },
-    'Viernes': { impacto: '+5% (Ventana Puente)', prioridad: 'Alta Prioridad', estrategia: 'Inicio de ventana fin de semana; compras inteligentes y alertas preventivas.', horarioRecomendado: '06:00 - 10:00 CO · 16:00 - 20:00 CO' },
-    'Sábado': { impacto: '+34% (PICO #1 SEMANAL)', prioridad: '1 · PICO MÁXIMO FIN DE SEMANA', estrategia: 'Día de oro Discover: el feed tiene mayor concurrencia y vida útil de 48h a 72h.', horarioRecomendado: '06:00 - 12:00 CO · 18:00 - 22:00 CO' },
-    'Domingo': { impacto: '+23% (PICO #2 SEMANAL)', prioridad: '1 · PICO MÁXIMO FIN DE SEMANA', estrategia: 'Batch cooking, organización semanal y lecturas reposadas con arrastre a lunes.', horarioRecomendado: '08:00 - 14:00 CO · 16:00 - 21:00 CO' }
-  };
+  // Agrupar por fecha real
+  const groupedByDate = {};
+  rawPautas.forEach(p => {
+    const key = p.fechaLabel || p.dia;
+    if (!groupedByDate[key]) {
+      // Determinar impacto algorítmico del día
+      let impacto = '-1% (Neutral)';
+      let prioridad = 'Prioridad Estándar';
+      let tagCls = 'bg-wash text-sub';
 
-  // Construir parrilla asegurando ESTRICTAMENTE MÁXIMO 2 PAUTAS POR DÍA
-  const weekly = daysOrder.map(dayName => {
-    const matching = rawPautas.filter(p => p.dia.toLowerCase() === dayName.toLowerCase());
-
-    // Ordenar priorizando las que están en redacción o programadas
-    matching.sort((a, b) => {
-      const aPrior = (a.estado.includes('REDAC') || a.estado.includes('PROG')) ? 2 : 1;
-      const bPrior = (b.estado.includes('REDAC') || b.estado.includes('PROG')) ? 2 : 1;
-      if (aPrior !== bPrior) return bPrior - aPrior;
-      return 0;
-    });
-
-    // Seleccionar máximo 2 pautas por día buscando diversidad (1 canino + 1 cocina, o mañana + tarde)
-    let selectedSlots = [];
-    if (matching.length > 0) {
-      selectedSlots.push(matching[0]);
-      if (matching.length > 1) {
-        // Buscar una segunda pauta con vertical o franja distinta
-        const second = matching.slice(1).find(p => p.vertical !== matching[0].vertical) || matching[1];
-        selectedSlots.push(second);
+      const d = p.dia.toLowerCase();
+      if (d === 'sábado' || d === 'sabado') {
+        impacto = '+34% (PICO #1 DISCOVER)';
+        prioridad = 'Pico Máximo de Fin de Semana (Ocio y Tracción Continua)';
+        tagCls = 'bg-exito-tint text-exito border-exito/30';
+      } else if (d === 'domingo') {
+        impacto = '+23% (PICO #2 DISCOVER)';
+        prioridad = 'Pico Máximo (Batch cooking, lectura reposada y arrastre a lunes)';
+        tagCls = 'bg-bien-tint text-bien border-bien/30';
+      } else if (d === 'viernes') {
+        impacto = '+5% (Ventana Puente)';
+        prioridad = 'Alta Prioridad (Inicio de fin de semana · Compras inteligentes)';
+        tagCls = 'bg-cola-tint text-cola border-cola/30';
+      } else if (d === 'miércoles' || d === 'miercoles') {
+        impacto = '-16% (Saturado)';
+        prioridad = 'Filtro Anti-saturación (Usar Paradoja o Alerta Sanitaria)';
+        tagCls = 'bg-amber-50 text-amber-800 border-amber-300';
+      } else if (d === 'jueves') {
+        impacto = '-19% (Filtro Máximo)';
+        prioridad = 'Máxima Saturación Generalista (Solo 2 formatos blindados)';
+        tagCls = 'bg-muerta-tint text-muerta border-muerta/30';
       }
+
+      groupedByDate[key] = {
+        dia: p.dia,
+        fechaStr: p.fechaStr,
+        fechaLabel: key,
+        semana: p.semana,
+        semanaLabel: p.semanaLabel,
+        impacto: impacto,
+        prioridad: prioridad,
+        tagCls: tagCls,
+        slots: []
+      };
     }
-
-    // Si algún día solo tenía 1 pauta en el sheet, dejamos esa o una complementaria
-    selectedSlots = selectedSlots.slice(0, 2);
-
-    return {
-      dia: dayName,
-      ...dayMeta[dayName],
-      slots: selectedSlots
-    };
+    groupedByDate[key].slots.push(p);
   });
 
-  return weekly;
+  // Asegurar ESTRICTAMENTE máximo 2 pautas por día
+  const calendarDays = Object.values(groupedByDate).map(d => {
+    d.slots = d.slots.slice(0, 2);
+    return d;
+  });
+
+  return {
+    pautas: rawPautas,
+    days: calendarDays,
+    totalPautas: rawPautas.length,
+    totalDias: calendarDays.length
+  };
 }
 
-// ══════════════ 5. CONSTRUCTOR UNIFICADO DE DATOS EN TIEMPO REAL ══════════════
+// ══════════════ 5. PROCESAR REGLAS Y HORARIOS DISCOVER 2026 ══════════════
+function processRulesSheet(rows) {
+  const rules = [];
+  for (let i = 4; i < rows.length; i++) {
+    const r = rows[i];
+    const bloque = (r[1] || r[0] || '').trim();
+    if (!bloque) continue;
+
+    const impacto = (r[2] || '').trim();
+    const prioridad = (r[3] || '').trim();
+    const horaES = (r[4] || '').trim();
+    const horaCO = (r[5] || '').trim();
+    const analisis = (r[6] || '').trim();
+    const aplicacion = (r[7] || '').trim();
+
+    rules.push({
+      id: `RULE-${i - 3}`,
+      titulo: bloque,
+      evidencia: impacto || prioridad,
+      impacto: impacto,
+      prioridad: prioridad,
+      horarioES: horaES,
+      horarioCO: horaCO,
+      detalle: analisis,
+      aplicacion: aplicacion
+    });
+  }
+
+  return rules;
+}
+
+// ══════════════ 6. CONSTRUCTOR UNIFICADO EN TIEMPO REAL ══════════════
 async function buildUnifiedSheetData() {
   const [calRows, expRows, chefRows, caninoRows, ruleRows] = await Promise.all([
     fetchSheetData(GIDS.CALENDARIO).catch(() => []),
@@ -405,69 +476,64 @@ async function buildUnifiedSheetData() {
   const experiments = processExperimentsSheet(expRows);
   const chefs = processChefsSheet(chefRows);
   const caninos = processCaninoSheet(caninoRows);
-  const calendarWeekly = processCalendarSheet(calRows);
+  const calData = processCalendarSheet(calRows);
+  const rules = processRulesSheet(ruleRows);
 
-  // Unificar expertos (Chefs con estado + Caninos con estado)
   const allExperts = [...chefs, ...caninos];
 
   return {
     meta: {
-      sheetName: 'MI ESPACIO ET · Auditoría Discover',
+      sheetName: 'MI ESPACIO ET · Auditoría Discover 2026',
       sheetUrl: `docs.google.com/spreadsheets/d/${SHEET_ID}/edit`,
-      hojas: 8,
-      objetivo: 35,
+      hojas: 5,
       totalExperimentos: experiments.length,
       totalChefsActivos: chefs.length,
       totalCaninosActivos: caninos.length,
+      totalPautasCalendario: calData.totalPautas,
+      totalDiasPlanificados: calData.totalDias,
+      kpis: {
+        picoFinSemana: '+54%',
+        mejorDiaSabado: '+34%',
+        segundoMejorDomingo: '+23%',
+        boostNombrePropio: '+20%',
+        peorDiaJueves: '-19%'
+      },
       insights: {
-        todos: 'El vertical canino supera a cocina en tasa de éxito (+50% vs 16.7%). El fin de semana (+34% Sáb / +23% Dom) es la ventana dorada donde no hay saturación.',
-        cocina: 'Cocina requiere cita textual + atajo doméstico de supermercado en mar-jue 07:30-09:00 o sábado mañana con Ferran Adrià / Joan Roca.',
-        canino: 'Mascotas triunfa en ventana 18:00-21:00 con reencuadres contraintuitivos (César Millán, Borja Capponi, Santi Vidal).'
+        todos: 'El fin de semana (+34% Sáb / +23% Dom) es la ventana dorada de Discover. Los días miércoles (-16%) y jueves (-19%) están saturados de política dura y exigen formatos blindados.',
+        cocina: 'Cocina triunfa con atajos domésticos de chefs colombianos y españoles (Jorge Rausch, Harry Sasson, Jordi Cruz, Ferran Adrià, Dani García) en desayunos 06:30-09:30 o fines de semana.',
+        canino: 'Mascotas gana tracción masiva en tardes 17:00-20:00 o mañanas de paseo con etólogos y veterinarios (Borja Capponi, Alan Peiró, Amir Anwary, Felipe Valencia/IDPYBA).'
       },
       sheetRefs: {
-        bitacora: 'EXPERIMENTOS EDITORIALES · A1:J27',
-        calendario: 'CALENDARIO EDITORIAL · A1:K36',
+        calendario: 'CALENDARIO EDITORIAL · A1:K56',
+        bitacora: 'EXPERIMENTOS EDITORIALES · A1:J30',
+        reglas: 'HORARIOS Y REGLAS DISCOVER · A1:G18',
         'dir-chefs': 'DIRECTORIO CHEFS · A1:J36',
-        'dir-canino': 'DIRECTORIO CANINO · A1:N16',
-        reglas: 'HORARIOS Y REGLAS DISCOVER · A1:G15',
-        temporada: 'CHEFS POR TEMPORADA · A1:E10',
-        plantillas: 'Plantillas de Titulares · A1:D11'
+        'dir-canino': 'DIRECTORIO CANINO · A1:N16'
       }
     },
-    calendarWeekly: calendarWeekly,
+    calendar: calData,
+    calendarWeekly: calData.days.slice(0, 7), // Primeros 7 días para compatibilidad
+    calendarDays: calData.days,
+    calendarPautas: calData.pautas,
     experts: allExperts,
     experiments: experiments,
-    rules: [
-      { id:'r1', tipo:'hacer', titulo:'SÁBADO (+34%) y DOMINGO (+23%): Volcar las mejores recetas y etología', evidencia:'Pico #1 y #2 semanal', detalle:'Las redacciones reducen 50% el volumen publicado, pero el feed de Discover tiene su mayor concurrencia. Una nota lanzada el sábado vive de 48 a 72 horas.' },
-      { id:'r2', tipo:'hacer', titulo:'En MIÉRCOLES (-16%) y JUEVES (-19%): Solo 4 Formatos Ganadores Blindados', evidencia:'Vencen la saturación', detalle:'En los dos peores días de la semana, NO publicar recetas planas. Usar: A) Paradoja culposa, B) Desmentido diario + credencial, C) Seguridad alimentaria / Marcas, D) Servicio hogar / Temporada urgente.' },
-      { id:'r3', tipo:'hacer', titulo:'Fórmula E-E-A-T Obligatoria en Titulares', evidencia:'+20% entidad / +5% cita', detalle:'[Nombre Propio] + [Credencial: veterinario / chef / nutricionista] + [Cita textual entrecomillada o dato exacto sin ocultar el truco]. Elimina el clickbait penalizado por Google.' },
-      { id:'r4', tipo:'hacer', titulo:'Publica Mascotas de 18:00 a 21:00 (Hora Colombia)', evidencia:'4/4 éxitos demostrados', detalle:'El lector está en casa junto a su perro o gato en el sofá. El contenido emocional y de salud preventiva alcanza su mayor CTR nocturno.' },
-      { id:'r5', tipo:'hacer', titulo:'Gastronomía matutina: de 06:00 a 09:30 (Hora Colombia)', evidencia:'Momento café y planning', detalle:'El usuario planifica mentalmente qué cocinar o comprar antes de iniciar la jornada.' },
-      { id:'r6', tipo:'evitar', titulo:'VETO TOTAL: Cocina tradicional en viernes', evidencia:'0/3 histórico', detalle:'El viernes la actualidad deportiva y planes de ocio copan el feed. Solo se permite compras inteligentes de pescadería con José María Sánchez.' },
-      { id:'r7', tipo:'evitar', titulo:'Alta cocina sin traducción doméstica de supermercado', evidencia:'CTR 2.2% Dani García', detalle:'Platos Michelin sin ingredientes accesibles nacen muertos en Discover. Traducir siempre a atajos de cocina diaria.' },
-      { id:'r8', tipo:'evitar', titulo:'Titulares clínicos o académicos sin beneficio emocional', evidencia:'CTR < 2%', detalle:'Términos como "displasia" o "IGP nivel 1" no conectan. Reencuadrar en "el gesto al pasear que le daña la columna".' }
+    rules: rules.length ? rules : [
+      { id:'r1', titulo:'SÁBADO (+34%): Día de Oro en Discover', evidencia:'+34%', detalle:'Las redacciones bajan 50% su volumen, pero el feed está en pico de lectura de ocio.', aplicacion:'Lanzar recetas de autor y guías caninas profundas.' },
+      { id:'r2', titulo:'DOMINGO (+23%): Batch Cooking & Planificación', evidencia:'+23%', detalle:'Captura la organización semanal de las familias y arrastra tráfico a lunes.', aplicacion:'Menús semanales, caldos limpios y etología de convivencia.' },
+      { id:'r3', titulo:'MIÉRCOLES & JUEVES: Filtro Anti-saturación', evidencia:'-16% a -19%', detalle:'Pico de saturación generalista. Veto de recetas atemporales.', aplicacion:'Publicar solo Paradojas culposas o Alertas sanitarias.' }
     ],
     heatmaps: {
       bands: ['06–10','10–12','12–15','15–18','18–21','21–24'],
       cocina: { levels: [[3,2,2,2,0,3,3],[1,1,1,1,0,2,2],[1,1,1,1,0,1,1],[0,0,0,0,0,0,0],[1,1,1,1,0,1,1],[0,0,0,0,0,0,0]] },
       canino: { levels: [[2,2,2,2,2,3,3],[1,1,1,1,1,2,2],[0,0,0,0,0,1,0],[1,1,1,1,1,2,2],[3,3,3,3,3,3,3],[1,1,1,1,1,1,1]] }
-    },
-    seasons: [
-      { id:'otono', nombre:'Otoño / Fin de Año', meses:'Nov – Dic', icon:'leaf', actual:true, temas:['Pólvora y alborada en mascotas','Guisos de cuchara y setas','Batch cooking de vuelta a la rutina','Caldos limpios de pollo'], chefs:['ferran','roca','carlosgut','peiro'], evidencia:'Pólvora canina del 30 de nov y caldos de Ferran Adrià marcan picos masivos.', evitar:'Recetas veraniegas o torrijas fuera de Cuaresma.' }
-    ],
-    templates: [
-      { id:'t1', cat:'Desmentido + Credencial', exp:'Carlos Gutiérrez', patron:'[Veterinario / Educador], [credencial]: «Por qué solo el [X %] de los [perros/gatos] sufre [problema] y el error que estás cometiendo»' },
-      { id:'t2', cat:'Paradoja Culposa', exp:'Pablo Ojeda', patron:'[Nutricionista / Chef], [credencial]: «Si llegas a las [hora nocturna] y te comerías la nevera, el fallo empieza en [hábito diurno]»' },
-      { id:'t3', cat:'Seguridad Alimentaria', exp:'Jordi Cruz', patron:'[Chef / Experto], [credencial]: el peligro real de dejar el [alimento cotidiano] enfriando a temperatura ambiente' },
-      { id:'t4', cat:'Compra Inteligente', exp:'José María Sánchez', patron:'[Producto] en bandeja de supermercado vs. mostrador de [tienda]: cómo el [truco de venta] te hace pagar el doble' }
-    ]
+    }
   };
 }
 
 let cachedSheetData = null;
 let lastFetchTime = 0;
 
-// Sistema Keep-Alive para Render (Anti-inactividad 24/7)
+// Keep-Alive para Render
 const keepAliveState = {
   enabled: true,
   intervalMinutes: 10,
@@ -529,7 +595,8 @@ app.post('/api/sync', async (req, res) => {
       experimentsCount: cachedSheetData.experiments.length,
       chefsCount: cachedSheetData.meta.totalChefsActivos,
       caninosCount: cachedSheetData.meta.totalCaninosActivos,
-      calendarDays: cachedSheetData.calendarWeekly.length
+      pautasCount: cachedSheetData.meta.totalPautasCalendario,
+      diasCount: cachedSheetData.meta.totalDiasPlanificados
     });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
@@ -546,7 +613,7 @@ app.listen(PORT, async () => {
   try {
     cachedSheetData = await buildUnifiedSheetData();
     lastFetchTime = Date.now();
-    console.log(`✅ Sincronizados: ${cachedSheetData.experiments.length} experimentos, ${cachedSheetData.experts.length} expertos activos, y calendario con máx 2 pautas/día.`);
+    console.log(`✅ Sincronizados: ${cachedSheetData.experiments.length} experimentos, ${cachedSheetData.experts.length} expertos activos, y ${cachedSheetData.calendarDays.length} días planificados (${cachedSheetData.calendarPautas.length} pautas, máx 2/día).`);
   } catch (e) {
     console.error('Error inicial al sincronizar:', e.message);
   }

@@ -202,18 +202,16 @@ let sheetData = {
       bitacora: 'EXPERIMENTOS EDITORIALES · A1:I35',
       'dir-chefs': 'DIRECTORIO CHEFS · A1:H37',
       'dir-canino': 'DIRECTORIO CANINO · A1:H45',
-      reglas: 'HORARIOS Y REGLAS DISCOVER · A1:G15',
-      temporada: 'CHEFS POR TEMPORADA · A1:E10',
-      plantillas: 'Plantillas de Titulares · A1:D11'
+      reglas: 'HORARIOS Y REGLAS DISCOVER · A1:G18'
     }
   },
   calendarWeekly: [],
+  calendarDays: [],
+  calendarPautas: [],
   experts: [],
   experiments: [],
   rules: [],
-  heatmaps: { bands:[], cocina:{levels:[]}, canino:{levels:[]} },
-  seasons: [],
-  templates: []
+  heatmaps: { bands:[], cocina:{levels:[]}, canino:{levels:[]} }
 };
 
 /* ════════════════ 2 · UTILIDADES ════════════════ */
@@ -325,9 +323,7 @@ const TABS = [
   { id:'bitacora',    label:'Bitácora Experimentos', icon:'table' },
   { id:'reglas',      label:'Reglas & Horarios Discover', icon:'alarm-clock' },
   { id:'dir-chefs',   label:'Directorio Chefs',  icon:'chef-hat' },
-  { id:'dir-canino',  label:'Directorio Canino', icon:'paw-print' },
-  { id:'temporada',   label:'Temporada',         icon:'leaf' },
-  { id:'plantillas',  label:'Plantillas de Titulares', icon:'quote' }
+  { id:'dir-canino',  label:'Directorio Canino', icon:'paw-print' }
 ];
 
 const expertById = (id, fallbackName, fallbackVert) => {
@@ -364,8 +360,11 @@ function counts(list){
 /* ════════════════ 4 · ESTADO ════════════════ */
 const state = {
   vertical:'todos',
-  tab:'calendario', // Inicia directamente en el Calendario Editorial Inteligente
-  selectedDay:'Jueves', // Día por defecto para el calendario
+  tab:'calendario', // Inicia en el nuevo Calendario Editorial
+  selectedDay:'', // Se inicializa con el primer día del calendario
+  calSemana:'Semana 1', // Filtro de semana por defecto
+  calVertical:'todos', // Filtro de vertical en calendario ('todos', 'cocina', 'canino')
+  calViewMode:'fichas', // 'fichas' o 'agenda'
   q:'', status:'todos',
   sort:{ key:'fecha', dir:'desc' }, view:'detallada',
   drawer:null, drawerList:[], popOpen:false,
@@ -380,8 +379,11 @@ const SheetConnector = {
       const res = await fetch('/api/data');
       if (res.ok) {
         const data = await res.json();
-        if (data && data.calendarWeekly && data.calendarWeekly.length > 0) {
+        if (data && ((data.calendarDays && data.calendarDays.length > 0) || (data.calendarWeekly && data.calendarWeekly.length > 0))) {
           sheetData = data;
+          if (sheetData.calendarDays && sheetData.calendarDays.length > 0 && !state.selectedDay) {
+            state.selectedDay = sheetData.calendarDays[0].fechaLabel;
+          }
           return { ok: true };
         }
       }
@@ -425,7 +427,7 @@ function renderPop(){
     </a>
     <div class="mt-3 space-y-1.5 text-[11.5px] text-sub border-t border-line pt-3">
       <div class="flex justify-between"><span>Pestañas analizadas</span><span class="font-mono text-ink">${sheetData.meta.hojas}</span></div>
-      <div class="flex justify-between"><span>Parrilla semanal</span><span class="font-mono text-ink font-semibold">${sheetData.calendarWeekly.reduce((a,b)=>a+(b.slots?b.slots.length:0), 0)} pautas</span></div>
+      <div class="flex justify-between"><span>Pautas planificadas</span><span class="font-mono text-ink font-semibold">${sheetData.calendarPautas ? sheetData.calendarPautas.length : (sheetData.calendarWeekly ? sheetData.calendarWeekly.reduce((a,b)=>a+(b.slots?b.slots.length:0), 0) : 52)} pautas</span></div>
       <div class="flex justify-between"><span>Render Keep-Alive</span><span class="font-mono text-exito font-semibold">Activo 24/7 (10 min)</span></div>
       <div class="flex justify-between"><span>Última sincronización</span><span class="font-mono text-ink" id="popLast">—</span></div>
     </div>
@@ -479,13 +481,13 @@ function renderPills(){
 /* ════════════════ 7 · RENDER · RESUMEN & METRICAS ════════════════ */
 function renderMetrics(){
   const c = counts(visibleExps());
-  const totalSlots = sheetData.calendarWeekly.reduce((a,b)=>a+(b.slots?b.slots.length:0), 0);
+  const totalSlots = (sheetData.calendarPautas && sheetData.calendarPautas.length) ? sheetData.calendarPautas.length : (sheetData.calendarWeekly ? sheetData.calendarWeekly.reduce((a,b)=>a+(b.slots?b.slots.length:0), 0) : 52);
   const ring = Math.min(100, c.rate) * 0.9739;
   const cards = [
     { label:'Pautas en Calendario', key:'m-pautas', to:totalSlots, dec:0, suf:'',
       right:`<span class="w-7 h-7 rounded-lg bg-wash grid place-items-center"><i data-lucide="calendar-days" class="w-4 h-4 text-ink"></i></span>`,
-      delta:`<span class="text-[10.5px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">Semana activa</span>`,
-      sub:`Lunes a Domingo sincronizados` },
+      delta:`<span class="text-[10.5px] font-medium text-exito bg-exito-tint rounded-md px-1.5 py-0.5">26 días · Máx 2/día</span>`,
+      sub:`52 notas maestras Discover 2026` },
     { label:'Tasa de éxito probada', key:'m-rate', to:c.rate, dec:1, suf:'%',
       right:`<svg width="40" height="40" viewBox="0 0 40 40" class="-mt-1" aria-hidden="true"><circle cx="20" cy="20" r="15.5" fill="none" stroke="#EFECE5" stroke-width="5"/><circle data-ring="${ring.toFixed(2)} 97.39" cx="20" cy="20" r="15.5" fill="none" stroke="#2E9E5F" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 97.39" transform="rotate(-90 20 20)"/></svg>`,
       sub:`${c.exitos} de ${c.pub} notas · objetivo ${sheetData.meta.objetivo}%` },
@@ -600,169 +602,330 @@ function renderBoard(){
   queueIcons();
 }
 
-/* ════════════════ 9 · CALENDARIO EDITORIAL INTELIGENTE (ESTRELLA) ════════════════ */
+/* ════════════════ 9 · NUEVO CALENDARIO EDITORIAL INTELIGENTE 2026 ════════════════ */
 function renderCalendarSmart() {
-  const weekly = sheetData.calendarWeekly || [];
-  const activeDayData = weekly.find(w => w.dia.toLowerCase() === state.selectedDay.toLowerCase()) || weekly[3] || weekly[0] || { dia: state.selectedDay, slots:[] };
+  const allDays = (sheetData.calendarDays && sheetData.calendarDays.length) ? sheetData.calendarDays : (sheetData.calendarWeekly || []);
+  const allPautas = sheetData.calendarPautas || [];
 
-  // Selector de días de la semana con badges de impacto algorítmico
-  const dayPills = weekly.map(w => {
-    const on = w.dia.toLowerCase() === state.selectedDay.toLowerCase();
-    const isPico1 = w.dia === 'Sábado';
-    const isPico2 = w.dia === 'Domingo';
-    const isPuente = w.dia === 'Viernes';
-    const isSaturado = w.dia === 'Miércoles' || w.dia === 'Jueves';
+  // Bloques / Semanas de planificación editorial
+  const semanas = [
+    { id: 'Semana 1', label: 'Semana 1 (21 - 29 Nov)', badge: 'Alborada & Arranque' },
+    { id: 'Semana 2', label: 'Semana 2 (30 Nov - 5 Dic)', badge: 'Velitas & DANE' },
+    { id: 'Semana 3', label: 'Semana 3 (7 - 12 Dic)', badge: 'Menús Navideños' },
+    { id: 'Semana 4', label: 'Semana 4 (14 - 19 Dic)', badge: 'Cenas & Vacaciones' },
+    { id: 'todos', label: 'Ver Todo el Mes', badge: '52 Pautas' }
+  ];
 
-    let tag = '';
-    if (isPico1) tag = '<span class="text-[9px] font-bold px-1 rounded bg-exito-tint text-exito ml-1">+34%</span>';
-    else if (isPico2) tag = '<span class="text-[9px] font-bold px-1 rounded bg-bien-tint text-bien ml-1">+23%</span>';
-    else if (isPuente) tag = '<span class="text-[9px] font-bold px-1 rounded bg-cola-tint text-cola ml-1">+5%</span>';
-    else if (isSaturado) tag = '<span class="text-[9px] font-bold px-1 rounded bg-muerta-tint text-muerta ml-1">Filtro</span>';
+  // Filtrar días por semana seleccionada
+  let filteredDays = allDays;
+  if (state.calSemana !== 'todos') {
+    filteredDays = allDays.filter(d => d.semana === state.calSemana);
+  }
 
+  // Si no hay día seleccionado o no existe en los días filtrados, seleccionar el primero
+  if (!state.selectedDay || !filteredDays.some(d => d.fechaLabel === state.selectedDay)) {
+    state.selectedDay = filteredDays.length ? filteredDays[0].fechaLabel : (allDays[0] ? allDays[0].fechaLabel : '');
+  }
+
+  const activeDayData = allDays.find(d => d.fechaLabel === state.selectedDay) || filteredDays[0] || allDays[0] || { dia: 'Hoy', fechaLabel: 'Pauta Hoy', slots:[] };
+
+  // Selector de semanas
+  const weekButtons = semanas.map(s => {
+    const on = state.calSemana === s.id;
     return `
-      <button data-action="select-day" data-day="${w.dia}" class="shrink-0 px-3.5 py-2.5 rounded-xl border transition text-left ${on ? 'bg-ink text-paper border-ink shadow-md font-semibold' : 'bg-surface border-line text-sub hover:text-ink hover:border-ink/30'}">
-        <div class="flex items-center justify-between">
-          <span class="text-[13px]">${w.dia}</span>
-          ${tag}
-        </div>
-        <div class="text-[10px] mt-0.5 ${on ? 'text-paper/70' : 'text-faint'}">${w.slots ? w.slots.length : 0} pautas</div>
+      <button data-action="cal-week" data-semana="${s.id}"
+        class="shrink-0 px-3 py-1.5 rounded-xl text-[12px] font-medium transition border flex items-center gap-1.5 ${on ? 'bg-ink text-paper border-ink font-semibold shadow-sm' : 'bg-surface border-line text-sub hover:text-ink hover:border-ink/30'}">
+        <span>${esc(s.label)}</span>
+        <span class="text-[9.5px] font-mono rounded px-1.5 py-0.5 ${on ? 'bg-paper/20 text-paper font-bold' : 'bg-wash text-faint'}">${esc(s.badge)}</span>
       </button>
     `;
   }).join('');
 
-  // Slots / pautas recomendadas para el día seleccionado
-  const slotsList = (activeDayData.slots || []).map((s, idx) => {
-    const isCanino = s.vertical === 'canino';
+  // Selector de vertical
+  const vertButtons = [
+    { id: 'todos', label: 'Todas las pautas', count: allPautas.length, icon: 'layers' },
+    { id: 'cocina', label: 'Gastronomía (Chefs)', count: allPautas.filter(p => p.vertical === 'cocina').length, icon: 'utensils' },
+    { id: 'canino', label: 'Mascotas (Veterinarios)', count: allPautas.filter(p => p.vertical === 'canino').length, icon: 'paw-print' }
+  ].map(vb => {
+    const on = state.calVertical === vb.id;
+    return `
+      <button data-action="cal-vert" data-v="${vb.id}"
+        class="shrink-0 h-8 px-2.5 rounded-lg inline-flex items-center gap-1.5 text-[11.5px] border transition ${on ? 'bg-surface border-line text-ink font-semibold shadow-card' : 'border-transparent text-sub hover:text-ink font-medium'}">
+        <i data-lucide="${vb.icon}" class="w-3.5 h-3.5"></i>
+        <span>${vb.label}</span>
+        <span class="font-mono text-[10px] text-faint ml-0.5">(${vb.count})</span>
+      </button>
+    `;
+  }).join('');
+
+  // Selector de vista: Fichas del Día vs Parrilla Completa
+  const viewSwitch = `
+    <div class="flex bg-wash border border-line/70 rounded-xl p-0.5" role="group">
+      <button data-action="cal-view" data-mode="fichas" class="h-8 px-3 rounded-lg inline-flex items-center gap-1.5 text-[11.5px] transition ${state.calViewMode === 'fichas' ? 'bg-surface border border-line shadow-card font-semibold text-ink' : 'font-medium text-sub hover:text-ink'}">
+        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Fichas del Día
+      </button>
+      <button data-action="cal-view" data-mode="agenda" class="h-8 px-3 rounded-lg inline-flex items-center gap-1.5 text-[11.5px] transition ${state.calViewMode === 'agenda' ? 'bg-surface border border-line shadow-card font-semibold text-ink' : 'font-medium text-sub hover:text-ink'}">
+        <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Parrilla Completa
+      </button>
+    </div>
+  `;
+
+  // Date strip: carrusel de fechas para el bloque
+  const dayPills = filteredDays.map(d => {
+    const on = d.fechaLabel === state.selectedDay;
+    const isSab = d.dia === 'Sábado' || d.dia === 'Sabado';
+    const isDom = d.dia === 'Domingo';
+    const isVie = d.dia === 'Viernes';
+    const isSat = d.dia === 'Miércoles' || d.dia === 'Jueves';
+
+    let tag = '';
+    if (isSab) tag = '<span class="text-[9px] font-bold px-1 rounded bg-exito-tint text-exito border border-exito/30">+34%</span>';
+    else if (isDom) tag = '<span class="text-[9px] font-bold px-1 rounded bg-bien-tint text-bien border border-bien/30">+23%</span>';
+    else if (isVie) tag = '<span class="text-[9px] font-bold px-1 rounded bg-cola-tint text-cola border border-cola/30">+5%</span>';
+    else if (isSat) tag = '<span class="text-[9px] font-bold px-1 rounded bg-muerta-tint text-muerta border border-muerta/30">Filtro</span>';
+
+    return `
+      <button data-action="select-day" data-day="${esc(d.fechaLabel)}"
+        class="shrink-0 px-3.5 py-2.5 rounded-xl border text-left transition ${on ? 'bg-ink text-paper border-ink shadow-md font-semibold' : 'bg-surface border-line text-sub hover:text-ink hover:border-ink/40'}">
+        <div class="flex items-center justify-between gap-1.5">
+          <span class="text-[12.5px] font-semibold">${esc(d.dia)}</span>
+          ${tag}
+        </div>
+        <div class="text-[11px] mt-0.5 ${on ? 'text-paper/90 font-medium' : 'text-ink font-semibold'}">${esc(d.fechaStr || '')}</div>
+        <div class="text-[9.5px] font-mono mt-0.5 ${on ? 'text-paper/60' : 'text-faint'}">2 pautas</div>
+      </button>
+    `;
+  }).join('');
+
+  // Renderizar una tarjeta individual de pauta editorial
+  const renderPautaCard = (s, pautaIdx) => {
     const V = VERTICALS[s.vertical] || VERTICALS.canino;
     const isEnRedaccion = (s.estado || '').toUpperCase().includes('REDACCI');
     const isProgramado = (s.estado || '').toUpperCase().includes('PROGRAMA');
-    
+
     let estadoBadge = 'bg-wash text-sub border border-line';
-    if (isEnRedaccion) estadoBadge = 'bg-amber-50 text-amber-800 border border-amber-200';
+    if (isEnRedaccion) estadoBadge = 'bg-amber-50 text-amber-800 border border-amber-300';
     else if (isProgramado) estadoBadge = 'bg-cola-tint text-cola border border-cola/40';
     else estadoBadge = 'bg-exito-tint text-exito border border-exito/30';
 
+    const turnoLabel = pautaIdx === 0 ? 'Pauta 1/2 · Mañana' : 'Pauta 2/2 · Tarde / Noche';
+
     return `
-      <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-card hover:shadow-lift transition space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span class="font-mono text-[10.5px] font-bold bg-wash border border-line px-2 py-0.5 rounded text-ink flex items-center gap-1">
-              <i data-lucide="calendar" class="w-3 h-3 text-faint"></i> Pauta ${idx + 1}/2
-            </span>
-            <span class="font-mono text-[12px] font-bold bg-wash border border-line px-2 py-0.5 rounded text-ink flex items-center gap-1.5">
-              <i data-lucide="clock" class="w-3.5 h-3.5 text-faint"></i> ${esc(s.franja)} (CO)
-            </span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded ${V.tint}">
-              <i data-lucide="${V.icon}" class="w-3 h-3"></i> ${esc(s.seccion)}
-            </span>
-          </div>
-          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${estadoBadge}">
-            ${esc(s.estado || 'SUGERIDO')}
-          </span>
-        </div>
-
-        <div class="flex items-start gap-3">
-          <span class="w-8 h-8 rounded-full ${V.tint} grid place-items-center text-[10px] font-bold shrink-0 mt-0.5">
-            ${initials(s.referente)}
-          </span>
-          <div class="min-w-0 flex-1">
-            <div class="text-[11.5px] font-semibold text-sub uppercase tracking-wider flex items-center gap-1.5">
-              <span>${esc(s.referente)}</span>
-              <span class="text-faint">•</span>
-              <span class="text-[10.5px] text-faint normal-case">${esc(s.formato)}</span>
+      <div class="bg-surface border border-line rounded-2xl p-5 shadow-card hover:shadow-lift transition flex flex-col justify-between space-y-4">
+        <div>
+          <!-- Header de Pauta -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-line/70">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-[10.5px] font-bold px-2 py-0.5 rounded bg-ink text-paper shadow-sm">
+                ${turnoLabel}
+              </span>
+              <span class="inline-flex items-center gap-1.5 font-mono text-[12px] font-semibold bg-wash border border-line px-2.5 py-0.5 rounded text-ink">
+                <i data-lucide="clock" class="w-3.5 h-3.5 text-faint"></i> ${esc(s.franja)} COT
+              </span>
             </div>
-            <h4 class="font-serif text-[16px] sm:text-[17px] font-medium leading-snug text-ink mt-1">
-              ${esc(s.titular)}
-            </h4>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded ${V.tint}">
+                <i data-lucide="${V.icon}" class="w-3 h-3"></i> ${esc(s.seccion)}
+              </span>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${estadoBadge}">
+                ${esc(s.estado || 'PROGRAMADO')}
+              </span>
+            </div>
+          </div>
+
+          <!-- Referente / Autoridad -->
+          <div class="flex items-center gap-3 mt-3.5">
+            <span class="w-9 h-9 rounded-full ${V.tint} grid place-items-center text-[11px] font-bold shrink-0">
+              ${initials(s.referente)}
+            </span>
+            <div class="min-w-0 flex-1">
+              <h4 class="text-[14px] font-semibold text-ink truncate">${esc(s.referente)}</h4>
+              <p class="text-[11px] text-sub truncate">${esc(s.formato)}</p>
+            </div>
+          </div>
+
+          <!-- Titular Recomendado (Newsreader Serif) -->
+          <div class="mt-3.5 bg-paper/60 rounded-xl p-3.5 border border-line/70">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-faint block mb-1">Titular Recomendado Discover:</span>
+            <blockquote class="font-serif text-[17px] sm:text-[18px] font-semibold text-ink leading-snug">
+              “${esc(s.titular)}”
+            </blockquote>
+          </div>
+
+          <!-- Por Qué Funciona en Discover -->
+          <div class="mt-3 rounded-xl bg-wash/60 border border-line/70 p-3 text-[12px] text-sub leading-relaxed flex items-start gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+            <div>
+              <strong class="text-ink font-semibold">¿Por qué funciona en Discover?</strong>
+              <p class="text-sub mt-0.5 leading-snug">${esc(s.regla)}</p>
+            </div>
           </div>
         </div>
 
-        <div class="rounded-lg bg-paper/70 border border-line/70 p-3 flex gap-2.5 text-[12px] text-sub leading-relaxed">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5"></i>
-          <div>
-            <strong class="text-ink font-semibold">Por qué funciona en Discover:</strong> ${esc(s.regla)}
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-2 border-t border-line/70">
-          <span class="text-[10.5px] font-mono text-faint">Fórmula E-E-A-T anticlickbait</span>
-          <button data-action="copy-pauta" data-titular="${esc(s.titular)}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ink text-paper text-[11.5px] font-medium hover:bg-ink/90 transition shadow-card">
-            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar titular sugerido
+        <!-- Botón de Acción Directo -->
+        <div class="pt-3 border-t border-line/70 flex items-center justify-between gap-3">
+          <span class="text-[10.5px] font-mono text-faint">Fórmula E-E-A-T validada</span>
+          <button data-action="copy-pauta" data-titular="${esc(s.titular)}"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-ink text-paper text-[12px] font-medium hover:bg-ink/90 active:scale-95 transition shadow-card">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Titular Sugerido
           </button>
         </div>
       </div>
     `;
-  }).join('');
+  };
+
+  // Contenido según vista: Fichas del Día o Parrilla Completa
+  let mainContent = '';
+  if (state.calViewMode === 'fichas') {
+    let slots = activeDayData.slots || [];
+    if (state.calVertical !== 'todos') {
+      slots = slots.filter(s => s.vertical === state.calVertical);
+    }
+
+    mainContent = `
+      <!-- Cabecera del Día Seleccionado -->
+      <div class="bg-surface border border-line rounded-2xl p-5 shadow-card flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <h3 class="text-[19px] font-semibold tracking-tight text-ink">${esc(activeDayData.fechaLabel || activeDayData.dia)}</h3>
+            <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded ${esc(activeDayData.tagCls || 'bg-wash text-sub')}">
+              ${esc(activeDayData.impacto || 'Día Activo')}
+            </span>
+            <span class="text-[11.5px] font-mono text-sub bg-wash border border-line px-2 py-0.5 rounded">
+              Máximo 2 pautas por día
+            </span>
+          </div>
+          <p class="text-[12.5px] text-sub mt-1 leading-snug">${esc(activeDayData.prioridad || 'Estrategia editorial optimizada para perforar el feed Discover.')}</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-[11px] font-mono text-sub bg-paper px-3 py-1.5 rounded-lg border border-line">
+            Ventana España: +6h vs COT
+          </span>
+        </div>
+      </div>
+
+      <!-- Grid de las 2 Pautas Recomendadas -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        ${slots.length ? slots.map((s, idx) => renderPautaCard(s, idx)).join('') : `
+          <div class="col-span-full bg-surface border border-dashed border-line rounded-2xl p-12 text-center text-sub text-[13px]">
+            No hay pautas para este vertical en este día. Selecciona "Todas las pautas" para ver la programación completa.
+          </div>
+        `}
+      </div>
+    `;
+  } else {
+    // Modo Parrilla Completa (Agenda Timeline)
+    mainContent = `
+      <div class="space-y-6">
+        ${filteredDays.map(d => {
+          let daySlots = d.slots || [];
+          if (state.calVertical !== 'todos') {
+            daySlots = daySlots.filter(s => s.vertical === state.calVertical);
+          }
+          if (!daySlots.length) return '';
+
+          return `
+            <div class="bg-surface border border-line rounded-2xl p-5 shadow-card space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line/70 pb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-ink"></span>
+                  <h4 class="text-[16px] font-semibold text-ink">${esc(d.fechaLabel || d.dia)}</h4>
+                  <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded ${esc(d.tagCls || 'bg-wash text-sub')}">${esc(d.impacto || '')}</span>
+                </div>
+                <span class="text-[11px] font-mono text-faint">${daySlots.length} pautas recomendadas (Máx 2/día)</span>
+              </div>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                ${daySlots.map((s, idx) => renderPautaCard(s, idx)).join('')}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
 
   return `
     <div class="space-y-6">
-      
-      <!-- Banner de Estrategia Inteligente -->
+
+      <!-- Header Táctico del Calendario con Semáforo Discover 2026 -->
       <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 shadow-card space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center gap-2">
-            <span class="w-8 h-8 rounded-lg bg-ink text-paper grid place-items-center">
-              <i data-lucide="compass" class="w-4 h-4"></i>
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-ink text-paper grid place-items-center shadow-card shrink-0">
+              <i data-lucide="compass" class="w-5 h-5"></i>
             </span>
             <div>
-              <h3 class="text-[16px] font-semibold tracking-tight">Estrategia Táctica Discover 2026</h3>
-              <p class="text-[11.5px] text-sub">Matriz de publicación para superar el algoritmo y evitar los días de saturación.</p>
+              <h3 class="text-[17px] font-semibold tracking-tight text-ink">Plan Maestro Editorial Discover 2026</h3>
+              <p class="text-[12px] text-sub">52 pautas estratégicas sincronizadas en tiempo real desde Google Sheets · Máximo 2 por día.</p>
             </div>
           </div>
-          <span class="text-[11px] font-mono text-exito bg-exito-tint border border-exito/30 rounded-lg px-2.5 py-1">
-            Prioridad Máxima: Sábado & Domingo
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-[12px]">
-          <div class="p-3 rounded-xl bg-paper border border-line">
-            <strong class="text-ink block mb-0.5">1. Sábado (+34%) y Domingo (+23%)</strong>
-            <p class="text-sub text-[11px] leading-snug">Menos noticias duras en redacciones, lectores con tiempo de ocio en el sofá. Lanzar las mejores recetas de chefs y etología profunda.</p>
-          </div>
-          <div class="p-3 rounded-xl bg-paper border border-line">
-            <strong class="text-ink block mb-0.5">2. Miércoles (-16%) y Jueves (-19%)</strong>
-            <p class="text-sub text-[11px] leading-snug">Días hiper-saturados de política/economía. PROHIBIDO el evergreen genérico: usar solo Alertas Sanitarias (Jordi Cruz) o Paradojas (Pablo Ojeda).</p>
-          </div>
-          <div class="p-3 rounded-xl bg-paper border border-line">
-            <strong class="text-ink block mb-0.5">3. Fórmula E-E-A-T Obligatoria</strong>
-            <p class="text-sub text-[11px] leading-snug"><code>[Nombre Propio] + [Credencial] + [Cita textual o dato exacto]</code>. Aporta +20% de tráfico y blinda contra penalización anticlickbait.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Selector de Días Semanales -->
-      <div>
-        <div class="flex items-center justify-between mb-2.5">
-          <h4 class="text-[13.5px] font-semibold text-ink">Selecciona el día para ver las pautas recomendadas:</h4>
-          <span class="text-[11px] text-sub font-mono">Hora Colombia (COT)</span>
-        </div>
-        <div class="flex gap-2 overflow-x-auto pb-1" id="calendarDayPills">
-          ${dayPills}
-        </div>
-      </div>
-
-      <!-- Detalle del Día Activo -->
-      <div class="bg-wash/60 border border-line rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
-        <div>
           <div class="flex items-center gap-2">
-            <h3 class="text-[16px] font-semibold text-ink">${activeDayData.dia}</h3>
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-surface border border-line">${activeDayData.impacto || 'Parrilla activa'}</span>
-            <span class="text-[11px] text-sub font-medium">${activeDayData.prioridad || ''}</span>
+            <span class="text-[11px] font-mono text-exito bg-exito-tint border border-exito/30 rounded-lg px-2.5 py-1">
+              Prioridad Fin de Semana (+54%)
+            </span>
           </div>
-          <p class="text-[12px] text-sub mt-1 leading-snug">${activeDayData.estrategia || 'Pautas optimizadas para este día.'}</p>
         </div>
-        <div class="text-right">
-          <span class="text-[11px] font-mono text-faint block">Ventana Óptima</span>
-          <span class="text-[12px] font-bold font-mono text-ink">${activeDayData.horarioRecomendado || '06:00 - 10:00 CO'}</span>
+
+        <!-- Semáforo Algorítmico 2026 -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 text-[11.5px]">
+          <div class="p-2.5 rounded-xl bg-paper border border-line">
+            <span class="text-[10px] font-mono text-exito font-bold block uppercase tracking-wider">Sábado (+34%) & Domingo (+23%)</span>
+            <p class="text-sub text-[11px] mt-0.5 leading-tight">Pico máximo. Menos noticias duras, audiencia en el sofá. Vida útil de 48h a 72h.</p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-paper border border-line">
+            <span class="text-[10px] font-mono text-cola font-bold block uppercase tracking-wider">Viernes (+5% Puente)</span>
+            <p class="text-sub text-[11px] mt-0.5 leading-tight">Compras inteligentes (pescadería), menús exprés y alertas estacionales de viaje.</p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-paper border border-line">
+            <span class="text-[10px] font-mono text-muerta font-bold block uppercase tracking-wider">Miércoles & Jueves (-19%)</span>
+            <p class="text-sub text-[11px] mt-0.5 leading-tight">Máxima saturación política. VETO de recetas atemporales: solo Paradojas o Alertas sanitarias.</p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-paper border border-line">
+            <span class="text-[10px] font-mono text-ink font-bold block uppercase tracking-wider">Fórmula E-E-A-T (+20%)</span>
+            <p class="text-sub text-[11px] mt-0.5 leading-tight"><code>[Nombre Propio] + [Credencial] + [Cita textual o truco]</code>. Penalización anticlickbait.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Parrilla de Pautas para el Día -->
-      <div class="space-y-3.5">
-        ${slotsList || '<div class="bg-surface border border-dashed border-line rounded-xl p-8 text-center text-sub text-[13px]">No hay pautas registradas para este día</div>'}
+      <!-- Barra de Filtros y Navegación de Semanas -->
+      <div class="bg-surface border border-line rounded-2xl p-4 shadow-card space-y-3">
+        <!-- Fila 1: Pestañas de Semanas -->
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <span class="text-[11px] font-mono text-sub uppercase tracking-wider font-semibold">Bloque de Calendario:</span>
+          <div class="flex gap-2 overflow-x-auto pb-1 max-w-full">
+            ${weekButtons}
+          </div>
+        </div>
+
+        <!-- Fila 2: Filtros de Vertical y Modo de Vista -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-line/70">
+          <div class="flex items-center gap-1.5 overflow-x-auto">
+            ${vertButtons}
+          </div>
+          ${viewSwitch}
+        </div>
       </div>
+
+      <!-- Carrusel Horizontal de Días (Date Strip) -->
+      ${state.calViewMode === 'fichas' ? `
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-[13px] font-semibold text-ink">Selecciona el día para ver las 2 pautas recomendadas:</h4>
+            <span class="text-[11px] font-mono text-sub">${filteredDays.length} días planificados</span>
+          </div>
+          <div class="flex gap-2 overflow-x-auto pb-2" id="calendarDayPills">
+            ${dayPills}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Contenido Principal (Fichas o Agenda) -->
+      ${mainContent}
 
     </div>
+  `;
+}
   `;
 }
 
@@ -967,43 +1130,63 @@ function directoryPanel(v){
 
 function rulesPanel(){
   const items = sheetData.rules || [];
-  return panelHead('Horarios y Reglas Discover 2026', 'Algoritmo de tráfico, picos semanales y fórmulas obligatorias.') + `
-    <div class="grid md:grid-cols-2 gap-3">
+  const kpis = sheetData.meta && sheetData.meta.kpis ? sheetData.meta.kpis : {
+    picoFinSemana: '+54%', mejorDiaSabado: '+34%', segundoMejorDomingo: '+23%', boostNombrePropio: '+20%', peorDiaJueves: '-19%'
+  };
+
+  return panelHead('Horarios y Reglas Discover 2026', 'Algoritmo de tráfico, picos semanales y fórmulas obligatorias E-E-A-T.') + `
+    <!-- KPI Algorítmicos Bar -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-5">
+      <div class="bg-surface border border-line rounded-xl p-3 shadow-card">
+        <span class="text-[10px] font-mono text-faint uppercase tracking-wider block">Pico Fin de Semana</span>
+        <span class="font-mono text-[20px] font-bold text-exito">${esc(kpis.picoFinSemana)}</span>
+        <span class="text-[10.5px] text-sub block mt-0.5">Sáb + Dom vs media</span>
+      </div>
+      <div class="bg-surface border border-line rounded-xl p-3 shadow-card">
+        <span class="text-[10px] font-mono text-faint uppercase tracking-wider block">Día #1 Semanal</span>
+        <span class="font-mono text-[20px] font-bold text-exito">${esc(kpis.mejorDiaSabado)}</span>
+        <span class="text-[10.5px] text-sub block mt-0.5">Sábado (Ocio y vida útil 48h)</span>
+      </div>
+      <div class="bg-surface border border-line rounded-xl p-3 shadow-card">
+        <span class="text-[10px] font-mono text-faint uppercase tracking-wider block">Día #2 Semanal</span>
+        <span class="font-mono text-[20px] font-bold text-bien">${esc(kpis.segundoMejorDomingo)}</span>
+        <span class="text-[10.5px] text-sub block mt-0.5">Domingo (Batch cooking)</span>
+      </div>
+      <div class="bg-surface border border-line rounded-xl p-3 shadow-card">
+        <span class="text-[10px] font-mono text-faint uppercase tracking-wider block">Boost Nombre Propio</span>
+        <span class="font-mono text-[20px] font-bold text-cola">${esc(kpis.boostNombrePropio)}</span>
+        <span class="text-[10.5px] text-sub block mt-0.5">E-E-A-T + Credencial</span>
+      </div>
+      <div class="bg-surface border border-line rounded-xl p-3 shadow-card">
+        <span class="text-[10px] font-mono text-faint uppercase tracking-wider block">Peor Día (Saturación)</span>
+        <span class="font-mono text-[20px] font-bold text-muerta">${esc(kpis.peorDiaJueves)}</span>
+        <span class="text-[10.5px] text-sub block mt-0.5">Jueves (Veto evergreen)</span>
+      </div>
+    </div>
+
+    <!-- Reglas Editoriales Detalladas -->
+    <div class="grid md:grid-cols-2 gap-4">
       ${items.map(r => `
-        <div class="bg-surface border border-line rounded-xl p-4 shadow-card space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-semibold text-[13px] text-ink">${esc(r.titulo)}</span>
-            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-wash text-sub">${esc(r.evidencia)}</span>
-          </div>
-          <p class="text-[11.5px] text-sub leading-relaxed">${esc(r.detalle)}</p>
-        </div>
-      `).join('')}
-    </div>`;
-}
-
-function seasonPanel(){
-  return panelHead('Chefs y Temporada', 'Calendario culinario y de cuidados de mascotas.') + `
-    <div class="bg-surface border border-line rounded-xl p-5 shadow-card space-y-3">
-      <h4 class="font-semibold text-[14px]">Temporada Actual: Otoño / Fin de Año</h4>
-      <p class="text-[12px] text-sub leading-relaxed">Picos masivos esperados en Alborada / Pólvora (30 de nov en Colombia), caldos limpios de pollo (Ferran Adrià) y batch cooking pre-festivo.</p>
-    </div>`;
-}
-
-function templatePanel(){
-  const tpls = sheetData.templates || [];
-  return panelHead('Plantillas de Titulares Ganadoras', 'Fórmulas probadas listas para copiar con 1 clic.') + `
-    <div class="grid md:grid-cols-2 gap-3">
-      ${tpls.map(t => `
-        <div class="bg-surface border border-line rounded-xl p-4 shadow-card space-y-2 flex flex-col justify-between">
+        <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-card space-y-2.5 flex flex-col justify-between">
           <div>
-            <span class="text-[10.5px] font-bold uppercase tracking-wider text-faint">${esc(t.cat)}</span>
-            <div class="font-mono text-[11.5px] text-ink/90 bg-paper p-2.5 rounded-lg border border-line/70 mt-1">${esc(t.patron)}</div>
+            <div class="flex items-start justify-between gap-2">
+              <span class="font-semibold text-[14px] text-ink leading-snug">${esc(r.titulo)}</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-wash border border-line shrink-0 text-ink">${esc(r.evidencia || r.impacto || '')}</span>
+            </div>
+            ${(r.horarioCO || r.horarioES) ? `
+              <div class="mt-2 text-[11px] font-mono text-sub bg-paper p-1.5 rounded-lg border border-line/60 flex flex-wrap gap-x-3 gap-y-1">
+                ${r.horarioCO ? `<span><strong>Horario CO:</strong> ${esc(r.horarioCO)}</span>` : ''}
+                ${r.horarioES ? `<span><strong>Horario ES:</strong> ${esc(r.horarioES)}</span>` : ''}
+              </div>
+            ` : ''}
+            <p class="text-[12px] text-sub leading-relaxed mt-2">${esc(r.detalle)}</p>
           </div>
-          <div class="text-right pt-2">
-            <button data-action="copy-pauta" data-titular="${esc(t.patron)}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-ink text-paper text-[11px] font-medium hover:bg-ink/90 transition">
-              <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-            </button>
-          </div>
+          ${r.aplicacion ? `
+            <div class="pt-2.5 border-t border-line/70 text-[11.5px] text-ink/90 flex items-start gap-1.5 bg-wash/40 p-2 rounded-lg">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5 text-exito shrink-0 mt-0.5"></i>
+              <div><strong class="text-ink font-semibold">Aplicación práctica:</strong> ${esc(r.aplicacion)}</div>
+            </div>
+          ` : ''}
         </div>
       `).join('')}
     </div>`;
@@ -1013,12 +1196,10 @@ function renderPanel(animate = true){
   const panel = $('sheetPanel');
   const builders = {
     calendario: renderCalendarSmart,
-    bitacora: () => panelHead('Bitácora de Experimentos', 'Historial de notas probadas en El Tiempo.') + bitToolbar(),
+    bitacora: () => panelHead('Bitácora de Experimentos', 'Historial completo de notas probadas en El Tiempo auditadas en Google Sheets.') + bitToolbar(),
     reglas: rulesPanel,
     'dir-chefs': () => directoryPanel('cocina'),
-    'dir-canino': () => directoryPanel('canino'),
-    temporada: seasonPanel,
-    plantillas: templatePanel
+    'dir-canino': () => directoryPanel('canino')
   };
   panel.innerHTML = builders[state.tab] ? builders[state.tab]() : renderCalendarSmart();
   if (state.tab === 'bitacora'){ renderBitChips(); renderBitResults(); }
@@ -1128,8 +1309,28 @@ document.addEventListener('click', e => {
       state.selectedDay = t.dataset.day;
       renderPanel(false);
       break;
+    case 'cal-week':
+      state.calSemana = t.dataset.semana;
+      renderPanel(false);
+      break;
+    case 'cal-vert':
+      state.calVertical = t.dataset.v;
+      renderPanel(false);
+      break;
+    case 'cal-view':
+      state.calViewMode = t.dataset.mode;
+      renderPanel(false);
+      break;
     case 'copy-pauta':
       copyToClipboard(t.dataset.titular, 'Titular copiado al portapapeles');
+      const origHtml = t.innerHTML;
+      t.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> ¡Titular copiado!';
+      t.classList.add('bg-emerald-800');
+      setTimeout(() => {
+        t.innerHTML = origHtml;
+        t.classList.remove('bg-emerald-800');
+        queueIcons();
+      }, 2200);
       break;
     case 'set-status':
       state.status = t.dataset.v;
