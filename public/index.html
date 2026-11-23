@@ -23,6 +23,7 @@ tailwind.config={theme:{extend:{
 }}};
 </script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script>window.d3||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"><\/script>')</script>
 <style>
 :root{--paper:#F6F4EF;--card:#FCFBF8;--surface:#EFECE6;--ink:#141413;--line:#E3DFD6;--rule:#D6D1C7;--terra:#D94E34;--forest:#1E5641;--amber:#C88A1E;--amberdeep:#8F6212;--muted:#6B665C;--faint:#9B958A;--stickyH:118px;}
 html{scroll-behavior:smooth;}
@@ -69,8 +70,7 @@ select.ctl:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:foc
 .track .fill{height:100%;border-radius:6px;background:var(--ink);transition:width .6s cubic-bezier(.2,.8,.3,1);}
 .track .tick{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--amber);border-radius:2px;}
 section[id]{scroll-margin-top:calc(var(--stickyH) + 14px);}
-.reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease;}
-.reveal.in{opacity:1;transform:none;}
+.reveal{opacity:1;transform:none;}
 /* ── calendario ── */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
 .cal-dow{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-align:center;padding:4px 0;}
@@ -778,7 +778,7 @@ const fmtPct=(v,d=1)=>v==null?"—":(d===0?nfInt.format(Math.round(v)):nf1.forma
 const fmtK=v=>v==null?"—":v>=1e6?nf1.format(v/1e6)+" M":v>=1000?nf1.format(Math.round(v/100)/10)+" k":nfInt.format(Math.round(v));
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const norm=s=>String(s??"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
-const median=a=>a.length?d3.median(a):null;
+const median=a=>{if(!a||!a.length)return null;const s=a.slice().sort((x,y)=>x-y);const m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2;};
 const sumV=a=>a.reduce((s,p)=>s+(p.visitas||0),0);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const isoUTC=d=>d.toISOString().slice(0,10);
@@ -837,7 +837,7 @@ function buildSeed(){
 function exportData(data){return{meta:data.meta,piezas:data.piezas.map(p=>{const o={};CORE_KEYS.forEach(k=>o[k]=p[k]===undefined?null:p[k]);return o;})};}
 
 /* ═══════════ ESTADO ═══════════ */
-const state={data:buildSeed(),filters:{semana:"all",vertical:"all",regla:"all",experimento:"all",estado:"all"},search:"",sort:{key:"fecha",dir:1},monthIdx:1,selectedDay:"2026-12-17",view:"cal",drawerPiece:null,firstPaint:true};
+const state={data:buildSeed(),filters:{semana:"all",vertical:"all",regla:"all",experimento:"all",estado:"all"},search:"",sort:{key:"fecha",dir:1},monthIdx:1,selectedDay:"2026-12-17",view:"cal",drawerPiece:null,firstPaint:true,sheetExtras:{chefs:[],caninos:[],experiments:[]}};
 const $=id=>document.getElementById(id);
 const corteDate=()=>new Date(state.data.meta.corte);
 const corteISO=()=>state.data.meta.corte.slice(0,10);
