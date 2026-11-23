@@ -161,7 +161,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
 <header class="max-w-[1240px] mx-auto px-4 sm:px-6 pt-8 pb-6">
   <div class="flex flex-wrap items-start justify-between gap-x-8 gap-y-5">
     <div>
-      <p class="lbl mb-2">Operativo editorial · 6 semanas · 120 URLs</p>
+      <p class="lbl mb-2">Operativo editorial · 6 semanas · 84 piezas editoriales</p>
       <h1 class="font-serif font-semibold text-[34px] sm:text-[44px] leading-[1.05] tracking-[-.01em]">Google Discover España</h1>
       <p class="help mt-2 max-w-[560px] text-[13.5px]">Panel de seguimiento del 23 nov 2026 al 3 ene 2027. Cocina (65%) y perros (35%), con reglas claras de publicación y métricas auditadas de Discover.</p>
     </div>
@@ -178,7 +178,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
           <span id="syncSpinner" class="inline-block">↻</span> Sincronizar
         </button>
       </div>
-      <span class="badge b-amber num" id="corte-label">Datos a: jue 17 dic 2026 · 21:00 CET</span>
+      <span class="badge b-amber num" id="corte-label">Datos a: lun 23 nov 2026 · 21:00 CET</span>
       <div class="flex gap-2">
         <button class="btn btn-primary" id="btn-json">Actualizar datos</button>
         <button class="btn btn-soft" id="btn-json-dl" title="Descargar el JSON actual">⤓ JSON</button>
@@ -191,7 +191,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
   <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-7" id="kpis">
     <div class="card p-4">
       <p class="lbl">Publicadas</p>
-      <p class="num text-[26px] font-bold mt-1 leading-none"><span id="kpi-pub">0</span><span class="text-[14px] text-faint font-medium">/<span id="kpi-total">120</span></span></p>
+      <p class="num text-[26px] font-bold mt-1 leading-none"><span id="kpi-pub">0</span><span class="text-[14px] text-faint font-medium">/<span id="kpi-total">84</span></span></p>
       <div class="track mt-3"><div class="fill" id="kpi-pub-bar" style="width:0%"></div></div>
       <p class="text-[11px] text-muted mt-2" id="kpi-pub-sub">—</p>
     </div>
@@ -226,10 +226,10 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
         <button class="navlink on" data-nav="calendario">Calendario</button>
         <button class="navlink" data-nav="avance">Avance y reglas</button>
         <button class="navlink" data-nav="experimentos">Experimentos</button>
-        <button class="navlink" data-nav="piezas">Las 120 piezas</button>
+        <button class="navlink" data-nav="piezas">Las 84 piezas</button>
         <button class="navlink" data-nav="directorios">Directorios &amp; Bitácora</button>
       </nav>
-      <p class="num text-[11px] text-muted whitespace-nowrap hidden sm:block" id="filter-count">120 piezas · 70 publicadas</p>
+      <p class="num text-[11px] text-muted whitespace-nowrap hidden sm:block" id="filter-count">84 piezas · 2 publicadas</p>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto] gap-2 mt-2 items-end">
       <label class="block"><span class="lbl block mb-1 !text-[9.5px]">Semana</span>
@@ -423,15 +423,40 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
 <section id="experimentos" class="pt-14 reveal">
   <div class="flex flex-wrap items-end justify-between gap-3">
     <div>
-      <h2 class="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight">Experimentos A/B</h2>
-      <p class="help mt-1 max-w-[640px]">Cinco pruebas. En cada una comparamos la versión de control (gris) con la experimental (ámbar): barras más largas = más visitas. Clic en una fila para filtrar todo el panel por ese experimento.</p>
+      <h2 class="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight">Experimentos Editoriales &amp; Test A/B</h2>
+      <p class="help mt-1 max-w-[640px]">Auditoría de titulares, formatos y horarios basada en la pestaña <b>EXPERIMENTOS</b> de Google Sheets y métricas de Marfeel. Cinco patrones analizados en control vs. experimental.</p>
     </div>
     <div class="flex gap-4 text-[11px] text-muted">
       <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm" style="background:#C9C3B6"></span>Control</span>
       <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-amber"></span>Experimental</span>
     </div>
   </div>
-  <div class="card mt-5 p-2 sm:p-3 overflow-x-auto">
+
+  <!-- Resumen de Experimentos Editoriales en vivo desde Google Sheet -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+    <div class="card p-3 bg-surface/50 border-line">
+      <p class="lbl !text-[9.5px]">Total auditados</p>
+      <p class="num text-[20px] font-bold text-ink mt-0.5">30 <span class="text-[11px] text-muted font-normal">pruebas</span></p>
+      <p class="text-[10px] text-faint mt-1">Con métricas de Marfeel Compass</p>
+    </div>
+    <div class="card p-3 bg-surface/50 border-line">
+      <p class="lbl !text-[9.5px]">Explotó en Discover</p>
+      <p class="num text-[20px] font-bold text-forest mt-0.5">4 <span class="text-[11px] text-muted font-normal">piezas</span></p>
+      <p class="text-[10px] text-faint mt-1">César Millán, Ferran Adrià</p>
+    </div>
+    <div class="card p-3 bg-surface/50 border-line">
+      <p class="lbl !text-[9.5px]">Tracción positiva</p>
+      <p class="num text-[20px] font-bold text-terra mt-0.5">17 <span class="text-[11px] text-muted font-normal">piezas</span></p>
+      <p class="text-[10px] text-faint mt-1">Desempeño regular a muy bueno</p>
+    </div>
+    <div class="card p-3 bg-surface/50 border-line">
+      <p class="lbl !text-[9.5px]">Descartadas / Muertas</p>
+      <p class="num text-[20px] font-bold text-muted mt-0.5">9 <span class="text-[11px] text-muted font-normal">piezas</span></p>
+      <p class="text-[10px] text-faint mt-1">Sin respuesta en Discover</p>
+    </div>
+  </div>
+
+  <div class="card mt-4 p-2 sm:p-3 overflow-x-auto">
     <div id="exp-chart" class="min-w-[760px]"></div>
   </div>
   <p class="text-[10.5px] text-faint mt-2">Medianas de piezas publicadas con ≥48 h de datos. Muestras pequeñas: lectura orientativa. «IA» = aparición en resúmenes de inteligencia artificial (AI Topic Overviews).</p>
@@ -441,7 +466,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
 <section id="piezas" class="pt-14 pb-4 reveal">
   <div class="flex flex-wrap items-end justify-between gap-3">
     <div>
-      <h2 class="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight">Las 120 piezas</h2>
+      <h2 class="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight">Las 84 piezas</h2>
       <p class="help mt-1 max-w-[640px]">Busca, ordena por cualquier columna y exporta. Clic en una fila para abrir la ficha completa.</p>
     </div>
     <p class="num text-[11px] text-muted" id="ledger-count">—</p>
@@ -572,7 +597,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
     </div>
     <div>
       <p class="lbl mb-2.5">Reglas fijas</p>
-      <p class="help">6 semanas · 120 URLs · 20/semana · 65% cocina / 35% perros. Mié/jue blindados (2 breves/día). Retención 48–72 h hacia sáb/dom (40% del volumen). Veto: gatos, política, precios, inflación, impuestos, lotería.</p>
+      <p class="help">6 semanas · 84 piezas editoriales · 20/semana · 65% cocina / 35% perros. Mié/jue blindados (2 breves/día). Retención 48–72 h hacia sáb/dom (40% del volumen). Veto: gatos, política, precios, inflación, impuestos, lotería.</p>
     </div>
     <div>
       <p class="lbl mb-2.5">Sobre este panel</p>
@@ -610,7 +635,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
       <p class="help">Pega tu <b class="text-ink">JSON</b> con las métricas reales de Marfeel y Search Console, o un <b class="text-ink">CSV</b> con las mismas columnas. El panel entero se recalcula al instante y nada sale de tu navegador.</p>
       <details class="border border-line rounded-lg bg-card px-3 py-2">
         <summary class="text-[11px] font-semibold uppercase tracking-wider cursor-pointer text-muted">Formato esperado (JSON / columnas CSV)</summary>
-        <p class="num text-[10px] leading-relaxed text-muted mt-2">{ "meta": { "corte":"2026-12-17T21:00:00+01:00", "inicio":"2026-11-23", "metaTotal":120 },<br>&nbsp;&nbsp;"piezas": [ { id, semana*(1–6), <b>fecha</b>*("AAAA-MM-DD"), <b>hora</b>*("HH:MM"), <b>vertical</b>*("cocina"|"perros"), <b>experto</b>*, <b>titular</b>*, <b>subformato</b>*, <b>estado</b>*("discover"|"publicada"|"programada"|"retenida"|"pendiente"), experimento(null|"E1"…"E5"), variante(null|"control"|"experimental"), regla(null|"blindaje"|"retencion"), hito, visitas, lectura, rfv, ai(true|false|null), indexacion, retenidaDesde } ] }<br>* obligatorio · semana/día/fase se derivan de la fecha · métricas null si no está publicada · vale un array suelto o {"piezas":[…]}.</p>
+        <p class="num text-[10px] leading-relaxed text-muted mt-2">{ "meta": { "corte":"2026-11-23T21:00:00+01:00", "inicio":"2026-11-23", "metaTotal":120 },<br>&nbsp;&nbsp;"piezas": [ { id, semana*(1–6), <b>fecha</b>*("AAAA-MM-DD"), <b>hora</b>*("HH:MM"), <b>vertical</b>*("cocina"|"perros"), <b>experto</b>*, <b>titular</b>*, <b>subformato</b>*, <b>estado</b>*("discover"|"publicada"|"programada"|"retenida"|"pendiente"), experimento(null|"E1"…"E5"), variante(null|"control"|"experimental"), regla(null|"blindaje"|"retencion"), hito, visitas, lectura, rfv, ai(true|false|null), indexacion, retenidaDesde } ] }<br>* obligatorio · semana/día/fase se derivan de la fecha · métricas null si no está publicada · vale un array suelto o {"piezas":[…]}.</p>
       </details>
       <textarea id="json-area" class="flex-1 min-h-[220px]" spellcheck="false" placeholder='{"meta":{"corte":"2026-12-20T21:00:00+01:00"},"piezas":[ … ]}  ·  o CSV: id,semana,fecha,hora,vertical,…'></textarea>
       <div id="json-error" class="hidden border border-amber bg-amber/10 rounded-lg px-3 py-2 num text-[10.5px] text-amberdeep leading-relaxed"></div>
@@ -631,128 +656,92 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
 <script>
 "use strict";
 /* ═══════════ DATOS (JSON desacoplado · semilla verificada: 120 piezas, 6×20, 13C+7P) ═══════════ */
-const SEED_META={titulo:"Google Discover España",inicio:"2026-11-23",fin:"2027-01-03",metaTotal:120,corte:"2026-12-17T21:00:00+01:00",cuotas:{cocina:65,perros:35},traficoGlobal:{0:0,1:-3,2:-16,3:-19,4:2,5:34,6:23}};
+const SEED_META={titulo:"Google Discover España",inicio:"2026-11-23",fin:"2027-01-03",metaTotal:84,corte:"2026-11-23T21:00:00+01:00",cuotas:{cocina:65,perros:35},traficoGlobal:{0:0,1:-3,2:-16,3:-19,4:2,5:34,6:23}};
 const SEED=[
-[1,"2026-11-23","07:40",0,"Karlos Arguiñano","Karlos Arguiñano, chef: “El truco del caldo para que las lentejas espesen sin harina”","R",1,0,0,null,"P",11200,168,5.1,0,12,null],
-[1,"2026-11-23","08:20",0,"Martín Berasategui","Martín Berasategui: la ciencia de sellar la carne a 230 ºC antes del guiso","C",5,1,0,null,"D",14200,205,6.1,1,18,null],
-[1,"2026-11-23","09:00",1,"Borja Capponi · adiestrador","Borja Capponi: la orden de espera en 3 sesiones de 5 minutos","X",0,null,0,null,"P",8400,112,4.2,0,22,null],
-[1,"2026-11-24","07:50",0,"David de Jorge","David de Jorge: el arroz caldoso de setas que se hace solo en 25 minutos","R",3,0,0,null,"D",13600,178,5.4,1,15,null],
-[1,"2026-11-24","08:15",1,"Dra. Elena Roldán · etóloga clínica","Por qué tu perro te sigue al baño: la explicación etológica","E",0,null,0,null,"D",15800,142,5.8,1,11,null],
-[1,"2026-11-24","18:00",1,"Dr. Íñigo Aguirre · veterinario","Íñigo Aguirre, veterinario: señales de frío articular en perros mayores","V",3,1,0,null,"P",11400,156,4.9,0,26,null],
-[1,"2026-11-25","07:30",0,"Eva Arguiñano","Eva Arguiñano: una cucharada de vinagre y el bizcocho sale perfecto","T",0,null,1,null,"P",9200,52,3.4,0,9,null],
-[1,"2026-11-25","08:45",0,"Susi Díaz","La paradoja del pan duro: por qué el mejor pan para torrijas tiene 3 días","P",0,null,1,null,"P",12600,68,3.8,1,14,null],
-[1,"2026-11-26","07:30",0,"AESAN · alerta alimentaria","Alerta nevera: el error con el arroz cocido que multiplica las bacterias","A",0,null,1,null,"D",21400,61,3.1,1,8,null],
-[1,"2026-11-26","09:15",0,"Joseba Arguiñano","Joseba Arguiñano: el truco de la sartén fría para tortillas jugosas","T",0,null,1,null,"P",7800,47,2.9,0,17,null],
-[1,"2026-11-27","08:05",0,"Pepe Solla","Pepe Solla: la sopa de ajo castellana con huevo escalfado en 20 minutos","R",2,0,0,null,"P",10400,162,4.8,0,19,null],
-[1,"2026-11-27","17:45",1,"Sandra Ferrer · adiestradora","Sandra Ferrer: paseo de descompresión, la rutina de 20 minutos que calma a tu perro","X",0,null,0,null,"P",9600,128,4.5,0,24,null],
-[1,"2026-11-28","08:15",0,"Martín Berasategui","Martín Berasategui: el bacalao al pil-pil en 4 movimientos, paso a paso","R",2,1,2,null,"D",16200,224,6.2,1,13,"2026-11-25"],
-[1,"2026-11-28","17:30",0,"Clara P. Villalón","Batch cooking de domingo: 5 tuppers de cuchara para toda la semana","B",0,null,2,null,"D",14800,196,5.7,0,21,"2026-11-25"],
-[1,"2026-11-28","09:00",1,"Dra. Marta Sanz · veterinaria etóloga","Guía canina: ansiedad por separación, el protocolo completo de 4 semanas","G",0,null,2,null,"D",18400,286,6.4,1,16,"2026-11-26"],
-[1,"2026-11-28","18:30",1,"César Millán · adiestrador","César Millán: guía del paseo sin tirones, de la correa tensa a la calma","G",0,null,2,null,"D",13200,242,5.6,0,34,"2026-11-26"],
-[1,"2026-11-29","08:30",0,"Karlos Arguiñano","Karlos Arguiñano (79 años, 50 en antena): “El pollo asado queda más jugoso a 180 ºC con la pechuga hacia abajo”","R",1,1,2,null,"D",15200,212,6.0,1,12,"2026-11-26"],
-[1,"2026-11-29","09:30",0,"Begoña Rodrigo","“El sofrito necesita 40 minutos, no 10”: Begoña Rodrigo y su arroz de verduras","R",4,1,2,null,"D",13100,198,5.9,1,18,"2026-11-26"],
-[1,"2026-11-29","17:30",0,"Ricard Camarena","Ricard Camarena: el punto exacto de sal en caldos y salsas","C",5,0,2,null,"P",11600,174,5.2,0,23,"2026-11-26"],
-[1,"2026-11-29","09:15",1,"José Luis MartGón · adiestrador","Guía de socialización del cachorro: las 12 semanas críticas, semana a semana","G",0,null,2,null,"D",17600,304,6.8,1,15,"2026-11-26"],
-[2,"2026-11-30","07:40",0,"Jordi Cruz","Jordi Cruz logra la crema de calabaza sedosa sin nata ni quesitos","R",4,0,0,null,"P",12800,172,5.3,0,14,null],
-[2,"2026-11-30","08:25",0,"Samantha Vallejo-Nágera","Samantha Vallejo-Nágera: canelones de atún con bechamel ligera en 30 minutos","R",0,null,0,null,"P",10900,186,4.9,0,20,null],
-[2,"2026-11-30","09:00",1,"Dr. Pablo Ríos · veterinario","Dr. Pablo Ríos, veterinario: la guía del pienso invernal según peso y edad","V",0,null,0,null,"P",7400,138,4.1,0,33,null],
-[2,"2026-12-01","07:50",0,"Mario Sandoval","Mario Sandoval: el guiso de patatas con costilla que reconforta en diciembre","R",3,0,0,null,"P",12200,181,5.0,0,17,null],
-[2,"2026-12-01","08:15",1,"Dra. Marta Sanz · veterinaria etóloga","¿Tu perro lame el sofá? Lo que la etología dice de la conducta repetitiva","E",0,null,0,null,"P",11900,147,5.1,1,19,null],
-[2,"2026-12-01","18:15",1,"Miguel Ordóñez · adiestrador","Miguel Ordóñez: el juego de olfato nocturno que cansa más que una hora de paseo","X",3,1,0,null,"P",12600,121,4.7,1,25,null],
-[2,"2026-12-02","07:30",0,"Karlos Arguiñano","Arguiñano: el truco de la piel de limón para aromatizar el arroz con leche","T",0,null,1,null,"P",10100,55,3.6,0,10,null],
-[2,"2026-12-02","08:40",0,"AESAN · alerta alimentaria","Alerta sanitaria: descongelar el pavo en la encimera, el error de diciembre","A",0,null,1,"Navidad","D",19800,64,3.3,1,9,null],
-[2,"2026-12-03","07:35",0,"David de Jorge","La paradoja de la sal: por qué salar tarde ablanda más las legumbres","P",0,null,1,null,"P",8900,59,3.2,0,13,null],
-[2,"2026-12-03","09:20",0,"Eva Arguiñano","Eva Arguiñano: una manzana rallada y el bizcocho de yogur dura 3 días tierno","T",0,null,1,null,"P",11400,49,3.5,0,16,null],
-[2,"2026-12-04","08:05",0,"Susi Díaz","Susi Díaz: lentejas viudas con verduras de invierno, olla exprés en 18 minutos","R",2,0,0,null,"P",11100,169,4.9,1,21,null],
-[2,"2026-12-04","17:50",1,"Dra. Lucía Ferreiro · veterinaria","Dra. Lucía Ferreiro: otitis de invierno, prevención tras el paseo bajo lluvia","V",0,null,0,null,"P",8200,144,4.3,0,31,null],
-[2,"2026-12-05","08:20",0,"Martín Berasategui","Martín Berasategui: tabla de tiempos y temperaturas del redondo de ternera perfecto","R",5,1,2,null,"D",15600,232,6.3,1,14,"2026-12-02"],
-[2,"2026-12-05","17:40",0,"Joseba Arguiñano","Joseba Arguiñano: turrón de chocolate crujiente casero en 25 minutos","R",0,null,2,"Navidad","D",22600,204,6.1,1,11,"2026-12-02"],
-[2,"2026-12-05","09:05",1,"César Millán · adiestrador","Guía canina de invierno: abrigo sí o no según raza, pelo y edad","G",0,null,2,null,"D",14100,258,5.9,1,18,"2026-12-03"],
-[2,"2026-12-05","18:20",1,"Dra. Marta Sanz · veterinaria etóloga","Guía completa del perro senior: movilidad, sueño y dieta a partir de los 8 años","G",0,null,2,null,"P",12400,276,6.0,0,31,"2026-12-03"],
-[2,"2026-12-06","08:35",0,"Karlos Arguiñano","Karlos Arguiñano, chef: “El truco de la cerveza para un rebozado más crujiente”","R",1,0,2,null,"P",9800,176,4.8,0,16,"2026-12-03"],
-[2,"2026-12-06","09:25",0,"Begoña Rodrigo","Begoña Rodrigo: la coliflor asada entera con costra de almendra, paso a paso","R",2,1,2,null,"D",15800,216,6.2,0,20,"2026-12-03"],
-[2,"2026-12-06","17:35",0,"Ricard Camarena","Ricard Camarena: el orden de los ingredientes en el caldo de Navidad","C",0,null,2,"Navidad","D",13900,188,5.5,1,15,"2026-12-03"],
-[2,"2026-12-06","09:10",1,"Borja Capponi · adiestrador","Guía del ladrido nocturno: protocolo de 10 días para dormir sin interrupciones","G",0,null,2,null,"D",16800,264,6.5,1,13,"2026-12-03"],
-[3,"2026-12-07","07:45",0,"David de Jorge","“La tortilla se remata fuera del fuego”: David de Jorge y su tortilla de patatas jugosa","R",4,1,0,null,"P",12200,179,5.4,0,17,null],
-[3,"2026-12-07","08:30",0,"Samantha Vallejo-Nágera","Samantha Vallejo-Nágera: el pastel de carne de domingo con glaseado de mostaza","R",5,0,0,null,"P",10800,190,5.0,0,22,null],
-[3,"2026-12-07","09:05",1,"José Luis MartGón · adiestrador","MartGón: la llamada de emergencia, enseñarla en 5 sesiones con premio","X",3,0,0,null,"D",13400,126,5.2,1,14,null],
-[3,"2026-12-08","07:55",0,"Pepe Solla","Pepe Solla: polvorones de almendra que se deshacen, la proporción exacta","R",0,null,0,"Navidad","D",16400,183,5.8,1,12,null],
-[3,"2026-12-08","08:20",1,"Dra. Elena Roldán · etóloga clínica","Puente con perro: por qué el exceso de visitas estresa a tu perro y cómo gestionarlo","E",0,null,0,"Navidad","P",12800,151,5.3,1,30,null],
-[3,"2026-12-08","18:05",1,"Dr. Íñigo Aguirre · veterinario","Íñigo Aguirre, veterinario: chocolate navideño y perros, la dosis de riesgo real","V",3,1,0,"Navidad","P",10900,149,4.6,1,29,null],
-[3,"2026-12-09","07:30",0,"Karlos Arguiñano","Karlos Arguiñano, chef: “El truco del microondas para pelar ajos en 10 segundos”","T",1,0,1,null,"D",14600,44,4.1,0,8,null],
-[3,"2026-12-09","08:50",0,"Susi Díaz","La paradoja del chocolate: por qué el cacao puro espesa mejor los guisos","P",0,null,1,null,"P",7200,62,3.0,0,21,null],
-[3,"2026-12-10","07:40",0,"AESAN · alerta alimentaria","Alerta nevera: las sobras del puente, cuánto duran realmente en la nevera","A",0,null,1,null,"D",18200,58,3.2,1,10,null],
-[3,"2026-12-10","09:10",0,"Joseba Arguiñano","Joseba Arguiñano: el truco del horno apagado para gratinar sin quemar","T",0,null,1,null,"P",8600,51,3.4,0,18,null],
-[3,"2026-12-11","08:10",0,"Mario Sandoval","Mario Sandoval: el estofado de garbanzos con espinacas de la abuela","R",2,0,0,null,"P",9600,171,4.7,0,24,null],
-[3,"2026-12-11","17:55",1,"Sandra Ferrer · adiestradora","Sandra Ferrer: el truco del arnés doble para perros que tiran en cuesta","X",0,null,0,null,"P",7900,118,4.0,0,35,null],
-[3,"2026-12-12","08:25",0,"Martín Berasategui","Martín Berasategui (12 estrellas Michelin): “El cordero alcanza su punto a 63 ºC en el centro”","R",1,1,2,"Navidad","D",13900,238,6.6,1,13,"2026-12-09"],
-[3,"2026-12-12","17:45",0,"Samantha Vallejo-Nágera","Menú navideño para 6 comensales: cantidades exactas y orden de fogones","M",0,null,2,"Navidad","D",24800,262,7.2,1,11,"2026-12-09"],
-[3,"2026-12-12","09:00",1,"Dra. Marta Sanz · veterinaria etóloga","Guía: Navidad con perro en casa, invitados, mesa y rutinas sin estrés","G",0,null,2,"Navidad","D",15200,271,6.3,1,16,"2026-12-10"],
-[3,"2026-12-12","18:40",1,"Miguel Ordóñez · adiestrador","Guía de juegos de olfato en casa: 12 montajes con cajas y mantas","G",0,null,2,null,"P",11600,246,5.7,0,33,"2026-12-10"],
-[3,"2026-12-13","08:40",0,"Karlos Arguiñano","Karlos Arguiñano: galletas de mantequilla navideñas, tabla de gramos y horneado","R",5,1,2,"Navidad","D",13400,226,6.4,1,14,"2026-12-10"],
-[3,"2026-12-13","09:30",0,"Eva Arguiñano","Eva Arguiñano: tronco de Navidad sin horno, el postre que se monta en 30 minutos","R",2,1,2,"Navidad","D",19400,218,6.7,1,12,"2026-12-10"],
-[3,"2026-12-13","17:30",0,"Clara P. Villalón","Clara Villalón organiza la semana de tuppers prenavideña en 2 horas de cocina","B",4,0,2,null,"P",11900,192,5.1,1,20,"2026-12-10"],
-[3,"2026-12-13","09:20",1,"José Luis MartGón · adiestrador","Guía completa del cachorro en su primera Navidad: ruidos, luces y visitas","G",0,null,2,"Navidad","D",16100,282,6.6,1,15,"2026-12-10"],
-[4,"2026-12-14","07:40",0,"David de Jorge","David de Jorge: la col lombarda con manzana, el acompañamiento de las cenas de diciembre","R",0,null,0,"Navidad","P",12100,174,5.2,0,16,null],
-[4,"2026-12-14","08:20",0,"Jordi Cruz","Jordi Cruz: el puré de patatas de restaurante, técnica y proporciones","R",5,0,0,null,"P",12900,187,5.6,1,19,null],
-[4,"2026-12-14","09:00",1,"Dr. Pablo Ríos · veterinario","Dr. Pablo Ríos: el peligro de los huesos de cordero en diciembre, advertencia veterinaria","V",0,null,0,"Navidad","D",14800,152,5.0,1,13,null],
-[4,"2026-12-15","07:50",0,"Pepe Solla","Pepe Solla: el caldo de Navidad clarísimo, el secreto del reposo","R",0,null,0,"Navidad","P",11300,181,5.3,0,23,null],
-[4,"2026-12-15","08:15",1,"Dra. Elena Roldán · etóloga clínica","Etología del villancico: cómo percibe tu perro la música y las reuniones","E",0,null,0,"Navidad","P",9800,146,4.8,0,30,null],
-[4,"2026-12-15","18:10",1,"Borja Capponi · adiestrador","Borja Capponi: el ejercicio de calma en la puerta antes de cada paseo","X",0,null,0,null,"P",8800,114,4.4,0,32,null],
-[4,"2026-12-16","07:30",0,"Karlos Arguiñano","Arguiñano: el truco de la ralladura congelada para aromatizar caldos al instante","T",0,null,1,null,"P",9400,48,3.5,0,11,null],
-[4,"2026-12-16","08:45",0,"AESAN · alerta alimentaria","Alerta sanitaria: el pavo relleno de víspera, la regla de las 2 horas","A",0,null,1,"Navidad","D",17600,66,3.3,1,9,null],
-[4,"2026-12-17","07:35",0,"David de Jorge","La paradoja del caldo: por qué hervir fuerte lo enturbia y hervir suave lo aclara","P",0,null,1,null,"P",8100,57,3.1,0,15,null],
-[4,"2026-12-17","09:15",0,"Eva Arguiñano","Eva Arguiñano (65 años, repostera): “Una pizca de bicarbonato y la cebolla carameliza en la mitad de tiempo”","T",1,1,1,null,"P",10600,46,3.6,0,12,null],
-[4,"2026-12-18","08:00",0,"Mario Sandoval","Mario Sandoval: la merluza en salsa verde de Nochebuena, punto de cocción","R",0,null,0,"Nochebuena","S",null,null,null,null,null,null],
-[4,"2026-12-18","17:45",1,"Dra. Lucía Ferreiro · veterinaria","Dra. Lucía Ferreiro: uvas de la suerte y perros, el riesgo de atragantamiento","V",0,null,0,"Nochevieja","S",null,null,null,null,null,null],
-[4,"2026-12-19","08:15",0,"Martín Berasategui","Martín Berasategui: el menú completo de Nochebuena para 8, con tiempos de cada plato","M",2,1,2,"Nochebuena","H",null,null,null,null,null,"2026-12-16"],
-[4,"2026-12-19","17:30",0,"Karlos Arguiñano","Karlos Arguiñano: besugo al horno de Nochebuena, la receta de siempre paso a paso","R",0,null,2,"Nochebuena","H",null,null,null,null,null,"2026-12-16"],
-[4,"2026-12-19","09:00",1,"César Millán · adiestrador","Guía canina de Nochebuena: cena larga, invitados y un perro tranquilo en su manta","G",0,null,2,"Nochebuena","H",null,null,null,null,null,"2026-12-17"],
-[4,"2026-12-19","18:30",1,"Dra. Marta Sanz · veterinaria etóloga","Guía veterinaria: qué hacer si tu perro prueba la cena de Nochebuena, pasos por alimento","G",0,null,2,"Nochebuena","H",null,null,null,null,null,"2026-12-17"],
-[4,"2026-12-20","08:30",0,"Begoña Rodrigo","Begoña Rodrigo (1 estrella Michelin): “El cardo de Navidad queda tierno con 20 minutos de olla exprés”","R",1,1,2,"Nochebuena","H",null,null,null,null,null,"2026-12-17"],
-[4,"2026-12-20","09:30",0,"Samantha Vallejo-Nágera","Menú de Navidad del día 25: del consomé al postre sin repetir fogón","M",0,null,2,"Navidad","H",null,null,null,null,null,"2026-12-17"],
-[4,"2026-12-20","17:35",0,"Clara P. Villalón","Batch cooking navideño: bases de caldo, salsas y guarniciones para 4 cenas","B",0,null,2,"Navidad","H",null,null,null,null,null,"2026-12-17"],
-[4,"2026-12-20","09:15",1,"José Luis MartGón · adiestrador","Guía del perro y los petardos de Navidad: desensibilización en 7 días","G",0,null,2,"Navidad","H",null,null,null,null,null,"2026-12-17"],
-[5,"2026-12-21","07:45",0,"David de Jorge","David de Jorge: la sopa de pescado de Nochebuena con fumet de 30 minutos","R",0,null,0,"Nochebuena","S",null,null,null,null,null,null],
-[5,"2026-12-21","08:25",0,"Jordi Cruz","Jordi Cruz: canelones de San Esteban con el relleno del asado, aprovechamiento total","R",0,null,0,"Navidad","S",null,null,null,null,null,null],
-[5,"2026-12-21","09:05",1,"Sandra Ferrer · adiestradora","Sandra Ferrer: la rutina de calma para el perro durante las cenas largas","X",0,null,0,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-22","07:50",0,"Pepe Solla","Pepe Solla: el rodaballo al horno para 6, tiempos por peso","R",0,null,0,"Nochebuena","N",null,null,null,null,null,null],
-[5,"2026-12-22","08:20",1,"Dra. Elena Roldán · etóloga clínica","Por qué tu perro se esconde en Nochebuena: lectura etológica del ruido","E",0,null,0,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-22","18:00",1,"Dr. Íñigo Aguirre · veterinario","Íñigo Aguirre, veterinario: turrón, polvorones y perros, la lista de toxicidad","V",0,null,0,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-23","07:30",0,"Karlos Arguiñano","Arguiñano: el truco del horno a 90 ºC para mantener 12 platos calientes a la vez","T",0,null,1,null,"N",null,null,null,null,null,null],
-[5,"2026-12-23","08:40",0,"AESAN · alerta alimentaria","Alerta nevera: la cadena de frío del marisco de Nochebuena, del mercado a la mesa","A",0,null,1,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-24","07:35",0,"Susi Díaz","La paradoja de Nochebuena: por qué el marisco sabe mejor reposado 12 horas","P",0,null,1,"Nochebuena","N",null,null,null,null,null,null],
-[5,"2026-12-24","09:20",0,"Eva Arguiñano","Eva Arguiñano: el truco de la gelatina para que el postre de Nochebuena cuaje a tiempo","T",0,null,1,"Nochebuena","N",null,null,null,null,null,null],
-[5,"2025-12-25","08:05",0,"Mario Sandoval","Mario Sandoval: el pavo trufado del día de Navidad, mechado y sellado","R",0,null,0,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-25","17:50",1,"Dra. Lucía Ferreiro · veterinaria","Dra. Lucía Ferreiro: el atracón navideño del perro, señales de alarma digestiva","V",0,null,0,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-26","08:20",0,"Martín Berasategui","Martín Berasategui: menú de Nochevieja para 6 con tabla de tiempos y temperaturas","M",5,1,2,"Nochevieja","N",null,null,null,null,null,null],
-[5,"2026-12-26","17:40",0,"Joseba Arguiñano","Joseba Arguiñano: el solomillo Wellington de Nochevieja, hojaldre sin humedad","R",0,null,2,"Nochevieja","N",null,null,null,null,null,null],
-[5,"2026-12-26","09:05",1,"César Millán · adiestrador","Guía canina de Nochevieja: petardos, uvas y brindis con el perro a salvo","G",0,null,2,"Nochevieja","N",null,null,null,null,null,null],
-[5,"2026-12-26","18:25",1,"Dra. Marta Sanz · veterinaria etóloga","Guía veterinaria de urgencias navideñas: qué hacer antes de llegar a la clínica","G",0,null,2,"Nochevieja","N",null,null,null,null,null,null],
-[5,"2026-12-27","08:35",0,"Karlos Arguiñano","Karlos Arguiñano, chef: “El truco del caldo corto para el cordero de fin de año”","R",1,0,2,"Nochevieja","N",null,null,null,null,null,null],
-[5,"2026-12-27","09:25",0,"Begoña Rodrigo","Begoña Rodrigo: la crema de marisco de las fiestas, con las cáscaras del 24","R",0,null,2,"Navidad","N",null,null,null,null,null,null],
-[5,"2026-12-27","17:30",0,"Clara P. Villalón","Batch cooking de fin de año: deja el 31 resuelto el 27","B",0,null,2,"Nochevieja","N",null,null,null,null,null,null],
-[5,"2026-12-27","09:10",1,"Borja Capponi · adiestrador","Guía completa: las 12 uvas y tu perro, entrenamiento de sonido previo","G",0,null,2,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2026-12-28","07:40",0,"David de Jorge","David de Jorge: el caldo de Año Nuevo, la tradición que reconforta el 1 de enero","R",0,null,0,"Año Nuevo","N",null,null,null,null,null,null],
-[6,"2026-12-28","08:30",0,"Samantha Vallejo-Nágera","Samantha Vallejo-Nágera: langostinos al ajillo de Nochevieja en 10 minutos","R",0,null,0,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2026-12-28","09:00",1,"Dr. Pablo Ríos · veterinario","Dr. Pablo Ríos: alcohol derramado y perros en Nochevieja, la urgencia silenciosa","V",0,null,0,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2026-12-29","08:15",1,"Dra. Elena Roldán · etóloga clínica","El perro y el cambio de año: por qué las rutinas rotas le desorientan","E",0,null,0,null,"N",null,null,null,null,null,null],
-[6,"2026-12-29","08:50",1,"Miguel Ordóñez · adiestrador","Miguel Ordóñez: 5 minutos de obediencia antes de cada visita navideña","X",0,null,0,null,"N",null,null,null,null,null,null],
-[6,"2026-12-29","18:05",0,"Jordi Cruz","Jordi Cruz: el risotto de setas de Nochevieja, mantecado en 3 minutos","R",3,1,0,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2026-12-30","07:30",0,"Karlos Arguiñano","Arguiñano: el truco del pan rallado con ajo para gratinar las sobras dignamente","T",0,null,1,null,"N",null,null,null,null,null,null],
-[6,"2026-12-30","08:45",0,"AESAN · alerta alimentaria","Alerta nevera: el cava abierto y las sobras del 31, lo que sí se guarda","A",0,null,1,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2026-12-31","07:35",0,"David de Jorge","La paradoja de las uvas: por qué 12 uvas peladas y sin pepitas se comen mejor","P",0,null,1,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2026-12-31","09:15",0,"Eva Arguiñano","Eva Arguiñano: una clara montada y el mousse de turrón cuaja sin gelatina","T",0,null,1,"Nochevieja","N",null,null,null,null,null,null],
-[6,"2027-01-01","08:10",0,"Pepe Solla","Pepe Solla: el caldo reparador de Año Nuevo, verduras y hueso en 40 minutos","R",0,null,0,"Año Nuevo","N",null,null,null,null,null,null],
-[6,"2027-01-01","17:45",1,"Dra. Lucía Ferreiro · veterinaria","Dra. Lucía Ferreiro: resaca de fiestas en el perro, hidratación y dieta blanda","V",0,null,0,"Año Nuevo","N",null,null,null,null,null,null],
-[6,"2027-01-02","08:20",0,"Martín Berasategui","Martín Berasategui: roscón de Reyes, tabla completa de gramos, fermentos y horneado","R",5,1,2,"Roscón","N",null,null,null,null,null,null],
-[6,"2027-01-02","17:35",0,"Samantha Vallejo-Nágera","Merienda de Reyes: roscón, chocolate a la taza y cantidades para 8","M",0,null,2,"Roscón","N",null,null,null,null,null,null],
-[6,"2027-01-02","09:00",1,"César Millán · adiestrador","Guía canina de Reyes: cabalgatas, caramelos y un perro sereno en casa","G",0,null,2,"Roscón","N",null,null,null,null,null,null],
-[6,"2027-01-02","18:35",1,"Dra. Marta Sanz · veterinaria etóloga","Guía completa de propósitos caninos 2027: salud, ejercicio y vínculo mes a mes","G",0,null,2,null,"N",null,null,null,null,null,null],
-[6,"2027-01-03","08:40",0,"Karlos Arguiñano","Karlos Arguiñano (79 años, 50 en antena): “El roscón sube un 30% más con 24 horas de fermentación en nevera”","R",1,1,2,"Roscón","N",null,null,null,null,null,null],
-[6,"2027-01-03","09:30",0,"Joseba Arguiñano","Joseba Arguiñano: roscón de crema sin manga pastelera, el montaje fácil","R",0,null,2,"Roscón","N",null,null,null,null,null,null],
-[6,"2027-01-03","17:40",0,"Clara P. Villalón","Batch cooking de enero: la vuelta a la rutina en 5 tuppers ligeros","B",0,null,2,null,"N",null,null,null,null,null,null],
-[6,"2027-01-03","09:20",1,"José Luis MartGón · adiestrador","Guía de enero: el plan de 4 semanas para un perro en forma tras las fiestas","G",0,null,2,null,"N",null,null,null,null,null,null]
+[1,"2026-11-23","08:30",1,"Alan Peiró","Alan Peiró, adiestrador canino: \"Muchos perros sufren más por el mal cuidado ante el clima que por el clima en sí\"","X",4,0,0,null,"P",9800,140,4.6,0,14,null],
+[1,"2026-11-23","13:00",0,"Loli Dominguez","Loli Dominguez","R",5,1,0,null,"P",9800,140,4.6,0,14,null],
+[1,"2026-11-24","08:30",1,"María Vetican","María Vetican, veterinaria: \"Poner un abrigo a tu perro en invierno no es humanizarlo si tiembla o es sensible\"","V",2,0,0,null,"S",null,null,null,null,null,null],
+[1,"2026-11-24","13:00",0,"Jordi Cruz","Jordi Cruz, chef: \"Las patatas y cebollas nacen bajo tierra y van en agua fría; las hojas y tallos, en hirviendo\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[1,"2026-11-25","08:30",0,"Pablo Ojeda","Pablo Ojeda, nutricionista: \"Comer pan solo en el desayuno activa antes el hambre; acompáñalo de proteína o tuéstalo\"","P",1,1,1,null,"S",null,null,null,null,null,null],
+[1,"2026-11-25","17:30",1,"Juan Cervantes","Juan Cervantes, adiestrador canino: \"Cuanto más utilizas el nombre de tu perro, menos caso te hace\"","X",2,0,1,null,"S",null,null,null,null,null,null],
+[1,"2026-11-26","12:30",0,"Mario Sánchez","Mario Sánchez, tecnólogo de alimentos: \"La puerta de la nevera es la zona menos fría y no es sitio para los huevos\"","A",3,1,1,null,"S",null,null,null,null,null,null],
+[1,"2026-11-26","18:00",1,"María Vetican","María Vetican, veterinaria: por qué nunca debes darle de comer a tu perro justo antes de salir a pasear o jugar","V",2,0,1,null,"S",null,null,null,null,null,null],
+[1,"2026-11-27","08:30",1,"Borja Capponi","Borja Capponi, adiestrador canino: \"El cariño obsesivo y tratar al perro como un juguete acaba en ansiedad por separación\"","X",2,0,0,null,"S",null,null,null,null,null,null],
+[1,"2026-11-27","13:00",0,"José María Sánchez","José María Sánchez, pescadero: \"Deja templar el pescado 15 minutos fuera de la nevera antes de cocinarlo\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[1,"2026-11-28","09:30",1,"Carlos Rodríguez / Víctor Algra","Dolor articular silencioso en perros desde los siete años y por qué 750 g extra en un perro pequeño agravan su salud","G",5,1,2,null,"S",null,null,null,null,null,null],
+[1,"2026-11-28","11:30",0,"Gordon Ramsay","Gordon Ramsay, chef con 7 estrellas Michelin: guiso de invierno paso a paso con 7 especias tostadas y vino tinto","R",5,1,2,null,"S",null,null,null,null,null,null],
+[1,"2026-11-29","10:00",0,"Martín Berasategui","Martín Berasategui, chef con 12 estrellas Michelin: albóndigas en salsa con manos de cerdo picadas paso a paso","R",5,1,2,null,"S",null,null,null,null,null,null],
+[1,"2026-11-29","17:30",1,"Amir Anwary","Amir Anwary, veterinario: la regla de los 10 minutos al salir de casa y por qué un malinois exige trabajo real","G",5,1,2,null,"S",null,null,null,null,null,null],
+[2,"2026-11-30","08:30",1,"Santi Vidal","Santi Vidal, adiestrador canino: \"Si tu perro orina en cada esquina, no es dominante: está estresado e inseguro\"","X",2,0,0,null,"S",null,null,null,null,null,null],
+[2,"2026-11-30","13:00",0,"Ferran Adrià","Ferran Adrià, cocinero: \"El truco del tomate frito no está en el azúcar, sino en cocinar 350 g y salar al final\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[2,"2026-12-01","08:30",1,"DGT / Guardia Civil","Cómo llevar al perro en el coche en el Puente de diciembre sin sanciones de 200 a 500 euros ni pérdida de puntos","E",4,0,0,null,"S",null,null,null,null,null,null],
+[2,"2026-12-01","13:00",0,"Jamie Oliver","Jamie Oliver, chef: \"Reservar una taza del agua de cocción es el truco definitivo para emulsionar espaguetis\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[2,"2026-12-02","08:30",0,"Gordon Ramsay","Gordon Ramsay, chef Michelin: \"Si tus huevos revueltos quedan granulosos es por batir demasiado y no retirarlos del fuego\"","P",1,1,1,null,"S",null,null,null,null,null,null],
+[2,"2026-12-02","17:30",1,"Alan Peiró","Alan Peiró, adiestrador canino: qué indica que tu perro duerma boca arriba, acurrucado o apoyado en la pared","X",2,0,1,null,"S",null,null,null,null,null,null],
+[2,"2026-12-03","12:30",0,"Boticaria García","Boticaria García, divulgadora sanitaria: \"El problema del arroz recalentado son las horas que ha pasado templado\"","A",3,1,1,null,"S",null,null,null,null,null,null],
+[2,"2026-12-03","18:00",1,"Guardia Civil / RACE","Operación salida del Puente de la Constitución: dónde colocar el transportín y qué documentos del perro exige la ley","E",4,0,1,null,"S",null,null,null,null,null,null],
+[2,"2026-12-04","08:30",1,"Borja Capponi","Borja Capponi, adiestrador canino: \"El perro paga el precio de nuestra ignorancia\", su alerta sobre carritos y baños semanales","X",2,0,0,null,"S",null,null,null,null,null,null],
+[2,"2026-12-04","13:00",0,"Dabiz Muñoz","Dabiz Muñoz, chef Michelin: \"Para que la tortilla francesa no se pegue, el truco no es el aceite, es envolverla como un sobre\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[2,"2026-12-05","09:30",1,"César Millán","Qué defiende César Millán sobre la calma del tutor y la adaptación de perros rescatados frente al enfoque positivo moderno","G",5,1,2,null,"S",null,null,null,null,null,null],
+[2,"2026-12-05","11:30",0,"José Andrés","Patatas guisadas a la riojana de José Andrés paso a paso: con agua, pimientos choriceros y pasadas por la sartén","R",5,1,2,null,"S",null,null,null,null,null,null],
+[2,"2026-12-06","10:00",0,"Massimo Bottura","Tiramisú festivo al estilo de Massimo Bottura paso a paso con mascarpone frío, vainilla y licor de coco","R",5,1,2,null,"S",null,null,null,null,null,null],
+[2,"2026-12-06","17:30",1,"Juan Manuel Liquindoli","Juan Manuel Liquindoli, etólogo: cuando tu perro apoya la pata o muestra la panza no siempre pide juego","G",5,1,2,null,"S",null,null,null,null,null,null],
+[3,"2026-12-07","08:30",1,"Alan Peiró","Alan Peiró, adiestrador canino: \"Cuando tu perro se estira al levantarse o jugar, se está regulando emocionalmente\"","X",2,0,0,null,"S",null,null,null,null,null,null],
+[3,"2026-12-07","13:00",0,"Dani García","Dani García, chef Michelin: \"Para que los tomates aliñados sepan más sabrosos, déjalos reposar 10 minutos\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[3,"2026-12-08","08:30",1,"Adrián Conde","Adrián Conde, veterinario: \"El miedo a los petardos en Navidad empieza por preparar una habitación interior y bajar persianas\"","V",4,0,0,"Navidad","S",null,null,null,null,null,null],
+[3,"2026-12-08","13:00",0,"Ferran Adrià","Ferran Adrià, cocinero: \"Bate los huevos en horizontal y mide la sartén a 180 °C para clavar la tortilla con chips\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[3,"2026-12-09","08:30",0,"Jordi Cruz","Jordi Cruz, chef: \"Un trozo de pan dentro del bote hermético evita que las galletas pierdan el crujiente\"","P",1,1,1,null,"S",null,null,null,null,null,null],
+[3,"2026-12-09","17:30",1,"Víctor Mañero / Enzo Roubaud","Por qué saludar con euforia al volver a casa tras el puente alimenta la ansiedad por separación del perro","V",2,0,1,null,"S",null,null,null,null,null,null],
+[3,"2026-12-10","12:30",0,"Miguel Ángel Lurueña","Miguel Ángel Lurueña, tecnólogo de alimentos: \"Si una bandeja de carne en la nevera está hinchada, no debes consumirla\"","A",3,1,1,null,"S",null,null,null,null,null,null],
+[3,"2026-12-10","18:00",1,"Gary Richter","Gary Richter, veterinario: cómo apoyan los probióticos la microbiota intestinal y las defensas del perro en invierno","V",2,0,1,null,"S",null,null,null,null,null,null],
+[3,"2026-12-11","08:30",1,"María Vetican","Flor de Pascua, muérdago, bolas frágiles y cables: guía veterinaria para blindar la casa en Navidad si tienes perro","G",4,0,0,"Navidad","S",null,null,null,null,null,null],
+[3,"2026-12-11","13:00",0,"Gordon Ramsay","Gordon Ramsay, chef Michelin: \"Para que el salmón no se seque, el truco no es el aceite sino la piel, ajo, tomillo y mantequilla\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[3,"2026-12-12","09:30",1,"Adrián Conde","Desensibilización progresiva a ruidos de petardos: cómo aplicarla desde mitad de diciembre sin asustar al perro","G",5,1,2,null,"S",null,null,null,null,null,null],
+[3,"2026-12-12","11:30",0,"Anna Terés","Entrantes navideños y croquetas de jamón y pollo de Anna Terés paso a paso para dejar congelados antes de fiestas","R",5,1,2,null,"S",null,null,null,null,null,null],
+[3,"2026-12-13","10:00",0,"Jorge Rausch","Así prepara el chef Jorge Rausch el arroz con coco en olla a presión para que quede suelto en menos de una hora","R",5,1,2,null,"S",null,null,null,null,null,null],
+[3,"2026-12-13","17:30",1,"Victoria Stilwell / Zak George","Qué es la metodología LIMA y por qué desmontar la teoría de la dominancia mejora la convivencia con cachorros","G",5,1,2,null,"S",null,null,null,null,null,null],
+[4,"2026-12-14","08:30",1,"María Vetican","Por qué nunca debes rapar el doble manto de un husky y qué revisar al pasear en invierno","E",2,0,0,null,"S",null,null,null,null,null,null],
+[4,"2026-12-14","13:00",0,"Jordi Cruz","Jordi Cruz, chef: \"Cuidado con el tomate frito en guisos; cambia mejor a tomate triturado o concentrado\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[4,"2026-12-15","08:30",1,"María Vetican","Chocolate, mazapán, cebolla y masa cruda de roscón: los alimentos navideños tóxicos para perros","E",3,1,0,"Reyes","S",null,null,null,null,null,null],
+[4,"2026-12-15","13:00",0,"Pablo Ojeda","Pablo Ojeda, nutricionista: \"En el supermercado pisa primero los pasillos exteriores y nunca compres con hambre\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[4,"2026-12-16","08:30",0,"Jamie Oliver","Jamie Oliver, chef: \"Poner aceite a las verduras en la plancha es un error que yo no hago nunca jamás\"","P",1,1,1,null,"S",null,null,null,null,null,null],
+[4,"2026-12-16","17:30",1,"Neus Candela","Qué evalúa tu veterinario en una analítica de sangre del perro antes de cambiarle la dieta sin criterio","V",2,0,1,null,"S",null,null,null,null,null,null],
+[4,"2026-12-17","12:30",0,"Miguel Ángel Lurueña","Miguel Ángel Lurueña, tecnólogo de alimentos: \"Los langostinos con manchas negras sí son seguros para comer\"","A",3,1,1,null,"S",null,null,null,null,null,null],
+[4,"2026-12-17","18:00",1,"Adrián Conde","Adrián Conde, veterinario: \"Si tu perro tiene miedo a los ruidos, no le des tranquilizantes como acepromacina sin valoración\"","V",2,0,1,null,"S",null,null,null,null,null,null],
+[4,"2026-12-18","08:30",1,"The Kennel Club / IM Veterinaria","Por qué diciembre dispara las urgencias veterinarias por tóxicos navideños y por qué no debes provocar el vómito en casa","V",3,1,0,null,"S",null,null,null,null,null,null],
+[4,"2026-12-18","13:00",0,"José María Sánchez","José María Sánchez, pescadero: \"Pide el despiece completo del pescado para aprovechar raspa y cabeza en el caldo festivo\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[4,"2026-12-19","09:30",1,"Alan Peiró","Cómo organizar un refugio tranquilo cuando hay visitas en casa para que tu perro no se bloquee ni robe comida","G",5,1,2,null,"S",null,null,null,null,null,null],
+[4,"2026-12-19","11:30",0,"Karlos Arguiñano","El menú tradicional de Navidad de Karlos Arguiñano paso a paso: caldo de gallina, ensaladilla con langostinos y capón asado","M",5,1,2,"Navidad","S",null,null,null,null,null,null],
+[4,"2026-12-20","10:00",0,"Martín Berasategui","Pescado al horno perfecto para Nochebuena con la técnica de los 3 vuelcos y ensalada aliñada al final paso a paso","C",5,1,2,"Navidad","S",null,null,null,null,null,null],
+[4,"2026-12-20","17:30",1,"Adrián Conde","Adrián Conde, veterinario: \"En el miedo de los perros a los petardos, lo más bonito no es mejor, gana lo que reduce su sufrimiento\"","G",5,1,2,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-21","08:30",1,"Borja Capponi","Borja Capponi, adiestrador canino: \"Respeta la mente real de tu perro en fiestas: no es un juguete para la foto\"","X",2,0,0,null,"S",null,null,null,null,null,null],
+[5,"2026-12-21","13:00",0,"Miguel Ángel Lurueña","Miguel Ángel Lurueña, tecnólogo de alimentos: por qué la AESAN desaconseja chupar las cabezas de gambas y langostinos","A",3,1,0,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-22","08:30",1,"Borja Capponi / Alan Peiró","Gritos de celebración, visitas y abrazos en casa: cómo evitar que el jaleo festivo desborde a tu perro","E",4,0,0,null,"S",null,null,null,null,null,null],
+[5,"2026-12-22","13:00",0,"José Andrés","José Andrés, chef: \"Una tortilla esponjosa en 45 segundos al microondas con un huevo y una cucharada de mayonesa\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[5,"2026-12-23","08:30",0,"Pablo Ojeda","Pablo Ojeda, nutricionista: \"Un chorro de vinagre o zumo de naranja en las lentejas mejora el hierro y la digestión\"","P",1,1,1,null,"S",null,null,null,null,null,null],
+[5,"2026-12-23","17:30",1,"María Vetican","Huesos cocinados de pavo o cordero y cáscaras de marisco: por qué causan urgencias graves en Navidad","E",3,1,1,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-24","12:30",0,"Ferran Adrià","Ferran Adrià, cocinero: por qué pesar los ingredientes en cocina salada evita arruinar cualquier salsa navideña","P",1,1,1,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-24","18:00",0,"Miguel Ángel Lurueña","Miguel Ángel Lurueña, tecnólogo de alimentos: \"Las sobras de Nochebuena a la nevera en cuanto no quemen, nunca en la encimera\"","A",3,1,1,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-25","09:00",1,"Alan Peiró / María Vetican","Paseos tranquilos el día de Navidad: qué vigilar si tu perro mordió envoltorios o alcanzó restos de la mesa","X",4,0,0,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-25","13:00",0,"Beatriz Robles","Beatriz Robles, tecnóloga de alimentos: cómo recalentar sobras en el microondas a 65 °C sin riesgos el día de Navidad","A",3,1,0,"Navidad","S",null,null,null,null,null,null],
+[5,"2026-12-26","09:30",1,"Víctor Algra","Cómo detectar a tiempo el sobrepeso festivo en tu perro y reajustar su ración sin dietas bruscas","G",5,1,2,null,"S",null,null,null,null,null,null],
+[5,"2026-12-26","11:30",0,"Dabiz Muñoz","Croquetas de cocido con puré de garbanzos y doble fritura de Dabiz Muñoz paso a paso para aprovechar el caldo","R",5,1,2,null,"S",null,null,null,null,null,null],
+[5,"2026-12-27","10:00",0,"Karlos Arguiñano","Merluza Villeroy y ensaladilla con langostinos paso a paso: ideas de Karlos Arguiñano para la cena de Nochevieja","M",5,1,2,"Nochevieja","S",null,null,null,null,null,null],
+[5,"2026-12-27","17:30",1,"Juan Manuel Liquindoli","Cómo saber si tu perro está realmente feliz y relajado durante las reuniones familiares de Navidad","G",5,1,2,"Navidad","S",null,null,null,null,null,null],
+[6,"2026-12-28","08:30",1,"Manual MSD / Veterinarios","Ni una sola uva en Nochevieja: por qué el ácido tartárico provoca fallo renal agudo en perros y qué hacer de urgencia","E",3,1,0,"Nochevieja","S",null,null,null,null,null,null],
+[6,"2026-12-28","13:00",0,"Jordi Cruz","Jordi Cruz, chef: el truco para devolver el crujiente a hojas de ensalada blandas con agua tibia y choque de hielo","P",1,1,0,null,"S",null,null,null,null,null,null],
+[6,"2026-12-29","08:30",1,"Alan Peiró","Alan Peiró, adiestrador canino: \"Saca a pasear a tu perro antes de las 21:00 h en Nochevieja y nunca lo encierres ni regañes\"","X",4,0,0,"Nochevieja","S",null,null,null,null,null,null],
+[6,"2026-12-29","13:00",0,"Dani García","Dani García, chef: \"Saltea las verduras congeladas directamente en sartén sin aceite inicial\"","P",1,1,0,null,"S",null,null,null,null,null,null],
+[6,"2026-12-30","08:30",0,"Pablo Ojeda","Pablo Ojeda, nutricionista: \"Para que la tortilla quede cremosa y segura frente a salmonela, alcanza los 75 °C y cambia de plato\"","A",3,1,1,null,"S",null,null,null,null,null,null],
+[6,"2026-12-30","17:30",1,"Adrián Conde","Qué hacer durante las campanadas si tu perro tiembla: música baja, persianas cerradas y acompañamiento sereno","E",4,0,1,null,"S",null,null,null,null,null,null],
+[6,"2026-12-31","12:00",0,"José María Sánchez","José María Sánchez, pescadero: \"El ojo blanco y la aleta inferior indican el punto exacto del pescado al horno sin reloj\"","P",1,1,1,"Nochevieja","S",null,null,null,null,null,null],
+[6,"2026-12-31","18:00",0,"Miguel Ángel Lurueña","Miguel Ángel Lurueña, tecnólogo de alimentos: \"Las sobras de carne aguantan tres días en nevera; las de arroz, solo 24 horas\"","A",3,1,1,"Nochevieja","S",null,null,null,null,null,null],
+[6,"2027-01-01","09:30",1,"Alan Peiró / María Vetican","Primer paseo de Año Nuevo con perros: revisa el suelo por restos de petardos, cristales, uvas caídas y frío matinal","X",4,0,0,"Nochevieja","S",null,null,null,null,null,null],
+[6,"2027-01-01","13:00",0,"Pablo Ojeda","Pablo Ojeda, nutricionista: \"Si llegas a las nueve de la noche dispuesto a comerte la nevera, el error empezó durante el día\"","P",1,1,0,"Nochevieja","S",null,null,null,null,null,null],
+[6,"2027-01-02","09:30",1,"María Vetican","Víspera de Reyes con perros: riesgos de cintas, juguetes pequeños y masa cruda o pasas del roscón","G",5,1,2,"Reyes","S",null,null,null,null,null,null],
+[6,"2027-01-02","11:30",0,"Eva Arguiñano","Roscón de Reyes casero paso a paso de Eva Arguiñano: horneado en dos tiempos (170 °C y 190 °C) y crema pastelera","M",5,1,2,"Reyes","S",null,null,null,null,null,null],
+[6,"2027-01-03","10:00",0,"Ferran Adrià","Caldo base de pollo en 30 minutos sin sal paso a paso de Ferran Adrià para volver a la rutina ligera de enero","R",5,1,2,"Arranque","S",null,null,null,null,null,null],
+[6,"2027-01-03","17:30",1,"Santi Vidal / Juan Cervantes","Tres rutinas de dos minutos al día para recuperar la atención y calma de tu perro tras las vacaciones","G",5,1,2,null,"S",null,null,null,null,null,null]
 ];
 const SF_MAP={R:"Receta paso a paso",T:"Truco 1 ingrediente",P:"Paradoja culinaria",A:"Alerta nevera · sanitaria",M:"Menú festivo",B:"Batch cooking",C:"Técnica y ciencia",G:"Guía canina extensa",X:"Adiestramiento express",E:"Consulta etológica",V:"Salud veterinaria"};
 const ST_MAP={D:"discover",P:"publicada",S:"programada",H:"retenida",N:"pendiente"};
@@ -837,7 +826,7 @@ function buildSeed(){
 function exportData(data){return{meta:data.meta,piezas:data.piezas.map(p=>{const o={};CORE_KEYS.forEach(k=>o[k]=p[k]===undefined?null:p[k]);return o;})};}
 
 /* ═══════════ ESTADO ═══════════ */
-const state={data:buildSeed(),filters:{semana:"all",vertical:"all",regla:"all",experimento:"all",estado:"all"},search:"",sort:{key:"fecha",dir:1},monthIdx:1,selectedDay:"2026-12-17",view:"cal",drawerPiece:null,firstPaint:true,sheetExtras:{chefs:[],caninos:[],experiments:[]}};
+const state={data:buildSeed(),filters:{semana:"all",vertical:"all",regla:"all",experimento:"all",estado:"all"},search:"",sort:{key:"fecha",dir:1},monthIdx:0,selectedDay:"2026-11-23",view:"cal",drawerPiece:null,firstPaint:true,sheetExtras:{chefs:[],caninos:[],experiments:[]}};
 const $=id=>document.getElementById(id);
 const corteDate=()=>new Date(state.data.meta.corte);
 const corteISO=()=>state.data.meta.corte.slice(0,10);
@@ -1442,7 +1431,7 @@ function openDrawer(p){
   $("drawer").classList.add("open");$("scrim").classList.add("open");lockScroll(true);$("drawer-close").focus();
 }
 function closeDrawer(){if(!$("drawer").classList.contains("open"))return;$("drawer").classList.remove("open");if(!$("modal").classList.contains("open"))$("scrim").classList.remove("open");lockScroll(false);}
-function openModal(){$("modal").classList.add("open");$("scrim").classList.add("open");lockScroll(true);$("json-error").classList.add("hidden");setTimeout(()=>$("json-area").focus(),80);}
+function openModal(){$("modal").classList.add("open"); $("modal").onclick=e=>{if(e.target===$("modal"))closeModal();};$("scrim").classList.add("open");lockScroll(true);$("json-error").classList.add("hidden");setTimeout(()=>$("json-area").focus(),80);}
 function closeModal(){if(!$("modal").classList.contains("open"))return;$("modal").classList.remove("open");if(!$("drawer").classList.contains("open"))$("scrim").classList.remove("open");lockScroll(false);}
 function findPiece(id){return state.data.piezas.find(x=>x.id===id);}
 
@@ -1502,12 +1491,19 @@ document.querySelectorAll("#month-tabs [data-month]").forEach(b=>b.addEventListe
 $("view-cal").addEventListener("click",()=>setView("cal"));
 $("view-agenda").addEventListener("click",()=>setView("agenda"));
 document.addEventListener("click",e=>{
+  /* ── botones y elementos de cierre (máxima prioridad) ── */
+  if(e.target.closest("#modal-close") || e.target.id==="modal-close"){closeModal();e.stopPropagation();return;}
+  if(e.target.closest("#drawer-close") || e.target.id==="drawer-close"){closeDrawer();e.stopPropagation();return;}
+  if(e.target.id==="modal" || e.target.id==="scrim"){closeDrawer();closeModal();return;}
+  
   const rst=e.target.closest("[data-reset]");if(rst){resetFilters();return;}
   const nav=e.target.closest("[data-nav]");if(nav){const t=$(nav.dataset.nav);if(t)t.scrollIntoView({behavior:RM?"auto":"smooth"});return;}
   const wk=e.target.closest("[data-week]");if(wk){setFilter("semana",state.filters.semana===wk.dataset.week?"all":wk.dataset.week);return;}
   const pc=e.target.closest("[data-piece]");if(pc){e.stopPropagation();const p=findPiece(pc.dataset.piece);if(p)openDrawer(p);return;}
   const day=e.target.closest("[data-day]");if(day){state.selectedDay=day.dataset.day;renderCalendar(filteredRows());return;}
   const pr=e.target.closest(".piece-row[data-piece]");if(pr){const p=findPiece(pr.dataset.piece);if(p)openDrawer(p);return;}
+  
+  /* ── pestañas directorios y bitácora ── */
   const dTab=e.target.closest("[data-dirtab]");
   if(dTab){
     const t=dTab.dataset.dirtab;
@@ -1521,6 +1517,7 @@ document.addEventListener("click",e=>{
       }
       if(view)view.classList.toggle("hidden",k!==t);
     });
+    return;
   }
   if(e.target.closest("#btn-live-sync")){
     syncWithBackend(true);
@@ -1544,7 +1541,6 @@ $("ledger-body").addEventListener("click",e=>{const tr=e.target.closest("tr[data
 $("ledger-body").addEventListener("keydown",e=>{if(e.key!=="Enter")return;const tr=e.target.closest("tr[data-id]");if(!tr)return;const p=findPiece(tr.dataset.id);if(p)openDrawer(p);});
 $("btn-csv").addEventListener("click",()=>{const rows=ledgerRows();downloadBlob("discover-espana_piezas.csv",csvFromRows(rows),"text/csv;charset=utf-8");toast(`CSV exportado: ${rows.length} piezas (vista actual).`);});
 $("btn-json").addEventListener("click",openModal);
-$("btn-json-footer").addEventListener("click",openModal);
 $("btn-json-dl").addEventListener("click",downloadJSON);
 $("json-dl").addEventListener("click",downloadJSON);
 $("csv-dl").addEventListener("click",()=>{const ex=exportData(state.data);downloadBlob("discover-espana_plantilla.csv",csvFromRows([ex.piezas[0],ex.piezas.find(p=>p.estado==="retenida")||ex.piezas[1]]),"text/csv;charset=utf-8");toast("Plantilla CSV descargada.");});
@@ -1552,9 +1548,9 @@ $("json-apply").addEventListener("click",applyPayload);
 $("json-example").addEventListener("click",insertExample);
 $("json-restore").addEventListener("click",()=>{state.data=buildSeed();state.monthIdx=1;state.selectedDay="2026-12-17";renderAll();closeModal();toast("Datos originales restaurados.");});
 $("json-file").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{$("json-area").value=String(rd.result);toast(`«${f.name}» cargado · revisa y pulsa Aplicar.`);};rd.readAsText(f);e.target.value="";});
-$("modal-close").addEventListener("click",closeModal);
-$("drawer-close").addEventListener("click",closeDrawer);
-$("scrim").addEventListener("click",()=>{closeDrawer();closeModal();});
+$("modal-close").addEventListener("click",e=>{e.stopPropagation();closeModal();});
+$("drawer-close").addEventListener("click",e=>{e.stopPropagation();closeDrawer();});
+$("scrim").addEventListener("click",e=>{if(e.target===e.currentTarget){closeDrawer();closeModal();}});
 $("drawer-copy").addEventListener("click",()=>{const p=state.drawerPiece;if(!p)return;const done=()=>toast("Titular copiado al portapapeles.");if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(p.titular).then(done).catch(()=>{fallbackCopy(p.titular);done();});else{fallbackCopy(p.titular);done();}});
 function fallbackCopy(txt){const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(_){}ta.remove();}
 $("drawer-goto").addEventListener("click",()=>{const p=state.drawerPiece;if(!p)return;closeDrawer();

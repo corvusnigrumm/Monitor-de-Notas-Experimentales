@@ -174,6 +174,15 @@ function mapEstado(estadoRaw, urlPub) {
   return 'programada';
 }
 
+// Distribución de fechas por semana para fallback secuencial
+// Operativo: 23 nov 2026 – 3 ene 2027, 6 semanas, ~20 piezas/semana
+function inferDateByIndex(idx, totalRows) {
+  const START = new Date("2026-11-23T12:00:00Z");
+  const dayOffset = Math.floor(idx / 2);
+  const d = new Date(START.getTime() + dayOffset * 86400000);
+  return d.toISOString().slice(0, 10);
+}
+
 function processCalendarSheet(rows) {
   const dataRows = rows.slice(4).filter(r => r.length > 5 && (r[1] || r[2]));
   const piezas = [];
@@ -189,7 +198,7 @@ function processCalendarSheet(rows) {
     const estadoRaw = r[8] || 'PROGRAMADO';
     const urlPub = r[9] || '';
     
-    const fecha = parseDateFromRule(regla) || '2026-11-23';
+    const fecha = parseDateFromRule(regla) || parseDateFromRule(titular) || inferDateByIndex(idx, dataRows.length);
     const horaMatch = franja.match(/(\d{1,2}:\d{2})/);
     const hora = horaMatch ? horaMatch[1].padStart(5, '0') : '08:30';
     const vertical = seccion.toLowerCase().includes('perro') || seccion.toLowerCase().includes('canin') ? 'perros' : 'cocina';
@@ -390,9 +399,9 @@ async function buildUnifiedSheetData() {
       titulo: "Google Discover España",
       inicio: "2026-11-23",
       fin: "2027-01-03",
-      metaTotal: 120,
+      metaTotal: piezas.length || 84,
       totalPautasSheet: piezas.length,
-      corte: "2026-12-17T21:00:00+01:00",
+      corte: "2026-11-23T21:00:00+01:00",
       cuotas: { cocina: 65, perros: 35 },
       traficoGlobal: { 0: 0, 1: -3, 2: -16, 3: -19, 4: 2, 5: 34, 6: 23 },
       syncTime: new Date().toISOString(),
