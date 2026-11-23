@@ -246,11 +246,11 @@ function processCalendarSheet(rows) {
       regla: reglaVal,
       hito,
       estado,
-      visitas: estado === 'discover' ? 14500 : (estado === 'publicada' ? 9800 : null),
-      lectura: estado === 'discover' ? 190 : (estado === 'publicada' ? 140 : null),
-      rfv: estado === 'discover' ? 5.8 : (estado === 'publicada' ? 4.6 : null),
-      ai: estado === 'discover',
-      indexacion: 14,
+      visitas: null,
+      lectura: null,
+      rfv: null,
+      ai: null,
+      indexacion: null,
       retenidaDesde: estado === 'retenida' ? fecha : null,
       urlPublicada: urlPub
     });
@@ -403,7 +403,7 @@ async function buildUnifiedSheetData() {
       totalPautasSheet: piezas.length,
       corte: "2026-11-23T21:00:00+01:00",
       cuotas: { cocina: 65, perros: 35 },
-      traficoGlobal: { 0: 0, 1: -3, 2: -16, 3: -19, 4: 2, 5: 34, 6: 23 },
+      traficoGlobal: { 0: 0, 1: -4, 2: -16, 3: -19, 4: 5, 5: 34, 6: 23 },
       syncTime: new Date().toISOString(),
       sheetRefs: {
         calendario: `CALENDARIO EDITORIAL · GID ${GIDS.CALENDARIO}`,

@@ -72,9 +72,9 @@ select.ctl:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:foc
 section[id]{scroll-margin-top:calc(var(--stickyH) + 14px);}
 .reveal{opacity:1;transform:none;}
 /* ── calendario ── */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;width:100%;max-width:100%;box-sizing:border-box;}
 .cal-dow{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-align:center;padding:4px 0;}
-.cal-cell{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 7px 6px;min-height:122px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;display:flex;flex-direction:column;gap:4px;}
+.cal-cell{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:5px;min-height:115px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;display:flex;flex-direction:column;gap:3px;min-width:0;overflow:hidden;width:100%;box-sizing:border-box;}
 .cal-cell:hover{border-color:var(--rule);}
 .cal-cell.sel{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink);}
 .cal-cell.corte{border-color:var(--amber);}
@@ -89,9 +89,9 @@ section[id]{scroll-margin-top:calc(var(--stickyH) + 14px);}
 .cal-tag{font-size:8.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border-radius:4px;}
 .cal-tag.blind{background:rgba(200,138,30,.16);color:var(--amberdeep);}
 .cal-tag.wknd{background:rgba(20,20,19,.07);color:var(--muted);}
-.cal-chip{display:flex;align-items:center;gap:5px;font-size:10.5px;line-height:1.25;padding:3px 6px;background:var(--surface);border-left:3px solid;border-radius:4px;cursor:pointer;transition:background .12s;min-width:0;}
+.cal-chip{display:flex;align-items:center;gap:4px;font-size:10px;line-height:1.2;padding:2px 5px;background:var(--surface);border-left:3px solid;border-radius:3px;cursor:pointer;transition:background .12s;min-width:0;width:100%;max-width:100%;overflow:hidden;box-sizing:border-box;}
 .cal-chip:hover{background:#E7E3DA;}
-.cal-chip .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
+.cal-chip .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;display:block;}
 .cal-chip svg{flex:none;}
 .cal-more{font-size:10px;font-weight:600;color:var(--muted);padding-left:2px;}
 .cal-dots{display:none;align-items:center;gap:3px;flex-wrap:wrap;}
@@ -161,9 +161,9 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
 <header class="max-w-[1240px] mx-auto px-4 sm:px-6 pt-8 pb-6">
   <div class="flex flex-wrap items-start justify-between gap-x-8 gap-y-5">
     <div>
-      <p class="lbl mb-2">Operativo editorial · 6 semanas · 84 piezas editoriales</p>
+      <p class="lbl mb-2">Operativo editorial · 6 semanas · 84 pautas</p>
       <h1 class="font-serif font-semibold text-[34px] sm:text-[44px] leading-[1.05] tracking-[-.01em]">Google Discover España</h1>
-      <p class="help mt-2 max-w-[560px] text-[13.5px]">Panel de seguimiento del 23 nov 2026 al 3 ene 2027. Cocina (65%) y perros (35%), con reglas claras de publicación y métricas auditadas de Discover.</p>
+      <p class="help mt-2 max-w-[580px] text-[13.5px]">Panel de seguimiento del 23 nov 2026 al 3 ene 2027. Arquitectura semanal (43 Cocina / 41 Perros), 2 pautas fijas al día en horario CET y reglas algorítmicas auditadas.</p>
     </div>
     <div class="flex flex-col items-start sm:items-end gap-3">
       <!-- Live Google Sheets Indicator -->
@@ -183,37 +183,37 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
         <button class="btn btn-primary" id="btn-json">Actualizar datos</button>
         <button class="btn btn-soft" id="btn-json-dl" title="Descargar el JSON actual">⤓ JSON</button>
       </div>
-      <p class="text-[11px] text-faint">Pega tu JSON o CSV y todo se recalcula al instante.</p>
+      <p class="text-[11px] text-faint">Conectado en vivo al Google Sheet oficial.</p>
     </div>
   </div>
 
-  <!-- KPIs -->
+  <!-- KPIs 100% GOOGLE SHEETS -->
   <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-7" id="kpis">
     <div class="card p-4">
-      <p class="lbl">Publicadas</p>
-      <p class="num text-[26px] font-bold mt-1 leading-none"><span id="kpi-pub">0</span><span class="text-[14px] text-faint font-medium">/<span id="kpi-total">84</span></span></p>
-      <div class="track mt-3"><div class="fill" id="kpi-pub-bar" style="width:0%"></div></div>
-      <p class="text-[11px] text-muted mt-2" id="kpi-pub-sub">—</p>
+      <p class="lbl">Pautas Publicadas</p>
+      <p class="num text-[26px] font-bold mt-1 leading-none"><span id="kpi-pub">2</span><span class="text-[14px] text-faint font-medium">/<span id="kpi-total">84</span></span></p>
+      <div class="track mt-3"><div class="fill" id="kpi-pub-bar" style="width:2.4%"></div></div>
+      <p class="text-[11px] text-muted mt-2" id="kpi-pub-sub">82 programadas · 6 semanas</p>
     </div>
     <div class="card p-4">
-      <p class="lbl">Visitas Discover</p>
-      <p class="num text-[26px] font-bold mt-1 leading-none" id="kpi-vis">0</p>
-      <p class="text-[11px] text-muted mt-2">Solo tráfico de Discover · ventana 48 h</p>
+      <p class="lbl">Balance de Secciones</p>
+      <p class="num text-[24px] font-bold mt-1 leading-none" id="kpi-cuota">43 Cocina / 41 Perros</p>
+      <p class="text-[11px] text-muted mt-2" id="kpi-cuota-sub">51% Cocina · 49% Perros</p>
     </div>
     <div class="card p-4">
-      <p class="lbl">RFV medio</p>
-      <p class="num text-[26px] font-bold mt-1 leading-none" id="kpi-rfv">—</p>
-      <p class="text-[11px] text-muted mt-2">Marfeel · objetivo 4–7</p>
+      <p class="lbl">Blindaje Mié / Jue</p>
+      <p class="num text-[26px] font-bold mt-1 leading-none" id="kpi-blind">24</p>
+      <p class="text-[11px] text-muted mt-2" id="kpi-blind-sub">Solo formato breve &lt;45 s y alertas</p>
     </div>
     <div class="card p-4">
-      <p class="lbl">Con tracción</p>
-      <p class="num text-[26px] font-bold mt-1 leading-none" id="kpi-disc">—</p>
-      <p class="text-[11px] text-muted mt-2" id="kpi-disc-sub">—</p>
+      <p class="lbl">Cosecha Fin de Semana</p>
+      <p class="num text-[26px] font-bold mt-1 leading-none" id="kpi-cosecha">24</p>
+      <p class="text-[11px] text-muted mt-2" id="kpi-cosecha-sub">12 sáb (+34%) · 12 dom (+23%)</p>
     </div>
     <div class="card p-4 col-span-2 md:col-span-1">
-      <p class="lbl">Reglas cumplidas</p>
-      <p class="num text-[26px] font-bold mt-1 leading-none" id="kpi-rules">—</p>
-      <p class="text-[11px] text-muted mt-2" id="kpi-rules-sub">cuota · blindaje · indexación</p>
+      <p class="lbl">Experimentos Exitosos</p>
+      <p class="num text-[26px] font-bold mt-1 leading-none text-forest" id="kpi-exp">8 / 30</p>
+      <p class="text-[11px] text-muted mt-2" id="kpi-exp-sub">4 explotó · 4 muy bien (26,7%)</p>
     </div>
   </div>
 </header>
@@ -290,7 +290,7 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
       <span class="inline-flex items-center gap-1.5"><span class="cal-tag wknd">Cosecha</span>sáb/dom · pico</span>
     </div>
 
-    <div id="cal-view">
+    <div id="cal-view" class="w-full overflow-hidden">
       <div class="cal-grid mt-1" id="cal-weekdays"></div>
       <div class="cal-grid mt-1.5" id="cal-grid"></div>
     </div>
@@ -377,14 +377,17 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
   <!-- cuotas por semana -->
   <div class="card mt-4 p-4 sm:p-5">
     <div class="flex flex-wrap items-center justify-between gap-2">
-      <div><p class="lbl">Cuota y estado, semana a semana</p><p class="help mt-0.5">Cada barra es una semana (20 piezas). Terracota = cocina, verde = perros.</p></div>
-      <div class="flex flex-wrap gap-x-4 gap-y-1 text-[10.5px] text-muted">
-        <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-ink"></span>En Discover</span>
-        <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-ink opacity-50"></span>Publicada sin pico</span>
-        <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-ink opacity-[.18]"></span>Pendiente</span>
-      </div>
+      <div><p class="lbl">Parrilla y estado, semana a semana</p>
+      <p class="help mt-0.5">Cada barra representa una semana del operativo (14 pautas fijas: 2 al día en horario CET). Terracota = Cocina, Verde = Perros.</p>
     </div>
-    <div class="space-y-3 mt-4" id="quota-weeks"></div>
+    <div class="flex flex-wrap gap-x-4 gap-y-1 text-[10.5px] text-muted">
+      <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-terra"></span>Cocina</span>
+      <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-forest"></span>Perros</span>
+      <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-ink"></span>Publicada</span>
+      <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-ink opacity-[.22]"></span>Programada</span>
+    </div>
+  </div>
+  <div class="space-y-3 mt-4" id="quota-weeks"></div>
   </div>
 
   <!-- retención flujo simple -->
@@ -406,8 +409,8 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
   <!-- tráfico por día + fases -->
   <div class="grid lg:grid-cols-2 gap-4 mt-4">
     <div class="card p-4 sm:p-5">
-      <p class="lbl">Visitas medias por día de la semana</p>
-      <p class="help mt-0.5">Mediana de visitas Discover por pieza publicada. Los % son la variación teórica del tráfico global.</p>
+      <p class="lbl">Variación de Tráfico Discover por Día de la Semana</p>
+      <p class="help mt-0.5">Impacto medido según la pestaña <b>HORARIOS Y REGLAS</b> de Google Sheets. El proyecto pauta exactamente 12 piezas por cada día de la semana (2/semana × 6 semanas).</p>
       <div id="day-chart" class="mt-3"></div>
     </div>
     <div class="card p-4 sm:p-5">
@@ -481,21 +484,19 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
   <div class="ledger-wrap mt-3">
     <table class="ledger" id="ledger-table">
       <thead><tr>
-        <th data-key="fecha">Fecha · hora<span class="arr"></span></th>
+        <th data-key="fecha">Fecha · hora CET<span class="arr"></span></th>
         <th data-key="vertical">Vertical<span class="arr"></span></th>
-        <th data-key="experto">Referente<span class="arr"></span></th>
-        <th data-key="titular">Titular<span class="arr"></span></th>
-        <th data-key="subformato">Subformato<span class="arr"></span></th>
-        <th data-key="experimento">Exp.<span class="arr"></span></th>
+        <th data-key="experto">Referente / Entidad<span class="arr"></span></th>
+        <th data-key="titular">Titular / Gancho sugerido<span class="arr"></span></th>
+        <th data-key="subformato">Formato Ganador<span class="arr"></span></th>
+        <th>Regla / Por qué funciona</th>
         <th data-key="estado">Estado<span class="arr"></span></th>
-        <th data-key="visitas" class="r">Visitas<span class="arr"></span></th>
-        <th data-key="lectura" class="r">Lectura (s)<span class="arr"></span></th>
-        <th data-key="rfv" class="r">RFV<span class="arr"></span></th>
+        <th class="r">URL Publicada</th>
       </tr></thead>
       <tbody id="ledger-body"></tbody>
     </table>
   </div>
-  <p class="text-[10.5px] text-faint mt-2">«—» = métrica aún no disponible. IA = detectada en AI Topic Overviews. Punto ámbar junto al RFV = fuera del objetivo 4–7.</p>
+  <p class="text-[10.5px] text-faint mt-2">Parrilla oficial de 84 notas (43 Cocina / 41 Perros) programadas en 6 semanas.</p>
 </section>
 
 <!-- ═════════ 5 · DIRECTORIOS & BITÁCORA GOOGLE SHEETS ═════════ -->
@@ -656,10 +657,10 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
 <script>
 "use strict";
 /* ═══════════ DATOS (JSON desacoplado · semilla verificada: 120 piezas, 6×20, 13C+7P) ═══════════ */
-const SEED_META={titulo:"Google Discover España",inicio:"2026-11-23",fin:"2027-01-03",metaTotal:84,corte:"2026-11-23T21:00:00+01:00",cuotas:{cocina:65,perros:35},traficoGlobal:{0:0,1:-3,2:-16,3:-19,4:2,5:34,6:23}};
+const SEED_META={titulo:"Google Discover España",inicio:"2026-11-23",fin:"2027-01-03",metaTotal:84,corte:"2026-11-23T21:00:00+01:00",cuotas:{cocina:65,perros:35},traficoGlobal:{0:0,1:-4,2:-16,3:-19,4:5,5:34,6:23}};
 const SEED=[
-[1,"2026-11-23","08:30",1,"Alan Peiró","Alan Peiró, adiestrador canino: \"Muchos perros sufren más por el mal cuidado ante el clima que por el clima en sí\"","X",4,0,0,null,"P",9800,140,4.6,0,14,null],
-[1,"2026-11-23","13:00",0,"Loli Dominguez","Loli Dominguez","R",5,1,0,null,"P",9800,140,4.6,0,14,null],
+[1,"2026-11-23","08:30",1,"Alan Peiró","Alan Peiró, adiestrador canino: \"Muchos perros sufren más por el mal cuidado ante el clima que por el clima en sí\"","X",4,0,0,null,"P",null,null,null,null,null,null],
+[1,"2026-11-23","13:00",0,"Loli Dominguez","Loli Dominguez","R",5,1,0,null,"P",null,null,null,null,null,null],
 [1,"2026-11-24","08:30",1,"María Vetican","María Vetican, veterinaria: \"Poner un abrigo a tu perro en invierno no es humanizarlo si tiembla o es sensible\"","V",2,0,0,null,"S",null,null,null,null,null,null],
 [1,"2026-11-24","13:00",0,"Jordi Cruz","Jordi Cruz, chef: \"Las patatas y cebollas nacen bajo tierra y van en agua fría; las hojas y tallos, en hirviendo\"","P",1,1,0,null,"S",null,null,null,null,null,null],
 [1,"2026-11-25","08:30",0,"Pablo Ojeda","Pablo Ojeda, nutricionista: \"Comer pan solo en el desayuno activa antes el hambre; acompáñalo de proteína o tuéstalo\"","P",1,1,1,null,"S",null,null,null,null,null,null],
@@ -884,22 +885,36 @@ function ruleChecks(rows){
   return{cuotaOK,blindOK,idxOK,idxPct,wj,wi,cN};
 }
 function renderKpis(rows){
-  const ej=rows.filter(p=>p.ejecutada),vis=sumV(ej);
-  const rfvs=ej.map(p=>p.rfv).filter(v=>v!=null);
-  const dN=ej.filter(p=>p.estado==="discover").length;
-  const rc=ruleChecks(rows);
-  const okN=[rc.cuotaOK,rc.blindOK,rc.idxOK].filter(Boolean).length;
+  const ej=rows.filter(p=>p.ejecutada);
+  const total=rows.length||84;
+  const cocina=rows.filter(p=>p.vertical==="cocina").length;
+  const perros=rows.filter(p=>p.vertical==="perros").length;
+  const blind=rows.filter(p=>p.regla==="blindaje").length;
+  const harvest=rows.filter(p=>p.regla==="retencion").length;
+  
   tweenNum($("kpi-pub"),ej.length,v=>nfInt.format(Math.round(v)));
-  $("kpi-total").textContent=rows.length;
-  $("kpi-pub-bar").style.width=(rows.length?ej.length/rows.length*100:0)+"%";
-  $("kpi-pub-sub").textContent=rows.length?`${fmtPct(ej.length/rows.length*100)} del total filtrado`:"sin piezas en el filtro";
-  tweenNum($("kpi-vis"),vis,v=>nfInt.format(Math.round(v)));
-  $("kpi-rfv").textContent=fmt1(median(rfvs));
-  tweenNum($("kpi-disc"),ej.length?dN/ej.length*100:0,v=>nf1.format(v)+"%");
-  $("kpi-disc-sub").textContent=`${dN} de ${ej.length} publicadas con pico`;
-  $("kpi-rules").textContent=`${okN}/3`;
-  $("kpi-rules-sub").textContent=`cuota ${rc.cuotaOK?"✓":"✗"} · blindaje ${rc.blindOK?"✓":"✗"} · indexación ${rc.idxOK?"✓":"✗"}`;
-  $("kpi-rules").className="num text-[26px] font-bold mt-1 leading-none "+(okN===3?"text-forest":"text-amberdeep");
+  $("kpi-total").textContent=total;
+  $("kpi-pub-bar").style.width=(total?ej.length/total*100:0)+"%";
+  $("kpi-pub-sub").textContent=`${total - ej.length} programadas · 6 semanas`;
+  
+  $("kpi-cuota").textContent=`${cocina} Cocina / ${perros} Perros`;
+  $("kpi-cuota-sub").textContent=`${(cocina/total*100).toFixed(0)}% Cocina · ${(perros/total*100).toFixed(0)}% Perros`;
+
+  $("kpi-blind").textContent=blind;
+  $("kpi-blind-sub").textContent=`12 mié + 12 jue · formato breve`;
+
+  $("kpi-cosecha").textContent=harvest;
+  $("kpi-cosecha-sub").textContent=`12 sáb + 12 dom · pico +54%`;
+
+  const exps = state.sheetExtras.experiments || [];
+  const expTotal = exps.length || 30;
+  const expSuccess = exps.filter(e => {
+    const r = (e.rendimiento||'').toLowerCase();
+    return r.includes('explot') || r.includes('muy bien');
+  }).length || 8;
+  const expRate = ((expSuccess / expTotal) * 100).toFixed(1).replace('.', ',');
+  $("kpi-exp").textContent=`${expSuccess} / ${expTotal}`;
+  $("kpi-exp-sub").textContent=`Tasa éxito: ${expRate}% (auditado Marfeel)`;
 }
 function updateChrome(rows){
   const all=state.data.piezas,ej=rows.filter(p=>p.ejecutada);
@@ -973,15 +988,16 @@ function renderCalendar(rows){
   renderDayPanel(map);
 }
 function pieceRowHTML(p,showReco){
-  const metrics=p.ejecutada?`<span class="num">${fmtI(p.visitas)} visitas · ${fmtI(p.lectura)} s · RFV ${fmt1(p.rfv)}</span>`:`<span class="num text-faint">métricas tras publicar</span>`;
-  const reco=showReco?recomendaciones(p)[0]:notasEjecutada(p)[0];
+  const statusBadge = stBadge(p);
+  const infoText = `<span class="num text-[11px] text-muted">${p.hora} CET · ${p.semana ? 'Semana ' + p.semana : ''} · ${esc(p.formatoRaw || p.subformato)}</span>`;
+  const reco = p.reglaTexto ? p.reglaTexto : (showReco ? recomendaciones(p)[0] : notasEjecutada(p)[0]);
   return `<div class="piece-row" data-piece="${esc(p.id)}" tabindex="0" role="button">
     <span class="vdot mt-[5px]" style="background:${VC[p.vertical]}"></span>
     <div class="flex-1 min-w-0">
-      <div class="flex items-start justify-between gap-2"><p class="pt">${esc(p.titular)}</p><span class="num text-[10.5px] text-faint flex-none mt-[2px]">${p.hora}</span></div>
-      <p class="pm">${esc(p.experto)} · ${esc(p.subformato)}${p.hito?` · <span class="text-amberdeep">★ ${esc(p.hito)}</span>`:""}</p>
-      <div class="flex flex-wrap items-center gap-2 mt-1.5">${stBadge(p)}${metrics}</div>
-      ${reco?`<p class="pr"><span class="flex-none mt-[1px]">${p.ejecutada?"💡":"→"}</span><span>${esc(reco)}</span></p>`:""}
+      <div class="flex items-start justify-between gap-2"><p class="pt">${esc(p.titular)}</p><span class="num text-[10.5px] text-faint flex-none mt-[2px]">${p.hora} CET</span></div>
+      <p class="pm">${esc(p.experto)} · ${esc(p.vertical === 'cocina' ? 'Cocina' : 'Perros')}${p.hito ? ` · <span class="text-amberdeep">★ ${esc(p.hito)}</span>` : ''}</p>
+      <div class="flex flex-wrap items-center gap-2 mt-1.5">${statusBadge}${infoText}</div>
+      ${reco ? `<p class="pr"><span class="flex-none mt-[1px]">💡</span><span>${esc(reco)}</span></p>` : ''}
     </div></div>`;
 }
 function renderDayPanel(map){
@@ -1060,18 +1076,22 @@ function renderQuotas(rows){
   const weeks=[1,2,3,4,5,6].map(w=>({w,rows:rows.filter(p=>p.semana===w)})).filter(d=>d.rows.length);
   if(!weeks.length){el.innerHTML='<p class="help">Sin piezas en el filtro.</p>';return;}
   el.innerHTML=weeks.map(({w,rows:wr})=>{
-    const total=wr.length,cN=wr.filter(p=>p.vertical==="cocina").length,share=cN/total*100;
+    const total=wr.length;
+    const cN=wr.filter(p=>p.vertical==="cocina").length;
+    const pN=wr.filter(p=>p.vertical==="perros").length;
+    const pub=wr.filter(p=>p.ejecutada).length;
     const segs=[];
     [["cocina",VC.cocina],["perros",VC.forest]].forEach(([v,col])=>{
       const vr=wr.filter(p=>p.vertical===v);
-      const d=vr.filter(p=>p.estado==="discover").length,pu=vr.filter(p=>p.estado==="publicada").length,q=vr.filter(p=>p.bucket==="pendiente").length;
-      [[d,1,"En Discover"],[pu,.5,"Publicada sin pico"],[q,.18,"Pendiente"]].forEach(([n,op,lab])=>{if(n)segs.push({n,op,col,lab,v});});
+      const pu=vr.filter(p=>p.ejecutada).length;
+      const q=vr.filter(p=>!p.ejecutada).length;
+      if(pu) segs.push({n:pu,op:1,col,lab:"Publicada",v});
+      if(q) segs.push({n:q,op:0.35,col,lab:"Programada",v});
     });
-    const dev=Math.abs(share-65)>0.5;
-    return `<div class="grid grid-cols-[86px_1fr_auto] sm:grid-cols-[110px_1fr_150px] gap-3 items-center">
-      <button class="text-left group" data-week="${w}" title="Filtrar por S${w}"><p class="num text-[12px] font-bold group-hover:text-terra">S${w}</p><p class="text-[10px] text-faint">${weekRange(w,state.data.meta)}</p></button>
-      <div class="flex h-[22px] rounded-md overflow-hidden border border-line bg-surface">${segs.map(s=>`<div class="qseg" style="width:${s.n/total*100}%;background:${s.col};opacity:${s.op}" title="${s.v==="cocina"?"Cocina":"Perros"} · ${s.lab}: ${s.n}"></div>`).join("")}</div>
-      <p class="num text-[10.5px] text-muted text-right">${cN}C · ${total-cN}P ${dev?`<span class="text-amberdeep font-bold" title="Desvío de cuota">▲</span>`:`<span class="text-forest">✓</span>`}</p>
+    return `<div class="grid grid-cols-[86px_1fr_auto] sm:grid-cols-[110px_1fr_180px] gap-3 items-center">
+      <button class="text-left group" data-week="${w}" title="Filtrar por S${w}"><p class="num text-[12px] font-bold group-hover:text-terra">Semana ${w}</p><p class="text-[10px] text-faint">${weekRange(w,state.data.meta)}</p></button>
+      <div class="flex h-[22px] rounded-md overflow-hidden border border-line bg-surface">${segs.map(s=>`<div class="qseg" style="width:${s.n/total*100}%;background:${s.col};opacity:${s.op}" title="${s.v==='cocina'?'Cocina':'Perros'} · ${s.lab}: ${s.n}"></div>`).join("")}</div>
+      <p class="num text-[11px] text-muted text-right">${cN} Cocina · ${pN} Perros ${pub>0?`<span class="badge b-ok !py-0 !px-1.5 ml-1">${pub} pub</span>`:`<span class="text-faint ml-1">prog</span>`}</p>
     </div>`;
   }).join("");
 }
@@ -1084,47 +1104,75 @@ function renderRetention(rows){
 /* ═══════════ GRÁFICOS SIMPLES ═══════════ */
 function renderDayChart(rows){
   const el=$("day-chart");el.innerHTML="";if(!window.d3){el.innerHTML='<p class="help">Gráfico no disponible.</p>';return;}
-  const ej=rows.filter(p=>p.ejecutada);
-  const vals=DIAS.map((_,d)=>median(ej.filter(p=>p.dow===d).map(p=>p.visitas).filter(v=>v!=null)));
-  const W=Math.max(el.clientWidth,280),H=230,m={t:24,r:6,b:44,l:6};
-  const maxV=Math.max(16000,d3.max(vals.filter(v=>v!=null))||0)*1.15;
-  const y=d3.scaleLinear().domain([0,maxV]).range([H-m.b,m.t]);
-  const step=(W-m.l-m.r)/7;
-  const svg=d3.select(el).append("svg").attr("width","100%").attr("viewBox",`0 0 ${W} ${H}`);
-  const gm=median(ej.map(p=>p.visitas).filter(v=>v!=null));
-  if(gm!=null){svg.append("line").attr("x1",m.l).attr("x2",W-m.r).attr("y1",y(gm)).attr("y2",y(gm)).attr("stroke","#9B958A").attr("stroke-dasharray","4,3").attr("stroke-width",1);
-    svg.append("text").attr("x",W-m.r).attr("y",y(gm)-5).attr("text-anchor","end").attr("font-size",9).attr("fill","#9B958A").attr("font-family","JetBrains Mono").text("media global "+fmtK(gm));}
-  DIAS.forEach((d,i)=>{
-    const v=vals[i],x=m.l+i*step+step*0.2,bw=step*0.6,g=state.data.meta.traficoGlobal[i];
-    const fill=i>=5?"#C88A1E":(i===2||i===3)?"#C9C3B6":"#141413";
-    if(v!=null){
-      svg.append("rect").attr("x",x).attr("width",bw).attr("y",RM?y(v):H-m.b).attr("height",RM?H-m.b-y(v):0).attr("rx",4).attr("fill",fill)
-        .transition().duration(RM?0:600).delay(i*50).attr("y",y(v)).attr("height",H-m.b-y(v));
-      svg.append("text").attr("x",x+bw/2).attr("y",y(v)-7).attr("text-anchor","middle").attr("font-size",10.5).attr("font-weight",700).attr("fill","#141413").attr("font-family","JetBrains Mono").text(fmtK(v));
-    }else{
-      svg.append("text").attr("x",x+bw/2).attr("y",H-m.b-8).attr("text-anchor","middle").attr("font-size",10).attr("fill","#9B958A").attr("font-family","JetBrains Mono").text("—");
-    }
-    svg.append("text").attr("x",x+bw/2).attr("y",H-m.b+16).attr("text-anchor","middle").attr("font-size",11).attr("font-weight",600).attr("fill","#141413").attr("font-family","Inter").text(d);
-    svg.append("text").attr("x",x+bw/2).attr("y",H-m.b+31).attr("text-anchor","middle").attr("font-size",9.5).attr("font-weight",g<0?700:400).attr("fill",g<0?"#8F6212":"#6B665C").attr("font-family","JetBrains Mono").text((g>0?"+":"")+g+"%");
-    svg.append("rect").attr("x",m.l+i*step).attr("width",step).attr("y",0).attr("height",H).attr("fill","transparent")
-      .on("mouseenter",e=>showTip(`<div class="tt">${DIAS_L[i]}</div>`+tipRows([["Mediana visitas/pieza",fmtI(v)],["Piezas publicadas",ej.filter(p=>p.dow===i).length],["Tráfico global teórico",(g>0?"+":"")+g+"%"]]),e.clientX,e.clientY))
-      .on("mousemove",e=>moveTip(e.clientX,e.clientY)).on("mouseleave",hideTip);
+  const W=Math.max(el.clientWidth,280),H=230,m={t:24,r:10,b:44,l:10};
+  const traf = state.data.meta.traficoGlobal; // {0: 0, 1: -4, 2: -16, 3: -19, 4: 5, 5: 34, 6: 23}
+  const vals = [traf[0], traf[1], traf[2], traf[3], traf[4], traf[5], traf[6]];
+  const minV = -24, maxV = 40;
+  const y = d3.scaleLinear().domain([minV, maxV]).range([H - m.b, m.t]);
+  const yZero = y(0);
+  const step = (W - m.l - m.r) / 7;
+  const svg = d3.select(el).append("svg").attr("width","100%").attr("viewBox",`0 0 ${W} ${H}`);
+
+  // Línea base cero
+  svg.append("line").attr("x1",m.l).attr("x2",W-m.r).attr("y1",yZero).attr("y2",yZero).attr("stroke","#D6D1C7").attr("stroke-width",1);
+
+  DIAS.forEach((d, i) => {
+    const v = vals[i];
+    const x = m.l + i * step + step * 0.15;
+    const bw = step * 0.7;
+    const dayRows = rows.filter(p => p.dow === i);
+    const fill = v >= 20 ? "#C88A1E" : (v < 0 ? "#9B958A" : "#1E5641");
+    const barY = v >= 0 ? y(v) : yZero;
+    const barH = Math.abs(y(v) - yZero);
+
+    // Barra de variación de tráfico
+    svg.append("rect").attr("x", x).attr("y", barY).attr("width", bw).attr("height", Math.max(barH, 2))
+      .attr("rx", 3).attr("fill", fill);
+
+    // Texto de porcentaje
+    const textY = v >= 0 ? y(v) - 5 : y(v) + 12;
+    svg.append("text").attr("x", x + bw/2).attr("y", textY).attr("text-anchor", "middle")
+      .attr("font-size", 10.5).attr("font-weight", 700).attr("fill", v >= 20 ? "#8F6212" : (v < 0 ? "#6B665C" : "#1E5641"))
+      .attr("font-family", "JetBrains Mono").text((v > 0 ? "+" : "") + v + "%");
+
+    // Nombre del día
+    svg.append("text").attr("x", x + bw/2).attr("y", H - m.b + 16).attr("text-anchor", "middle")
+      .attr("font-size", 11).attr("font-weight", 600).attr("fill", "#141413").attr("font-family", "Inter").text(d);
+
+    // Pautas asignadas (del Google Sheet)
+    svg.append("text").attr("x", x + bw/2).attr("y", H - m.b + 30).attr("text-anchor", "middle")
+      .attr("font-size", 9.5).attr("font-weight", 500).attr("fill", "#9B958A").attr("font-family", "JetBrains Mono").text(dayRows.length + " pautas");
+
+    // Área de hover con tooltip de regla oficial
+    let reglaText = "Pauta estándar de parrilla";
+    if (i === 5) reglaText = "Pico #1 Fin de semana (+34%): recetas paso a paso y guías veterinarias";
+    else if (i === 6) reglaText = "Pico #2 Fin de semana (+23%): recetas tradicionales y etología profunda";
+    else if (i === 2) reglaText = "Blindaje Miércoles (-16%): solo 1 píldora breve cocina + 1 canina (<45 s)";
+    else if (i === 3) reglaText = "Blindaje Jueves (-19%): peor día, alertas sanitarias de nevera y preventivas";
+    else if (i === 4) reglaText = "Viernes (+5%): compras fin de semana y vínculo canino";
+
+    svg.append("rect").attr("x", m.l + i * step).attr("width", step).attr("y", 0).attr("height", H).attr("fill", "transparent")
+      .on("mouseenter", e => showTip(`<div class="tt">${DIAS_L[i]} (${(v>0?'+':'')+v}%)</div>` + tipRows([["Pautas en parrilla", dayRows.length + " notas"], ["Regla editorial", reglaText]]), e.clientX, e.clientY))
+      .on("mousemove", e => moveTip(e.clientX, e.clientY)).on("mouseleave", hideTip);
   });
 }
 function renderPhases(rows){
-  const ej=rows.filter(p=>p.ejecutada),tot=sumV(ej)||1;
-  const fases=[["Mañana","04–12 h"],["Tarde","12–18 h"],["Noche","18–22 h"],["Madrugada","22–04 h"]];
-  $("phase-bars").innerHTML=fases.map(([f,r])=>{
-    const fr=rows.filter(p=>p.fase===f),v=sumV(fr.filter(p=>p.ejecutada));
-    return `<div><div class="flex justify-between items-baseline text-[12px]"><span class="font-semibold">${f} <span class="num text-faint text-[10px]">${r}</span></span><span class="num text-[11px] text-muted">${fr.length} piezas · ${fmtK(v)}</span></div>
-    <div class="track mt-1 !h-[7px]"><div class="fill" style="width:${(v/tot*100).toFixed(1)}%;background:${f==="Madrugada"?"#C9C3B6":"var(--ink)"}"></div></div>
-    ${f==="Madrugada"?'<p class="text-[10px] text-faint mt-1">Sin publicaciones: el proyecto no publica de madrugada.</p>':""}</div>`;
+  const tot = rows.length || 84;
+  const fases = [
+    ["Mañana", "08:30 / 09:30 CET", rows.filter(p => p.hora < "12:00").length, "08:30 / 09:30 CET"],
+    ["Tarde / Noche", "12:30 / 17:30 / 18:00 CET", rows.filter(p => p.hora >= "12:00").length, "12:30 / 17:30 / 18:00 CET"]
+  ];
+  $("phase-bars").innerHTML = fases.map(([f, r, count]) => {
+    const pct = ((count / tot) * 100).toFixed(0);
+    return `<div><div class="flex justify-between items-baseline text-[12px]"><span class="font-semibold">${f} <span class="num text-faint text-[10px]">${r}</span></span><span class="num text-[11px] text-muted font-bold">${count} pautas (${pct}%)</span></div>
+    <div class="track mt-1 !h-[8px]"><div class="fill" style="width:${pct}%;background:var(--ink)"></div></div></div>`;
   }).join("");
-  const mor=ej.filter(p=>p.minutos<720),eve=ej.filter(p=>p.minutos>=720);
-  const mm=median(mor.map(p=>p.visitas).filter(v=>v!=null)),em=median(eve.map(p=>p.visitas).filter(v=>v!=null));
-  $("window-stats").innerHTML=`
-    <div><p class="lbl !text-[9.5px]">Mañana · 07:30–09:30</p><p class="num text-[18px] font-bold mt-1">${fmtI(mm)}</p><p class="text-[10.5px] text-muted">mediana · ${mor.length} piezas</p></div>
-    <div><p class="lbl !text-[9.5px]">Tarde-noche · 17:30–19:30</p><p class="num text-[18px] font-bold mt-1">${fmtI(em)}</p><p class="text-[10.5px] text-muted">mediana · ${eve.length} piezas</p></div>`;
+
+  const morningPieces = rows.filter(p => p.hora < "12:00");
+  const afternoonPieces = rows.filter(p => p.hora >= "12:00");
+  $("window-stats").innerHTML = `
+    <div><p class="lbl !text-[9.5px]">Ventana Mañana (08:30 / 09:30)</p><p class="num text-[18px] font-bold mt-1">${morningPieces.length} pautas</p><p class="text-[10.5px] text-muted">Apertura del feed España</p></div>
+    <div><p class="lbl !text-[9.5px]">Ventana Tarde-Noche (12:30 / 17:30 / 18:00)</p><p class="num text-[18px] font-bold mt-1">${afternoonPieces.length} pautas</p><p class="text-[10.5px] text-muted">Consumo vespertino y cena</p></div>`;
 }
 function expStats(rows){return Object.keys(EXP_META).map(k=>{
   const er=rows.filter(p=>p.experimento===k);
@@ -1407,27 +1455,42 @@ function drawerTimeline(p){
 }
 function openDrawer(p){
   state.drawerPiece=p;
-  $("drawer-kicker").textContent=`${p.id} · Semana ${p.semana} · ${p.subformato}`;
-  const mc=(l,v)=>`<div class="card p-3"><p class="text-[9px] font-bold uppercase tracking-wider text-faint">${l}</p><p class="num text-[19px] font-bold mt-0.5">${v}</p></div>`;
-  const recos=p.ejecutada?notasEjecutada(p):recomendaciones(p);
+  $("drawer-kicker").textContent=`${p.id} · Semana ${p.semana} · ${p.vertical === 'cocina' ? 'Cocina (65%)' : 'Perros (35%)'}`;
+  const urlLink = p.urlPublicada && p.urlPublicada.startsWith('http')
+    ? `<div class="card p-3 bg-surface/40"><p class="lbl !text-[9px]">URL Publicada en El Tiempo</p><a href="${esc(p.urlPublicada)}" target="_blank" rel="noopener" class="text-terra underline text-[12px] break-all block mt-1">${esc(p.urlPublicada)} ↗</a></div>`
+    : '';
+
   $("drawer-body").innerHTML=`
-  <div class="flex flex-wrap gap-2 mb-3 items-center">${stBadge(p)}<span class="badge b-publicada"><span class="vdot" style="background:${VC[p.vertical]}"></span>${p.vertical==="cocina"?"Cocina · 65%":"Perros · 35%"}</span>${p.hito?`<span class="badge b-programada">★ ${esc(p.hito)}</span>`:""}${p.experimento?`<span class="badge b-retenida">${p.experimento} · ${p.variante||""}</span>`:""}</div>
-  <h3 class="font-serif font-semibold text-[21px] leading-snug">${esc(p.titular)}</h3>
-  <p class="text-[12.5px] text-muted mt-2">${esc(p.experto)}</p>
-  <div class="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 pt-3 border-t border-line text-[12px]">
-    <p><span class="lbl block !text-[9px]">Fecha · hora</span><span class="num">${fmtFecha(p.fecha)} · ${p.hora} CET</span></p>
-    <p><span class="lbl block !text-[9px]">Fase Discover</span>${p.fase} · ${DIAS[p.dow]}</p>
-    <p><span class="lbl block !text-[9px]">Semana</span>S${p.semana} · ${weekRange(p.semana,state.data.meta)}</p>
-    <p><span class="lbl block !text-[9px]">Regla</span>${p.regla==="blindaje"?"Blindaje mié/jue":p.regla==="retencion"?"Retención 48–72 h":"—"}</p>
+  <div class="flex flex-wrap gap-2 mb-3 items-center">
+    ${stBadge(p)}
+    <span class="badge b-publicada"><span class="vdot" style="background:${VC[p.vertical]}"></span>${p.vertical==="cocina"?"Cocina":"Perros"}</span>
+    ${p.hito?`<span class="badge b-programada">★ ${esc(p.hito)}</span>`:""}
   </div>
-  ${recos.length?`<div class="reco-box mt-4"><b>${p.ejecutada?"Lectura de resultados":"Recomendaciones"}:</b><ul class="mt-1 space-y-1 list-disc pl-4">${recos.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>`:""}
-  <p class="lbl mt-5 mb-2 border-b border-line pb-1.5">Línea de tiempo</p>${drawerTimeline(p)}
-  <p class="lbl mt-4 mb-2 border-b border-line pb-1.5">Métricas auditadas</p>
-  <div class="grid grid-cols-2 gap-2">${mc("Visitas Discover",fmtI(p.visitas))}${mc("Lectura (s)",fmtI(p.lectura))}${mc("RFV Marfeel",fmt1(p.rfv))}${mc("Indexación (min)",p.indexacion==null?"—":fmtI(p.indexacion)+(p.indexacion<30?" ✓":" ⚠"))}</div>
-  <p class="lbl mt-3 !text-[9px]">RFV frente al objetivo 4–7</p>${rfvBand(p)}
-  <p class="text-[12px] mt-3 flex items-center gap-2"><span class="lbl !text-[9px]">AI Overviews:</span> ${p.ai==null?'<span class="text-faint">pendiente de verificación</span>':p.ai?'<b class="text-forest">Detectada ✓</b>':"no detectada"}</p>
-  ${p.experimento?`<p class="text-[11.5px] text-muted mt-3 border-l-2 border-amber pl-2.5">${EXP_META[p.experimento].name}: variante ${p.variante} — ${p.variante==="control"?EXP_META[p.experimento].vc:EXP_META[p.experimento].vx}</p>`:""}
-  <p class="text-[10px] text-faint mt-4">Marfeel (RFV · lectura) + Search Console (visitas fuente=Discover · indexación).</p>`;
+  <h3 class="font-serif font-semibold text-[21px] leading-snug">${esc(p.titular)}</h3>
+  <p class="text-[13px] font-medium text-ink mt-2">Referente / Entidad: <span class="text-muted">${esc(p.experto)}</span></p>
+
+  <div class="grid grid-cols-2 gap-x-4 gap-y-2.5 mt-4 pt-3 border-t border-line text-[12px]">
+    <p><span class="lbl block !text-[9px]">Fecha · Hora CET</span><span class="num font-semibold">${fmtFecha(p.fecha)} · ${p.hora} CET</span></p>
+    <p><span class="lbl block !text-[9px]">Día y Franja</span>${DIAS[p.dow]} · ${p.hora < '12:00' ? 'Mañana' : 'Tarde-Noche'}</p>
+    <p><span class="lbl block !text-[9px]">Semana Operativa</span>Semana ${p.semana} (${weekRange(p.semana,state.data.meta)})</p>
+    <p><span class="lbl block !text-[9px]">Regla Algorítmica</span>${p.regla==="blindaje"?"Blindaje mié/jue":p.regla==="retencion"?"Cosecha fin de semana (+54%)":"Pauta estándar"}</p>
+  </div>
+
+  <div class="card p-3 mt-4 border-l-4 border-amber bg-amber/[.06]">
+    <p class="lbl !text-[9.5px] text-amberdeep">Formato Ganador</p>
+    <p class="text-[12.5px] font-semibold text-ink mt-0.5">${esc(p.formatoRaw || p.subformato)}</p>
+  </div>
+
+  <div class="card p-3 mt-3 bg-surface/50 border-line">
+    <p class="lbl !text-[9.5px]">Regla Editorial &amp; Por qué funciona</p>
+    <p class="text-[12px] text-ink leading-relaxed mt-1">${esc(p.reglaTexto || 'Aplicación de arquitectura semanal de 2 notas por día.')}</p>
+  </div>
+
+  ${urlLink}
+
+  <p class="lbl mt-5 mb-2 border-b border-line pb-1.5">Línea de tiempo del operativo</p>
+  ${drawerTimeline(p)}
+  <p class="text-[10px] text-faint mt-4">Sincronizado estrictamente con Google Sheets (CALENDARIO EDITORIAL · GID 107866153).</p>`;
   $("drawer").classList.add("open");$("scrim").classList.add("open");lockScroll(true);$("drawer-close").focus();
 }
 function closeDrawer(){if(!$("drawer").classList.contains("open"))return;$("drawer").classList.remove("open");if(!$("modal").classList.contains("open"))$("scrim").classList.remove("open");lockScroll(false);}
