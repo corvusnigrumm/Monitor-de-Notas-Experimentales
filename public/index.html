@@ -225,9 +225,8 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
       <nav class="flex gap-5 overflow-x-auto" aria-label="Secciones">
         <button class="navlink on" data-nav="calendario">Calendario</button>
         <button class="navlink" data-nav="avance">Avance y reglas</button>
-        <button class="navlink" data-nav="experimentos">Experimentos</button>
+        <button class="navlink" data-nav="experimentos">Experimentos &amp; Directorios</button>
         <button class="navlink" data-nav="piezas">Las 84 piezas</button>
-        <button class="navlink" data-nav="directorios">Directorios &amp; Bitácora</button>
       </nav>
       <p class="num text-[11px] text-muted whitespace-nowrap hidden sm:block" id="filter-count">84 piezas · 2 publicadas</p>
     </div>
@@ -422,47 +421,217 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
   </div>
 </section>
 
-<!-- ═════════ 3 · EXPERIMENTOS ═════════ -->
-<section id="experimentos" class="pt-14 reveal">
-  <div class="flex flex-wrap items-end justify-between gap-3">
+<!-- ═════════ 3 · ECOSISTEMA EDITORIAL: EXPERIMENTOS, CHEFS & ESPECIALISTAS CANINOS ═════════ -->
+<section id="experimentos" class="pt-14 pb-8 reveal">
+  <div class="flex flex-wrap items-end justify-between gap-x-6 gap-y-3 pb-3 border-b border-line">
     <div>
-      <h2 class="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight">Experimentos Editoriales &amp; Test A/B</h2>
-      <p class="help mt-1 max-w-[640px]">Auditoría de titulares, formatos y horarios basada en la pestaña <b>EXPERIMENTOS</b> de Google Sheets y métricas de Marfeel. Cinco patrones analizados en control vs. experimental.</p>
+      <p class="lbl">Ecosistema Editorial Google Discover · Google Sheets Oficial</p>
+      <h2 class="font-serif font-semibold text-[26px] sm:text-[34px] leading-tight mt-1">Experimentos Editoriales &amp; Directorios de Autoridad</h2>
+      <p class="help mt-1.5 max-w-[720px] text-[13px]">
+        Integración completa del banco de <b>30 experimentos auditados con Marfeel Compass</b>, junto al directorio de <b>47 chefs y creadores</b> y <b>50 especialistas caninos colegiados</b>. Toda la información del Google Sheet sincronizada en vivo sin exclusión de filtros.
+      </p>
     </div>
-    <div class="flex gap-4 text-[11px] text-muted">
-      <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm" style="background:#C9C3B6"></span>Control</span>
-      <span class="inline-flex items-center gap-1.5"><span class="inline-block w-[10px] h-[10px] rounded-sm bg-amber"></span>Experimental</span>
-    </div>
-  </div>
-
-  <!-- Resumen de Experimentos Editoriales en vivo desde Google Sheet -->
-  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
-    <div class="card p-3 bg-surface/50 border-line">
-      <p class="lbl !text-[9.5px]">Total auditados</p>
-      <p class="num text-[20px] font-bold text-ink mt-0.5">30 <span class="text-[11px] text-muted font-normal">pruebas</span></p>
-      <p class="text-[10px] text-faint mt-1">Con métricas de Marfeel Compass</p>
-    </div>
-    <div class="card p-3 bg-surface/50 border-line">
-      <p class="lbl !text-[9.5px]">Explotó en Discover</p>
-      <p class="num text-[20px] font-bold text-forest mt-0.5">4 <span class="text-[11px] text-muted font-normal">piezas</span></p>
-      <p class="text-[10px] text-faint mt-1">César Millán, Ferran Adrià</p>
-    </div>
-    <div class="card p-3 bg-surface/50 border-line">
-      <p class="lbl !text-[9.5px]">Tracción positiva</p>
-      <p class="num text-[20px] font-bold text-terra mt-0.5">17 <span class="text-[11px] text-muted font-normal">piezas</span></p>
-      <p class="text-[10px] text-faint mt-1">Desempeño regular a muy bueno</p>
-    </div>
-    <div class="card p-3 bg-surface/50 border-line">
-      <p class="lbl !text-[9.5px]">Descartadas / Muertas</p>
-      <p class="num text-[20px] font-bold text-muted mt-0.5">9 <span class="text-[11px] text-muted font-normal">piezas</span></p>
-      <p class="text-[10px] text-faint mt-1">Sin respuesta en Discover</p>
+    <div class="flex items-center gap-2">
+      <span class="num text-[11px] text-muted border border-line bg-card rounded-md px-3 py-1.5 shadow-sm">
+        127 registros en total
+      </span>
     </div>
   </div>
 
-  <div class="card mt-4 p-2 sm:p-3 overflow-x-auto">
-    <div id="exp-chart" class="min-w-[760px]"></div>
+  <!-- Tarjetas KPI del Ecosistema -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
+    <div class="card p-3.5 bg-surface/40 border-line hover:border-rule transition-colors">
+      <div class="flex items-center justify-between">
+        <p class="lbl !text-[9.5px]">30 Experimentos</p>
+        <span class="badge b-discover !text-[9px]">Marfeel</span>
+      </div>
+      <p class="num text-[22px] font-bold text-ink mt-1">26,7% <span class="text-[11.5px] text-muted font-normal">éxito</span></p>
+      <p class="text-[10.5px] text-muted mt-1">4 explotaron · 4 muy bien · 10 descartadas</p>
+    </div>
+    <div class="card p-3.5 bg-surface/40 border-line hover:border-rule transition-colors">
+      <div class="flex items-center justify-between">
+        <p class="lbl !text-[9.5px]">47 Chefs Verificados</p>
+        <span class="vdot bg-terra"></span>
+      </div>
+      <p class="num text-[22px] font-bold text-terra mt-1">96,6 M <span class="text-[11.5px] text-muted font-normal">audiencia</span></p>
+      <p class="text-[10.5px] text-muted mt-1">47 perfiles sin omisión de filtros</p>
+    </div>
+    <div class="card p-3.5 bg-surface/40 border-line hover:border-rule transition-colors">
+      <div class="flex items-center justify-between">
+        <p class="lbl !text-[9.5px]">50 Especialistas Caninos</p>
+        <span class="vdot bg-forest"></span>
+      </div>
+      <p class="num text-[22px] font-bold text-forest mt-1">50 <span class="text-[11.5px] text-muted font-normal">colegiados</span></p>
+      <p class="text-[10.5px] text-muted mt-1">10 etólogos · 14 veterinarios · 24 adiestradores</p>
+    </div>
+    <div class="card p-3.5 bg-surface/40 border-line hover:border-rule transition-colors">
+      <div class="flex items-center justify-between">
+        <p class="lbl !text-[9.5px]">Referentes con Pico</p>
+        <span class="text-[11px] text-amberdeep font-bold">★ TOP</span>
+      </div>
+      <p class="num text-[22px] font-bold text-amberdeep mt-1">8 <span class="text-[11.5px] text-muted font-normal">estrellas</span></p>
+      <p class="text-[10.5px] text-muted mt-1">César Millán, Ferran Adrià, Anna Terés...</p>
+    </div>
   </div>
-  <p class="text-[10.5px] text-faint mt-2">Medianas de piezas publicadas con ≥48 h de datos. Muestras pequeñas: lectura orientativa. «IA» = aparición en resúmenes de inteligencia artificial (AI Topic Overviews).</p>
+
+  <!-- Pestañas interactivas del Ecosistema -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mt-6 pb-2 border-b border-line">
+    <div class="flex flex-wrap items-center gap-2" id="eco-tabs">
+      <button class="btn btn-primary !py-1.5 !px-3.5" id="tab-btn-bitacora" data-dirtab="bitacora">
+        🔥 30 Experimentos con Marfeel (<span id="dir-bitacora-count">30</span>)
+      </button>
+      <button class="btn btn-soft !py-1.5 !px-3.5" id="tab-btn-chefs" data-dirtab="chefs">
+        👨‍🍳 Directorio de Chefs (<span id="dir-chefs-count">47</span>)
+      </button>
+      <button class="btn btn-soft !py-1.5 !px-3.5" id="tab-btn-canino" data-dirtab="canino">
+        🐕 Especialistas Caninos (<span id="dir-canino-count">50</span>)
+      </button>
+      <button class="btn btn-soft !py-1.5 !px-3.5" id="tab-btn-matriz" data-dirtab="matriz">
+        ⭐ Matriz de Rendimiento de Referentes
+      </button>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="relative min-w-[200px]">
+        <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-faint text-[12px]">⌕</span>
+        <input id="eco-search" type="search" placeholder="Buscar en el ecosistema..." class="w-full bg-card border border-line rounded-md pl-8 pr-3 py-1.5 text-[12px] placeholder:text-faint focus:border-rule" aria-label="Buscar en el ecosistema">
+      </div>
+      <div id="exp-view-mode" class="seg inline-flex">
+        <button id="btn-mode-cards" class="on" title="Vista fichas visuales">Fichas</button>
+        <button id="btn-mode-table" title="Vista tabla de auditoría">Tabla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros rápidos para Experimentos -->
+  <div class="flex flex-wrap items-center gap-1.5 mt-3" id="eco-filter-pills">
+    <span class="text-[10.5px] font-semibold uppercase tracking-wider text-muted mr-1.5">Filtro de rendimiento:</span>
+    <button class="btn !py-1 !px-2.5 !text-[11px] btn-primary" data-ecofilter="all">Todos (30)</button>
+    <button class="btn !py-1 !px-2.5 !text-[11px] btn-soft" data-ecofilter="explot">🔥 Explotó en Discover (4)</button>
+    <button class="btn !py-1 !px-2.5 !text-[11px] btn-soft" data-ecofilter="bien">⭐ Muy bien (4)</button>
+    <button class="btn !py-1 !px-2.5 !text-[11px] btn-soft" data-ecofilter="regular">⚠️ Regular / Decente (12)</button>
+    <button class="btn !py-1 !px-2.5 !text-[11px] btn-soft" data-ecofilter="muerta">❌ Nació muerta (10)</button>
+  </div>
+
+  <!-- VISTA 1: BITÁCORA DE EXPERIMENTOS -->
+  <div id="dir-view-bitacora" class="mt-4 space-y-4">
+    <!-- Grid de Fichas Visuales de Experimentos -->
+    <div id="exp-cards-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+
+    <!-- Tabla Completa de Experimentos -->
+    <div id="exp-table-container" class="hidden ledger-wrap">
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Autor / Referente</th>
+            <th>Titular Experimentado</th>
+            <th>Vertical</th>
+            <th>Rendimiento</th>
+            <th>Marfeel</th>
+            <th>Hallazgos e Hipótesis Editorial</th>
+          </tr>
+        </thead>
+        <tbody id="dir-bitacora-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VISTA 2: DIRECTORIO DE CHEFS (47 perfiles) -->
+  <div id="dir-view-chefs" class="hidden mt-4 space-y-4">
+    <div class="reco-box">
+      <b>Directorio de Chefs y Creadores Gastronómicos (47 perfiles del Google Sheet):</b> Se muestran todos los referentes registrados sin ocultar filas por filtros. Referentes contrastados para la franja de Cocina (52% de la parrilla).
+    </div>
+    <div class="ledger-wrap">
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th>Chef / Creador</th>
+            <th>Plataforma / Canal</th>
+            <th>Audiencia / Seguidores</th>
+            <th>Ganchos y Receta Estrella</th>
+            <th>Estado en Discover</th>
+            <th>Notas Publicadas</th>
+            <th class="r">Canal Oficial</th>
+          </tr>
+        </thead>
+        <tbody id="dir-chefs-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VISTA 3: ESPECIALISTAS CANINOS (50 perfiles) -->
+  <div id="dir-view-canino" class="hidden mt-4 space-y-4">
+    <div class="reco-box">
+      <b>Directorio Canino (50 especialistas verificados):</b> 10 etólogos clínicos, 14 veterinarios y 24 adiestradores. Voces de autoridad verificadas en positivo. Garantía E-E-A-T contra desinformación canina.
+    </div>
+    <div class="ledger-wrap">
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th>Especialista</th>
+            <th>Tipo de Perfil</th>
+            <th>País</th>
+            <th>Canal Principal</th>
+            <th>Audiencia</th>
+            <th>Enfoque y Recomendaciones</th>
+            <th>Estado en Discover</th>
+            <th class="r">Enlace / Perfil</th>
+          </tr>
+        </thead>
+        <tbody id="dir-canino-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VISTA 4: MATRIZ DE RENDIMIENTO DE REFERENTES -->
+  <div id="dir-view-matriz" class="hidden mt-4 space-y-4">
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="card p-4 border-l-4 border-forest bg-forest/[.04]">
+        <div class="flex items-center gap-2">
+          <span class="text-[18px]">🔥</span>
+          <h3 class="font-serif font-semibold text-[17px] text-forest">Referentes Estrella con Éxito Comprobado</h3>
+        </div>
+        <p class="text-[11.5px] text-muted mt-1">Entidades que generaron picos masivos de impresiones y CTR en los 30 experimentos:</p>
+        <ul class="mt-3 space-y-2 text-[12px] leading-relaxed">
+          <li class="border-b border-line pb-2">
+            <b class="text-ink">César Millán (Mundo Canino):</b> <i>2 de 2 experimentos con veredicto EXPLOTÓ</i>. Despierta con fuerza instantánea en SEO y Discover. Título con credencial ("adiestrador canino de 57 años") y cita textual sin rodeos.
+          </li>
+          <li class="border-b border-line pb-2">
+            <b class="text-ink">Ferran Adrià (Gastronomía):</b> <i>EXPLOTÓ en Discover</i>. Comportamiento volátil en los primeros minutos pero remonta con gran volumen. Fórmula de truco cotidiano con fruta fresca.
+          </li>
+          <li class="border-b border-line pb-2">
+            <b class="text-ink">Anna Terés (Cocina Fácil):</b> <i>Desempeño consistente y muy bien</i>. Excelente recepción en platos populares (pollo guisado con cerveza negra y laurel).
+          </li>
+          <li>
+            <b class="text-ink">Karlos Arguiñano &amp; Martín Berasategui:</b> <i>Picos seguros de fin de semana</i>. Retener para sábado y domingo (+54% Discover) maximiza la vida útil a 48–72 horas.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card p-4 border-l-4 border-terra bg-terra/[.04]">
+        <div class="flex items-center gap-2">
+          <span class="text-[18px]">⚠️</span>
+          <h3 class="font-serif font-semibold text-[17px] text-terra">Lecciones y Fórmulas Descartadas</h3>
+        </div>
+        <p class="text-[11.5px] text-muted mt-1">Patrones que fracasaron en Marfeel y reglas editoriales aprendidas:</p>
+        <ul class="mt-3 space-y-2 text-[12px] leading-relaxed">
+          <li class="border-b border-line pb-2">
+            <b class="text-ink">Dani García:</b> <i>Nació totalmente muerta</i>. Segunda nota consecutiva con mal resultado. Se descarta para franjas vespertinas de alta competencia.
+          </li>
+          <li class="border-b border-line pb-2">
+            <b class="text-ink">Cravings Journal:</b> <i>Nació muerta</i>. No sirve hacer recetas de YouTube genéricas sin gancho de proximidad o nombre con autoridad en España.
+          </li>
+          <li class="border-b border-line pb-2">
+            <b class="text-ink">Notas genéricas sin autor (ej. gatos):</b> <i>Fracaso absoluto</i>. Los titulares descriptivos sin entidad ("Los gatos cazan alguna araña...") son penalizados por el algoritmo.
+          </li>
+          <li>
+            <b class="text-ink">Coqui:</b> <i>Cae en picada por la tarde</i>. Los contenidos rápidos de 20 minutos funcionan solo en la ventana matinal de desayuno/media mañana.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ═════════ 4 · PIEZAS ═════════ -->
@@ -497,94 +666,6 @@ table.ledger{border-collapse:separate;border-spacing:0;width:100%;min-width:1080
     </table>
   </div>
   <p class="text-[10.5px] text-faint mt-2">Parrilla oficial de 84 notas (43 Cocina / 41 Perros) programadas en 6 semanas.</p>
-</section>
-
-<!-- ═════════ 5 · DIRECTORIOS & BITÁCORA GOOGLE SHEETS ═════════ -->
-<section id="directorios" class="pt-14 pb-8 reveal">
-  <div class="flex flex-wrap items-end justify-between gap-x-6 gap-y-3 pb-3 border-b border-line">
-    <div>
-      <p class="lbl">Directorio de Expertos &amp; Bitácora</p>
-      <h2 class="font-serif font-semibold text-[26px] sm:text-[32px] leading-tight mt-1">Ecosistema Editorial El Tiempo</h2>
-      <p class="help mt-1 max-w-[640px]">Perfiles verificados de chefs y especialistas caninos con estado Discover, además de la bitácora con los 28 experimentos auditados en Marfeel.</p>
-    </div>
-    <span class="num text-[11px] text-muted border border-line bg-card rounded-md px-3 py-1">Google Sheet en vivo</span>
-  </div>
-
-  <!-- Pestañas del directorio -->
-  <div class="flex flex-wrap items-center gap-2 mt-5">
-    <button class="btn btn-primary !py-1.5 !px-3.5" id="tab-btn-chefs" data-dirtab="chefs">Chefs Verificados (<span id="dir-chefs-count">15</span>)</button>
-    <button class="btn btn-soft !py-1.5 !px-3.5" id="tab-btn-canino" data-dirtab="canino">Especialistas Caninos (<span id="dir-canino-count">9</span>)</button>
-    <button class="btn btn-soft !py-1.5 !px-3.5" id="tab-btn-bitacora" data-dirtab="bitacora">Bitácora 28 Experimentos (<span id="dir-bitacora-count">28</span>)</button>
-  </div>
-
-  <!-- Vista Chefs -->
-  <div id="dir-view-chefs" class="space-y-4 mt-4">
-    <div class="reco-box">
-      <b>Criterio editorial de selección:</b> Solo referentes con impacto contrastado en Google Discover España. Se descartan perfiles sin estado operativo.
-    </div>
-    <div class="ledger-wrap">
-      <table class="ledger">
-        <thead>
-          <tr>
-            <th>Chef / Creador</th>
-            <th>Plataforma / Canal</th>
-            <th>Audiencia</th>
-            <th>Ganchos y Receta Estrella</th>
-            <th>Estado Discover</th>
-            <th>Notas Publicadas</th>
-          </tr>
-        </thead>
-        <tbody id="dir-chefs-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Vista Caninos -->
-  <div id="dir-view-canino" class="hidden space-y-4 mt-4">
-    <div class="reco-box">
-      <b>Etólogos, veterinarios y adiestradores:</b> Voces de autoridad verificadas en positivo. Garantía E-E-A-T contra desinformación canina.
-    </div>
-    <div class="ledger-wrap">
-      <table class="ledger">
-        <thead>
-          <tr>
-            <th>Especialista</th>
-            <th>Especialidad</th>
-            <th>Ámbito</th>
-            <th>Canal Principal</th>
-            <th>Audiencia</th>
-            <th>Enfoque y Recomendaciones</th>
-            <th>Estado Discover</th>
-          </tr>
-        </thead>
-        <tbody id="dir-canino-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Vista Bitácora -->
-  <div id="dir-view-bitacora" class="hidden space-y-4 mt-4">
-    <div class="reco-box">
-      <b>Bitácora de Notas Auditadas con Marfeel:</b> Historial de 28 experimentos con seguimiento de impresiones, clics, CTR y veredicto de tracción en Discover.
-    </div>
-    <div class="ledger-wrap">
-      <table class="ledger">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Fecha</th>
-            <th>Autor / Referente</th>
-            <th>Titular Experimentado</th>
-            <th>Vertical</th>
-            <th>Rendimiento</th>
-            <th>Consola</th>
-            <th>Hipótesis y Hallazgos</th>
-          </tr>
-        </thead>
-        <tbody id="dir-bitacora-tbody"></tbody>
-      </table>
-    </div>
-  </div>
 </section>
 
 </main>
@@ -1184,7 +1265,7 @@ function expStats(rows){return Object.keys(EXP_META).map(k=>{
   return{k,...EXP_META[k],nC:c.length,nX:x.length,pend:er.filter(p=>!p.ejecutada).length,mc,mx,ac,ax,delta,verdict};
 });}
 function renderExpChart(rows){
-  const el=$("exp-chart");el.innerHTML="";if(!window.d3){el.innerHTML='<p class="help p-3">Gráfico no disponible.</p>';return;}
+  const el=$("exp-chart");if(!el)return;el.innerHTML="";if(!window.d3){el.innerHTML='<p class="help p-3">Gráfico no disponible.</p>';return;}
   const stats=expStats(rows);
   const W=Math.max(el.clientWidth,760),rowH=96,headH=30,H=headH+5*rowH+8;
   const labelW=250,x0=labelW+16,x1=W-190;
@@ -1265,43 +1346,1441 @@ let isSyncing = false;
 let activeDirTab = 'chefs';
 
 state.sheetExtras = {
-  chefs: [
-    { nombre:"Ferran Adrià", canal:"Instagram (@ferranadriabulli)", audiencia:"480 k", ganchos:"Tortilla con chips, proporción del sofrito", estadoDiscover:"TOP DISCOVER", notasPublicadas:"4" },
-    { nombre:"Martín Berasategui", canal:"YouTube / TV", audiencia:"1.2 M", ganchos:"Sellar carnes a 230 ºC, ajo confitado", estadoDiscover:"TOP DISCOVER", notasPublicadas:"5" },
-    { nombre:"Jordi Cruz", canal:"Instagram / MasterChef", audiencia:"1.5 M", ganchos:"Regla tierra/agua fría, conservación aguacate", estadoDiscover:"TOP DISCOVER", notasPublicadas:"4" },
-    { nombre:"Karlos Arguiñano", canal:"Antena 3 / Hogarmanía", audiencia:"2.1 M", ganchos:"Espesar lentejas sin harina, trucos de puchero", estadoDiscover:"TOP DISCOVER", notasPublicadas:"6" },
-    { nombre:"Dani García", canal:"YouTube / Rte. BiBo", audiencia:"620 k", ganchos:"Primer hervor caldo limpio, mayonesa sin cortar", estadoDiscover:"ACTIVO", notasPublicadas:"3" },
-    { nombre:"Dabiz Muñoz", canal:"Instagram / DiverXO", audiencia:"1.4 M", ganchos:"Huevos fritos con puntilla sin aceite quemado", estadoDiscover:"ACTIVO", notasPublicadas:"3" },
-    { nombre:"Eva Arguiñano", canal:"Hogarmanía", audiencia:"540 k", ganchos:"Cucharada vinagre en bizcochos, roscón esponjoso", estadoDiscover:"ACTIVO", notasPublicadas:"3" },
-    { nombre:"David de Jorge", canal:"Robin Food / YouTube", audiencia:"890 k", ganchos:"Arroz caldoso en 25 min, sofrito express", estadoDiscover:"ACTIVO", notasPublicadas:"3" },
-    { nombre:"Mario Sánchez", canal:"Sefifood / Divulgación", audiencia:"280 k", ganchos:"La puerta de nevera no es para huevos, arroz cocido", estadoDiscover:"ACTIVO", notasPublicadas:"2" },
-    { nombre:"Pablo Ojeda", canal:"Nutrición / La Sexta", audiencia:"410 k", ganchos:"Pan solo activa hambre matinal, desayunos saciantes", estadoDiscover:"ACTIVO", notasPublicadas:"2" },
-    { nombre:"Joseba Arguiñano", canal:"Cocina Abierta", audiencia:"340 k", ganchos:"Sartén fría para tortillas jugosas, pan casero", estadoDiscover:"ACTIVO", notasPublicadas:"2" },
-    { nombre:"Susi Díaz", canal:"La Finca / Michelin", audiencia:"190 k", ganchos:"Pan duro de 3 días para torrijas perfectas", estadoDiscover:"ACTIVO", notasPublicadas:"2" },
-    { nombre:"José María Sánchez", canal:"Pescadería Artesanal", audiencia:"120 k", ganchos:"Templar pescado 15 min antes de cocinarlo", estadoDiscover:"ACTIVO", notasPublicadas:"2" },
-    { nombre:"Joan Roca", canal:"El Celler de Can Roca", audiencia:"920 k", ganchos:"Cocción a baja temperatura en casa, fondos limpios", estadoDiscover:"PROBADO", notasPublicadas:"2" },
-    { nombre:"Paco Roncero", canal:"Sublimotion / Casino", audiencia:"380 k", ganchos:"Aceite de oliva en spray y fritura crujiente", estadoDiscover:"PROBADO", notasPublicadas:"2" }
+  "chefs": [
+    {
+      "id": "chef-1",
+      "nombre": "Martín Berasategui",
+      "canal": "Restaurante Lasarte / TV",
+      "url": "https://www.instagram.com/martinberasategui",
+      "audiencia": "450,000",
+      "ganchos": "Bechamel con agua antes de la leche, albóndigas con miga en leche, huevo con puntilla a 180°C",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-2",
+      "nombre": "Ferran Adrià",
+      "canal": "elBulli / Fundación",
+      "url": "https://www.instagram.com/ferranadriabulli",
+      "audiencia": "500,000",
+      "ganchos": "Tortilla de puré Maggi, lentejas con sepia/alioli sin sofrito, regla del sofrito 100g cebolla / 80g tomate",
+      "estadoDiscover": "TOP DISCOVER",
+      "notasPublicadas": "4"
+    },
+    {
+      "id": "chef-3",
+      "nombre": "José Andrés",
+      "canal": "World Central Kitchen",
+      "url": "https://www.youtube.com/@chefjoseandres",
+      "audiencia": "950,000",
+      "ganchos": "Cucharada de mayonesa en huevos batidos para tortilla francesa cremosa, asados rápidos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-4",
+      "nombre": "Dabiz Muñoz",
+      "canal": "DiverXO / GoXO",
+      "url": "https://www.youtube.com/@DabizMunoz",
+      "audiencia": "1,100,000",
+      "ganchos": "Remojo corto de lentejas (3h max), rehogado de curry/comino y mantequilla/Jerez al final",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-5",
+      "nombre": "Karlos Arguiñano",
+      "canal": "Cocina Abierta (Hogarmania)",
+      "url": "https://www.youtube.com/@CocinaAbiertatv",
+      "audiencia": "1,250,000",
+      "ganchos": "Guisos de cuchara de temporada (pochas con níscalos), legumbres económicas",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "2"
+    },
+    {
+      "id": "chef-6",
+      "nombre": "Svitlana Popivnyak",
+      "canal": "Recetas de Esbieta",
+      "url": "https://www.youtube.com/@RecetasdeEsbieta",
+      "audiencia": "3,500,000",
+      "ganchos": "Torrijas cremosas infundidas en leche y nata, pan de molde casero esponjoso",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-7",
+      "nombre": "Carmen",
+      "canal": "Cocina con Carmen",
+      "url": "https://www.youtube.com/@CocinaconCarmen",
+      "audiencia": "1,650,000",
+      "ganchos": "Salmorejo cordobés sin amargar, potajes andaluces de Cuaresma",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-8",
+      "nombre": "Pamela Sánchez",
+      "canal": "Quiero Cupcakes",
+      "url": "https://www.youtube.com/@QuieroCupcakes",
+      "audiencia": "4,080,000",
+      "ganchos": "Tartas vistosas sin horno, trucos de horneado, bizcochos festivos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-9",
+      "nombre": "Mery (con Juanma)",
+      "canal": "Cocina para todos",
+      "url": "https://www.youtube.com/@CocinaParaTodos",
+      "audiencia": "3,820,000",
+      "ganchos": "Aperitivos para el fin de semana, dulces de 5 minutos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-10",
+      "nombre": "Sergio Enciso",
+      "canal": "La cocina del pirata",
+      "url": "https://www.youtube.com/@LaCocinaDelPirata",
+      "audiencia": "3,820,000",
+      "ganchos": "Recreación de salsas de comida rápida, platos de películas/series",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "chef-11",
+      "nombre": "Pilopi",
+      "canal": "¡Que el papeo te acompañe!",
+      "url": "https://www.youtube.com/@elPapeo",
+      "audiencia": "1,180,000",
+      "ganchos": "Experimentos extravagantes de cocina, recetas frikis",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-12",
+      "nombre": "Loli Domínguez",
+      "canal": "La Cocina de Loli Domínguez",
+      "url": "https://www.youtube.com/@LaCocinadeLoliDominguez",
+      "audiencia": "2,910,000",
+      "ganchos": "Platos de cuchara otoñales, guisos de la abuela tradicionales",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "5"
+    },
+    {
+      "id": "chef-13",
+      "nombre": "Marta Sanahuja",
+      "canal": "Delicious Martha",
+      "url": "https://www.instagram.com/deliciousmartha",
+      "audiencia": "2,000,000",
+      "ganchos": "Bizcochos en 5 minutos en Air Fryer, snacks saludables estéticos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-14",
+      "nombre": "Rafael Antonín",
+      "canal": "Rafuel (@rafuel55)",
+      "url": "https://www.instagram.com/rafuel55",
+      "audiencia": "1,000,000",
+      "ganchos": "Tortilla de patata chorreante con queso/trufa, bocadillos gourmet en 5 minutos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-15",
+      "nombre": "Paula Monreal",
+      "canal": "Paufeel",
+      "url": "https://www.instagram.com/paufeel",
+      "audiencia": "2,100,000",
+      "ganchos": "Cenas en 10 minutos con 3 ingredientes, pan de calabacín exprés en sartén",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-16",
+      "nombre": "Mario Ortiz",
+      "canal": "Mario Ortiz Nutrición",
+      "url": "https://www.instagram.com/marioortiznutricion",
+      "audiencia": "1,500,000",
+      "ganchos": "Fideuá marinera en microondas en 12 minutos, cenas exprés altas en proteína",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-17",
+      "nombre": "Joan Roca",
+      "canal": "El Celler de Can Roca",
+      "url": "https://www.instagram.com/cellercanroca",
+      "audiencia": "620,000",
+      "ganchos": "Cocina a baja temperatura doméstica, desalado de bacalao, caldos limpios",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-18",
+      "nombre": "Ángel León",
+      "canal": "Aponiente (El Chef del Mar)",
+      "url": "https://www.instagram.com/angel_leon_aponiente",
+      "audiencia": "380,000",
+      "ganchos": "Fritura de pescado crujiente sin huevo ni pan rallado (solo harina de trigo)",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-19",
+      "nombre": "Hermanos Torres",
+      "canal": "Cocina Torres / TV",
+      "url": "https://www.instagram.com/hermanostorres",
+      "audiencia": "380,000",
+      "ganchos": "La croqueta ultra cremosa de los Hermanos Torres, caldos concentrados",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-20",
+      "nombre": "Roberto Bosquet",
+      "canal": "Chef Bosquet (Naked & Sated)",
+      "url": "https://www.instagram.com/chefbosquet",
+      "audiencia": "3,000,000",
+      "ganchos": "Trufas fit de 2 ingredientes (chocolate 70% + pera), donuts saludables sin azúcar",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-21",
+      "nombre": "María José (MJ)",
+      "canal": "Las recetas de MJ",
+      "url": "https://www.youtube.com/@LasRecetasDeMJ",
+      "audiencia": "1,870,000",
+      "ganchos": "Smash Burger casera perfecta, ramen adaptado al hogar en 15 minutos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-22",
+      "nombre": "Dani García",
+      "canal": "Grupo Dani García",
+      "url": "https://www.youtube.com/@DaniGarcia",
+      "audiencia": "260,000",
+      "ganchos": "El secreto para que la fritura no quede grasienta, croquetas de jamón",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "2"
+    },
+    {
+      "id": "chef-23",
+      "nombre": "Alberto Chicote",
+      "canal": "Pesadilla en la Cocina / TV",
+      "url": "https://www.instagram.com/albertochicote",
+      "audiencia": "1,200,000",
+      "ganchos": "Sellado de carnes a fuego fuerte, errores que arruinan croquetas y frituras",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "chef-24",
+      "nombre": "Gorka Barredo",
+      "canal": "¡Que Viva la Cocina!",
+      "url": "https://www.youtube.com/@QueVivalaCocina",
+      "audiencia": "4,330,000",
+      "ganchos": "Cenas rápidas en 15 minutos, trucos para patatas a la importancia y guisos exprés",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "chef-25",
+      "nombre": "David de Jorge",
+      "canal": "Robin Food",
+      "url": "https://www.youtube.com/c/RobinFoodOficial",
+      "audiencia": "668,000",
+      "ganchos": "Sección 'Guarrindongadas', marmitako de bonito sin chorradas, guisos potentes vascos",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "2"
+    },
+    {
+      "id": "chef-26",
+      "nombre": "Anna Terés",
+      "canal": "Anna recetasfaciles",
+      "url": "https://www.youtube.com/@annarecetasfaciles",
+      "audiencia": "5,350,000",
+      "ganchos": "Recetas de 3 ingredientes, menús semanales de ahorro familiar, postres sin horno",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "chef-27",
+      "nombre": "Coqui",
+      "canal": "cocinaconcoqui",
+      "url": "https://www.instagram.com/cocinaconcoqui/",
+      "audiencia": "1,200",
+      "ganchos": "Recetas",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "chef-28",
+      "nombre": "Pablo Ojeda",
+      "canal": "pabloojedaj",
+      "url": "https://www.instagram.com/pabloojedaj/?hl=es",
+      "audiencia": "329,000",
+      "ganchos": "Si te levantas estresado evitar café con cafeína, tostar pan y sumar proteína para antojos, pasillos exteriores de supermercado",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-29",
+      "nombre": "José María Sánchez",
+      "canal": "naveganteoficial",
+      "url": "https://www.instagram.com/naveganteoficial/reels/",
+      "audiencia": "116,000",
+      "ganchos": "Pescado de pescadería frente al de supermercado, señales del punto al horno (ojo blanco y aleta inferior), caldos",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-30",
+      "nombre": "Joseba Arguiñano",
+      "canal": "Cocina Abierta / Panadería",
+      "url": "https://www.youtube.com/@CocinaAbiertatv",
+      "audiencia": "1,250,000",
+      "ganchos": "Vinagre vs baño frío al cocer huevos (1-2 cdas coagula clara si rompe; 10-12 min + polo ancho), patatas al microondas y pan fermentado en bol",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-31",
+      "nombre": "Eva Arguiñano",
+      "canal": "Cocina Abierta / Repostería",
+      "url": "https://www.youtube.com/@CocinaAbiertatv",
+      "audiencia": "1,250,000",
+      "ganchos": "Bizcocho de limón esponjoso que aguanta tierno días (huevos a temperatura ambiente + glaseado en caliente), torrijas con piel de limón",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-32",
+      "nombre": "Jordi Cruz Mas",
+      "canal": "ABaC / MasterChef",
+      "url": "https://www.instagram.com/jordicruzoficial",
+      "audiencia": "1,600,000",
+      "ganchos": "Sofrito dulce rápido con 1 g de bicarbonato por cada 500 g, arroz en 20 min (600 ml agua + 5 g sal) y seguridad alimentaria al enfriar arroz",
+      "estadoDiscover": "TOP DISCOVER",
+      "notasPublicadas": "3"
+    },
+    {
+      "id": "chef-33",
+      "nombre": "Jorge Rausch",
+      "canal": "Criterión / MasterChef Colombia",
+      "url": "https://www.instagram.com/jorge.rausch",
+      "audiencia": "1,500,000",
+      "ganchos": "Equilibrio de cuatro sabores básicos (limón para levantar, sal para potenciar, azúcar para corregir acidez)",
+      "estadoDiscover": "ACTIVO / PROBADO",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "chef-34",
+      "nombre": "Álvaro Clavijo",
+      "canal": "El Chato (Bogotá / 50 Best)",
+      "url": "https://www.instagram.com/elchato_rest/",
+      "audiencia": "125,000",
+      "ganchos": "Alta cocina colombiana de vanguardia, trabajo directo con pequeños productores y reinterpretación de ingredientes locales",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-35",
+      "nombre": "Dr. Carlos Jaramillo",
+      "canal": "Medicina Funcional / Nutrición",
+      "url": "https://www.youtube.com/@drcarlosjaramillo",
+      "audiencia": "3,100,000",
+      "ganchos": "Desayunos saludables económicos frente al costo de vida, alimentación antiinflamatoria",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-36",
+      "nombre": "Beatriz Robles",
+      "canal": "Tecnología de Alimentos y Nutrición",
+      "url": "https://www.instagram.com/beatrizroblestec/",
+      "audiencia": "120,000",
+      "ganchos": "Seguridad alimentaria, peligro en táper de oficina, cómo enfriar y recalentar comida",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-37",
+      "nombre": "Los de Ñam",
+      "canal": "Los de Ñam (Christian y Roberto)",
+      "url": "https://www.instagram.com/losdenam/",
+      "audiencia": "3,200,000",
+      "ganchos": "Truco para evitar que el cilantro se marchite, uso de la raíz en cocina colombiana, recetas fáciles",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-38",
+      "nombre": "Tulio Recomienda",
+      "canal": "Tulio Recomienda / Gastronomía Colombia",
+      "url": "https://www.instagram.com/tuliorecomienda/",
+      "audiencia": "2,800,000",
+      "ganchos": "Trucos tradicionales: arroz con leche cremoso con leche en polvo, cocina callejera y recetas locales",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-39",
+      "nombre": "Chris Carpentier",
+      "canal": "Chef Chris Carpentier / MasterChef",
+      "url": "https://www.instagram.com/chriscarpentier/",
+      "audiencia": "850,000",
+      "ganchos": "Secreto para asar carne en sartén sin perder jugos ni pegarse, técnicas de asado",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-40",
+      "nombre": "Harry Sasson",
+      "canal": "Restaurante Harry Sasson (Bogotá)",
+      "url": "https://www.instagram.com/harrysasson/",
+      "audiencia": "240,000",
+      "ganchos": "Plátano maduro meloso en sartén sin freír con jugo de naranja y mantequilla, chuletas asadas en 30 min",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-41",
+      "nombre": "Nicolás de Zubiría",
+      "canal": "MasterChef Colombia / Restaurantes",
+      "url": "https://www.instagram.com/nicodezubiria/",
+      "audiencia": "1,100,000",
+      "ganchos": "Organización de cenas de Navidad sin estrés, técnicas profesionales adaptadas al hogar",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-42",
+      "nombre": "Gordon Ramsay",
+      "canal": "Gordon Ramsay Restaurants / TV",
+      "url": "https://www.youtube.com/@gordonramsay",
+      "audiencia": "20,500,000",
+      "ganchos": "Huevos revueltos sin granos retirando del fuego, salmón crujiente con piel/ajo/mantequilla, guiso de invierno con 7 especias",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-43",
+      "nombre": "Jamie Oliver",
+      "canal": "Jamie Oliver Official / Quick & Easy",
+      "url": "https://www.youtube.com/@jamieoliver",
+      "audiencia": "6,000,000",
+      "ganchos": "Agua de cocción para emulsionar pasta, verduras a la plancha sin aceite previo, espaguetis con sardinas en lata",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-44",
+      "nombre": "Massimo Bottura",
+      "canal": "Osteria Francescana / Zero Waste",
+      "url": "https://www.instagram.com/massimobottura/",
+      "audiencia": "1,800,000",
+      "ganchos": "Corteza de parmesano en salsas para umami sin harina, tiramisú festivo con licor de coco, cocina de aprovechamiento Zero Waste",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-45",
+      "nombre": "Mario Sánchez",
+      "canal": "SefiFood / Divulgación Alimentaria",
+      "url": "https://www.instagram.com/sefifood/",
+      "audiencia": "195,000",
+      "ganchos": "Huevos fuera de la puerta de nevera, arroz y pasta máximo 24h refrigerados, mapa de baldas contra contaminación cruzada",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-46",
+      "nombre": "Boticaria García",
+      "canal": "Boticaria García / Divulgación Sanitaria",
+      "url": "https://www.instagram.com/boticariagarcia/",
+      "audiencia": "550,000",
+      "ganchos": "Peligro de horas templadas en arroz recalentado, fecha de consumo en yogures, bacterias en masa cruda de harina, no latas abiertas",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "chef-47",
+      "nombre": "Miguel Ángel Lurueña",
+      "canal": "Gominolas de Petróleo / Ciencia de Alimentos",
+      "url": "https://www.instagram.com/gominolasdepetroleo/",
+      "audiencia": "125,000",
+      "ganchos": "Bandeja hinchada de carne, melanosis segura en langostinos, cadmio en cabezas de marisco, sobras directas a frío",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    }
   ],
-  caninos: [
-    { nombre:"Borja Capponi", rol:"Adiestrador canino", pais:"España", canal:"Malas Pulgas / YouTube", audiencia:"520 k", ganchos:"Orden de espera 3 sesiones, ansiedad por separación", estadoDiscover:"TOP DISCOVER" },
-    { nombre:"Alan Peiró", rol:"Educador canino", pais:"España", canal:"YouTube / TikTok", audiencia:"380 k", ganchos:"Cuidado invernal del perro, tirones de correa", estadoDiscover:"TOP DISCOVER" },
-    { nombre:"María Vetican", rol:"Veterinaria clínica", pais:"España", canal:"TikTok / Instagram", audiencia:"610 k", ganchos:"Abrigo por raza y edad, torsión gástrica", estadoDiscover:"TOP DISCOVER" },
-    { nombre:"Dra. Elena Roldán", rol:"Etóloga clínica", pais:"España", canal:"Consulta etológica", audiencia:"140 k", ganchos:"Por qué te sigue al baño, señales de calma", estadoDiscover:"ACTIVO" },
-    { nombre:"Dr. Íñigo Aguirre", rol:"Veterinario especialista", pais:"España", canal:"Clínica Veterinaria", audiencia:"180 k", ganchos:"Dolor articular silencioso, frío en perros mayores", estadoDiscover:"ACTIVO" },
-    { nombre:"Juan Cervantes", rol:"Adiestrador canino", pais:"España", canal:"Educación en positivo", audiencia:"220 k", ganchos:"Cuanto más usas su nombre menos caso hace", estadoDiscover:"ACTIVO" },
-    { nombre:"Carlos Rodríguez", rol:"Veterinario y locutor", pais:"España", canal:"Como el Perro y el Gato (Onda Cero)", audiencia:"450 k", ganchos:"Sobrepeso 750g agrava salud articular", estadoDiscover:"ACTIVO" },
-    { nombre:"Víctor Algra", rol:"Veterinario divulgador", pais:"España", canal:"Un Veterinario Más", audiencia:"290 k", ganchos:"Alimentos tóxicos de Navidad, uvas y chocolate", estadoDiscover:"ACTIVO" },
-    { nombre:"Santi Vidal", rol:"Etólogo y educador", pais:"España", canal:"Más Que Guau", audiencia:"110 k", ganchos:"Rutinas de 2 minutos para recuperar la calma", estadoDiscover:"ACTIVO" }
+  "caninos": [
+    {
+      "id": "canino-1",
+      "nombre": "César Millán",
+      "rol": "Presentador / Perfil televisivo",
+      "pais": "México / EE. UU.",
+      "canal": "El encantador de perros (2004–2012)",
+      "audiencia": "Serie emitida en más de 80 países y más de 3 millones de seguidores en redes sociales.",
+      "ganchos": "Modelo del líder de la manada y disciplina firme.",
+      "url": "https://es.wikipedia.org/wiki/C%C3%A9sar_Mill%C3%A1n",
+      "estadoDiscover": "TOP DISCOVER",
+      "notasPublicadas": "4"
+    },
+    {
+      "id": "canino-2",
+      "nombre": "Borja Capponi",
+      "rol": "Presentador / Perfil televisivo",
+      "pais": "España",
+      "canal": "Borja Capponi Academy (YouTube)",
+      "audiencia": "Fama televisiva en Cuatro (2010), YouTube y cobertura en 20 minutos.",
+      "ganchos": "Educación canina televisiva; hoy defiende un enfoque instintivo propio.",
+      "url": "https://www.doogweb.es/tag/borja-capponi/",
+      "estadoDiscover": "TOP DISCOVER",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "canino-3",
+      "nombre": "María Vetican",
+      "rol": "Veterinario divulgador",
+      "pais": "España",
+      "canal": "Divulgación clínica veterinaria (España / LATAM)",
+      "audiencia": "Referente recurrente en Discover sobre urgencias domésticas: torsión gástrica por comer antes de pasear, shock térmico por agua fría y cuidados del Husky.",
+      "ganchos": "Prevención de urgencias (torsión gástrica, golpe de calor) y guías de raza.",
+      "url": "https://www.instagram.com/mariavetican/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-4",
+      "nombre": "Amir Anwary",
+      "rol": "Veterinario divulgador",
+      "pais": "Sudáfrica / ES / LATAM",
+      "canal": "Práctica veterinaria clínica y divulgación global",
+      "audiencia": "Altísima viralidad en Discover por alertas sobre razas de trabajo (Pastor Belga Malinois: 'Es una máquina') y la regla de 10 min al salir y llegar.",
+      "ganchos": "Razas exigentes, prevención de ansiedad por separación y tenencia responsable.",
+      "url": "https://www.tiktok.com/@amirthevet",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-5",
+      "nombre": "Alan Peiró",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Adiestramiento y etología aplicada (España)",
+      "audiencia": "Fenómeno recurrente en Discover por explicar la regla asociativa de 0,5 segundos (el perro no se venga) y por qué no tocarle la cabeza al saludar.",
+      "ganchos": "Desmontaje de mitos (venganza, saludo invasivo) y microconductas.",
+      "url": "https://www.instagram.com/alanpeiro_adiestrador/",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "canino-6",
+      "nombre": "Marta Amat Grau",
+      "rol": "Etólogo clínico",
+      "pais": "España",
+      "canal": "Universidad Autónoma de Barcelona (UAB)",
+      "audiencia": "Alrededor de 40 publicaciones científicas sobre agresividad canina y felina, ansiedad por separación y manejo del dolor.",
+      "ganchos": "Diagnóstico conductual: agresividad, estrés, ansiedad por separación y dolor.",
+      "url": "https://www.researchgate.net/profile/Marta-Amat",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-7",
+      "nombre": "Carlos Rodríguez",
+      "rol": "Veterinario clínico",
+      "pais": "España",
+      "canal": "Centro Veterinario Mascoteros (Rivas Vaciamadrid) · Fundación Mascoteros",
+      "audiencia": "Dirige Como el perro y el gato en Onda Cero (20 años en septiembre de 2025). Presentó PeloPicoPata en Atresmedia y ha firmado consultorios en 20 minutos y columnas en El País.",
+      "ganchos": "Clínica general, bienestar animal y divulgación.",
+      "url": "http://soycarlosrodriguez.com/carlos-rodriguez/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-8",
+      "nombre": "Juan Enrique Romero",
+      "rol": "Veterinario clínico",
+      "pais": "Argentina",
+      "canal": "Universidad Nacional de La Pampa (UNLPam)",
+      "audiencia": "Divulgador en cápsulas de National Geographic y columnista en Infobae.",
+      "ganchos": "Clínica preventiva, obesidad, artrosis y convivencia.",
+      "url": "https://www.infobae.com/perros-y-gatos/2023/09/15/epidemia-silenciosa-que-hay-que-saber-sobre-la-obesidad-en-perros-y-gatos/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-9",
+      "nombre": "Tomás Camps Morey",
+      "rol": "Etólogo clínico",
+      "pais": "España",
+      "canal": "UAB / Etovets",
+      "audiencia": "Firma junto a Marta Amat los manuales de referencia de la etología clínica en español.",
+      "ganchos": "Etología clínica y medicina del comportamiento.",
+      "url": "https://www.uab.cat/web/master-en-etologia-de-animales-de-compania/profesorado-1206597472129.html/d-Touch/param1-4549_es/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-10",
+      "nombre": "Gastón Britos",
+      "rol": "Veterinario divulgador",
+      "pais": "Argentina",
+      "canal": "Universidad Nacional de Río Cuarto (UNRC)",
+      "audiencia": "Más de 140.000 seguidores en Instagram y 160.000 en TikTok.",
+      "ganchos": "Divulgación con humor sobre el cuidado de animales pequeños y grandes.",
+      "url": "https://www.youtube.com/watch?v=wOmfsqCN3Gw",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-11",
+      "nombre": "Nacho Sierra",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "EFPC · Escuela de Formación Profesional Canina (antes Escuela de Psicología, Técnicas y Artes Animales, 1990)",
+      "audiencia": "Casi 30 años en radio y prensa: Onda Madrid, COPE (2013–2015) y Diario AS.",
+      "ganchos": "Obediencia, modificación de conducta, formación profesional y construcción del cachorro.",
+      "url": "https://efpc.es/biografia-nacho-sierra/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-12",
+      "nombre": "Antonio Paramio Miranda",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Editorial Díaz de Santos (autor técnico)",
+      "audiencia": "Referente editorial técnico en España. Sus libros se distribuyen en Colombia.",
+      "ganchos": "Aprendizaje, obediencia y detección.",
+      "url": "https://www.editdiazdesantos.com/libros/9788499698991/Paramio-Miranda-El-adiestramiento-silencioso.html",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-13",
+      "nombre": "Carlos Alfonso López García",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "EDUCAN (Brunete, Madrid)",
+      "audiencia": "Entrevistas especializadas en YouTube y publicación técnica en Mundo del Perro.",
+      "ganchos": "Vínculo social, resolución autónoma de problemas y perros de asistencia.",
+      "url": "https://www.adiestramientoeducan.com/doc/mail/divulgacion-cognitivo-emocional.pdf",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-14",
+      "nombre": "Teo Mariscal",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Bocalán y Fundación Bocalán",
+      "audiencia": "Cobertura en 20minutos. Formación en más de 15 países con filiales en Latinoamérica (Colombia y Ecuador). Su fundación ha ayudado a más de 200 familias con perros de asistencia.",
+      "ganchos": "Perros de asistencia, IAA y programas para cachorros.",
+      "url": "https://www.bocalanonline.net/iaa",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-15",
+      "nombre": "Enrique Solís",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "LealCan Adiestramiento Canino",
+      "audiencia": "Ponencias sobre la Ley Animal y artículos críticos de divulgación. En 2007 denunció los tirones de correa y los collares de descargas del programa de César Millán.",
+      "ganchos": "Educación en positivo con clicker, perros de aviso médico y de asistencia.",
+      "url": "https://lealcan.com/enrique-solis/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-16",
+      "nombre": "Pablo Hernández Garzón",
+      "rol": "Etólogo clínico",
+      "pais": "España",
+      "canal": "Etología Veterinaria (Madrid) · docente en UCM y UAB",
+      "audiencia": "Docencia universitaria y consulta clínica privada acreditada.",
+      "ganchos": "Relación entre enfermedades físicas y alteraciones conductuales.",
+      "url": "https://www.etologiaveterinaria.com/nosotros/pablo-hernandez-garzon/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-17",
+      "nombre": "Marcos J. Ibáñez",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "TAKODA (fundador y CEO)",
+      "audiencia": "Ponente en el IV Congreso de Derechos Animales (2024). Afirma haber asesorado a más de 5.000 familias.",
+      "ganchos": "Razas primitivas y nórdicas, Perro Lobo Checoslovaco, wolfdogs y neuroeducación.",
+      "url": "https://marcosjibanez.com/sobre-mi",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-18",
+      "nombre": "Ken Sewell",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Barcelona",
+      "audiencia": "Columnista histórico de La Vanguardia desde 1988 y colaborador del programa Bestial (La Sexta).",
+      "ganchos": "Obediencia básica y educación del propietario.",
+      "url": "https://es.wikipedia.org/wiki/Ken_Sewell",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-19",
+      "nombre": "César Arroyo",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Empire Dog España",
+      "audiencia": "Presencia en YouTube y pódcasts de obediencia deportiva.",
+      "ganchos": "Obediencia deportiva y alta competición.",
+      "url": "https://www.youtube.com/watch?v=B0DWC0Fmu4g",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-20",
+      "nombre": "Patricia Guerrero",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Pat Educadora Canina",
+      "audiencia": "—",
+      "ganchos": "Educación canina familiar.",
+      "url": "https://www.patguerrero.com/la-mision",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-21",
+      "nombre": "Lina Palafox",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "México",
+      "canal": "DogDog · Encaminando a Tu Perro (Guadalajara)",
+      "audiencia": "Libro con una editorial de alcance latinoamericano.",
+      "ganchos": "Convivencia basada en la personalidad individual del perro y en el desarrollo humano del cuidador.",
+      "url": "https://www.planetadelibros.com.mx/libro-lo-que-me-han-ensenado-los-perros/267777",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-22",
+      "nombre": "Alejandro Sánchez",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "Argentina",
+      "canal": "Lomas de Zamora (Gran Buenos Aires)",
+      "audiencia": "Notoriedad en el Cono Sur por entrenar a los perros de celebridades como Tini Stoessel, Pablo Echarri y Chayanne.",
+      "ganchos": "Reeducación doméstica mediante rutinas de paseo con comida.",
+      "url": "https://www.clarin.com/zonales/alejandro-sanchez-adiestrador-mascotas-top-perros-famosos-malcriados-_0_iw1Y3G6XS.html",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-23",
+      "nombre": "Rosana Álvarez Bueno",
+      "rol": "Etólogo clínico",
+      "pais": "España",
+      "canal": "Etolia · Etología veterinaria (directora)",
+      "audiencia": "—",
+      "ganchos": "Medicina del comportamiento sin miedo.",
+      "url": "https://www.etologiaveterinaria.net/inicio/quienes-somos/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-24",
+      "nombre": "Moisés Heiblum Frid (†)",
+      "rol": "Etólogo clínico",
+      "pais": "México",
+      "canal": "UNAM · FMVZ (Hospital Veterinario de Especialidades)",
+      "audiencia": "Legado: junto a Alberto Tejeda Perea y Sofía Alicia Rodríguez Viniegra formó la escuela clínica mexicana de comportamiento animal.",
+      "ganchos": "Etología clínica veterinaria (legado UNAM).",
+      "url": "https://avlzetologiavet.wordpress.com/2018/08/17/obituario-dr-moises-heiblum-frid/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-25",
+      "nombre": "Mónica Corchado",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Instituto Dog Coaching by Mónica Corchado",
+      "audiencia": "—",
+      "ganchos": "—",
+      "url": "https://www.youtube.com/@MonicaCorchado",
+      "estadoDiscover": "DESECHADO / NO DESPEGÓ",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "canino-26",
+      "nombre": "Manuel Manzano",
+      "rol": "Veterinario divulgador",
+      "pais": "España",
+      "canal": "Canal de YouTube Veterinario Gratis (@veterinariogratis)",
+      "audiencia": "2,1 millones de suscriptores y 3,67 % de engagement según HypeAuditor (estimación de terceros). Sus vídeos sirven de fuente a El Español, La Vanguardia, Mundo Deportivo y Las Provincias.",
+      "ganchos": "Nutrición preventiva, toxicidad alimentaria y curiosidades de conducta.",
+      "url": "https://www.youtube.com/@veterinariogratis",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "2"
+    },
+    {
+      "id": "canino-27",
+      "nombre": "Jaime Vidal (Santi)",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Más que Guau (cofundador junto a Elisa Hinojosa)",
+      "audiencia": "Citado como referente ético de la educación sin castigo. Proyectos con perros detectores para la conservación de fauna.",
+      "ganchos": "Educación libre de castigo y modificación de conductas emocionales.",
+      "url": "https://masqueguau.com/nosotros-2",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-28",
+      "nombre": "Juan Manuel Liquinodoli",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "Argentina",
+      "canal": "FILOSOFIA ANIMAL- Educación canina sin castigos",
+      "audiencia": "—",
+      "ganchos": "—",
+      "url": "https://www.instagram.com/juanmaliqui/?hl=es-la",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-29",
+      "nombre": "Aída",
+      "rol": "Etólogo clínico",
+      "pais": "España",
+      "canal": "Veterinaria Etóloga | Educadora Canina",
+      "audiencia": "Veterinaria Etóloga | Educadora Canina",
+      "ganchos": "—",
+      "url": "https://www.instagram.com/etolvet.lleida/reels/",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "—"
+    },
+    {
+      "id": "canino-30",
+      "nombre": "José Luis Puchol",
+      "rol": "Veterinario clínico",
+      "pais": "España",
+      "canal": "Hospital Veterinario Puchol (Madrid)",
+      "audiencia": "Voz de referencia en prensa económica y generalista (El Blog Salmón, Okdiario).",
+      "ganchos": "Cirugía avanzada, longevidad canina según el tamaño y economía del sector veterinario.",
+      "url": "https://hospitalveterinariopuchol.com/equipo-veterinario/jose-luis-puchol/",
+      "estadoDiscover": "ACTIVO / PROBADO",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "canino-31",
+      "nombre": "Adrián Conde",
+      "rol": "Veterinario clínico",
+      "pais": "España",
+      "canal": "Clínica veterinaria y divulgación digital",
+      "audiencia": "Fuerte presencia en prensa generalista y Discover sobre señales silenciosas de dolor articular y manejo real de fobia a petardos.",
+      "ganchos": "Detección de dolor silencioso, bienestar geriátrico y fobia a ruidos.",
+      "url": "https://www.instagram.com/adriancondevet/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-32",
+      "nombre": "Carlos Gutiérrez",
+      "rol": "Veterinario divulgador",
+      "pais": "España / LATAM",
+      "canal": "Nutricionista veterinario y divulgación felina/canina",
+      "audiencia": "Gran rendimiento en artículos sobre lenguaje de la cola del gato (barrera táctil frente a caricias) y salud emocional felina.",
+      "ganchos": "Nutrición clínica, lenguaje corporal del gato y desmontaje de mitos.",
+      "url": "https://www.youtube.com/@CarlosGutierrezVet",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-33",
+      "nombre": "Neus Candela",
+      "rol": "Veterinario clínico",
+      "pais": "España",
+      "canal": "Clínica veterinaria y divulgación preventiva",
+      "audiencia": "Destaca en prensa por explicar errores habituales al cambiar dieta renal ante una urea ligeramente elevada sin valorar contexto clínico.",
+      "ganchos": "Medicina interna, analíticas preventivas y nutrición clínica.",
+      "url": "https://www.instagram.com/neuscandelavet/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-34",
+      "nombre": "Belén Montoya",
+      "rol": "Veterinario clínico",
+      "pais": "España",
+      "canal": "Medicina felina y clínica general",
+      "audiencia": "Citada por recordar que 'el gato no es un perro pequeño' y explicar estrategias para evitar enfermedades renales por baja ingesta de agua.",
+      "ganchos": "Medicina felina, hidratación y prevención renal en gatos.",
+      "url": "https://www.instagram.com/belenmontoyavet/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-35",
+      "nombre": "Víctor Algra",
+      "rol": "Veterinario clínico",
+      "pais": "España",
+      "canal": "Clínica veterinaria y televisión divulgativa",
+      "audiencia": "Gran tracción con comparativas visuales sobre obesidad canina (impacto de 750 g extra en un perro de 5 kg) y prevención diaria.",
+      "ganchos": "Obesidad animal, medicina preventiva y bienestar cotidiano.",
+      "url": "https://www.instagram.com/victoralgravet/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-36",
+      "nombre": "Dr. Gary Richter",
+      "rol": "Veterinario clínico",
+      "pais": "EE. UU. / LATAM",
+      "canal": "Veterinaria integrativa y nutrición clínica",
+      "audiencia": "Amplia repercusión en prensa hispana y LATAM sobre probióticos e inmunidad intestinal canina e intolerancia felina a la leche de vaca.",
+      "ganchos": "Microbiota, probióticos, nutrición e intolerancias en perros y gatos.",
+      "url": "https://drgaryrichter.com/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-37",
+      "nombre": "Hunter Finn",
+      "rol": "Veterinario clínico",
+      "pais": "EE. UU. / Global",
+      "canal": "Clínica veterinaria y divulgación digital",
+      "audiencia": "Muy citado en verano por el truco del enfriamiento abdominal/inguinal en suelo frío y protección de almohadillas frente al asfalto caliente.",
+      "ganchos": "Prevención estacional de calor, primeros auxilios y cuidados básicos.",
+      "url": "https://www.tiktok.com/@dr.hunterfinn",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-38",
+      "nombre": "Santi Vidal",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "masqueguau",
+      "audiencia": "—",
+      "ganchos": "—",
+      "url": "https://www.instagram.com/masqueguau/",
+      "estadoDiscover": "ACTIVO / PROBADO",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "canino-39",
+      "nombre": "Victoria Stilwell",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "Reino Unido / Global",
+      "canal": "Victoria Stilwell Academy (Positively)",
+      "audiencia": "Autoridad global citada frente a la teoría de dominancia y para decodificar bostezos de estrés y mirada fija rígida.",
+      "ganchos": "Refuerzo positivo, lenguaje corporal de estrés y crítica a la dominancia.",
+      "url": "https://positively.com/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-40",
+      "nombre": "Zak George",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "EE. UU. / Global",
+      "canal": "Dog Training Revolution",
+      "audiencia": "Millones de suscriptores en YouTube; referente para nuevos tutores en redirección del mordisqueo y socialización.",
+      "ganchos": "Educación de cachorros, mordisqueo y refuerzo positivo.",
+      "url": "https://www.youtube.com/@zakgeorge",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-41",
+      "nombre": "Juan Manuel Liquindoli",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "Argentina / España",
+      "canal": "Filosofía Animal",
+      "audiencia": "Alto rendimiento en El Tiempo (12,6k en miércoles)",
+      "ganchos": "Señales de calma, apoyo de pata, mostrar la panza y felicidad canina",
+      "url": "https://www.instagram.com/filosofiaanimal",
+      "estadoDiscover": "TOP DISCOVER",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-42",
+      "nombre": "Juan Cervantes",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Educación canina",
+      "audiencia": "Alto CTR en prensa digital",
+      "ganchos": "Uso del nombre del perro y atención en el paseo",
+      "url": "https://www.instagram.com",
+      "estadoDiscover": "EN EVALUACIÓN",
+      "notasPublicadas": "1"
+    },
+    {
+      "id": "canino-43",
+      "nombre": "Manuel Balibrea",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Adiestramiento y etología canina aplicada",
+      "audiencia": "Gran alcance en análisis de conducta en razas de trabajo (Pastor Alemán), estimulación mental y socialización.",
+      "ganchos": "Razas de trabajo, estimulación cognitiva, límites del paseo corto y socialización progresiva.",
+      "url": "https://www.instagram.com",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-44",
+      "nombre": "Joan Miller",
+      "rol": "Etólogo clínico",
+      "pais": "EE. UU.",
+      "canal": "Alley Cat Allies / Cat Fanciers' Association (CFA)",
+      "audiencia": "Referente internacional en la teoría de la barrera táctil y los 4 niveles de tolerancia al contacto en felinos.",
+      "ganchos": "Etología felina, barrera táctil, umbral de tolerancia al tacto y socialización de gatos ferales y domésticos.",
+      "url": "https://www.alleycat.org/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-45",
+      "nombre": "Felipe Valencia",
+      "rol": "Etólogo clínico",
+      "pais": "Colombia",
+      "canal": "IDPYBA / Práctica clínica etológica (Bogotá)",
+      "audiencia": "Referente institucional en medios colombianos sobre protección animal en Alborada y Noche de Velitas.",
+      "ganchos": "Fobia a ruidos, pólvora decembrina, etología clínica y enriquecimiento ambiental.",
+      "url": "https://www.animalesbog.gov.co/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-46",
+      "nombre": "Alex Elvira",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Educación y Adiestramiento Canino",
+      "audiencia": "Gran impacto en redes y prensa digital sobre dificultades reales en educación de razas específicas (Jack Russell, dálmata, galgo).",
+      "ganchos": "Educación canina por razas, motivación, vínculo con el guía y límites del refuerzo alimenticio.",
+      "url": "https://www.instagram.com/alexelviracanino/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-47",
+      "nombre": "Andrea Mejía",
+      "rol": "Etólogo clínico",
+      "pais": "Colombia",
+      "canal": "Medicina Veterinaria y Etología Clínica (Colombia)",
+      "audiencia": "Divulgación especializada en medios colombianos y plataformas digitales sobre prevención de pánico en fechas decembrinas.",
+      "ganchos": "Manejo de fobia a pólvora, reducción de estrés en el hogar, prevención de fugas y espacios seguros para mascotas.",
+      "url": "https://www.instagram.com/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-48",
+      "nombre": "Carolina Alaguna",
+      "rol": "Etólogo clínico",
+      "pais": "Colombia",
+      "canal": "Universidad de Ciencias Aplicadas y Ambientales (UDCA) / Etovet",
+      "audiencia": "Voz experta recurrente en Caracol, RCN, El Tiempo y medios especializados en etología clínica y bienestar animal.",
+      "ganchos": "Diagnóstico diferencial de dolor oculto vs conducta, agresividad, ansiedad por separación y bienestar clínico.",
+      "url": "https://www.instagram.com/carolalagunaetologa/",
+      "estadoDiscover": "En evaluación",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-49",
+      "nombre": "Víctor Mañero",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España",
+      "canal": "Educación canina y modificación conductual (España)",
+      "audiencia": "Referente en medios digitales y redes sobre reajuste de rutinas post-festivos y prevención de conductas destructivas.",
+      "ganchos": "Ansiedad por separación, rutinas de salida y llegada, desapego progresivo.",
+      "url": "https://www.instagram.com/",
+      "estadoDiscover": "ACTIVO / PROBADO",
+      "notasPublicadas": "0"
+    },
+    {
+      "id": "canino-50",
+      "nombre": "Enzo Roubaud",
+      "rol": "Adiestrador / Educador canino",
+      "pais": "España / Francia",
+      "canal": "Etología aplicada y educación en positivo",
+      "audiencia": "Amplia comunidad en plataformas digitales por desmontar el mito del recibimiento efusivo como señal de cariño saludable.",
+      "ganchos": "Gestión del estrés, hiperapego, retorno a la rutina y calma emocional.",
+      "url": "https://www.instagram.com/",
+      "estadoDiscover": "ACTIVO / PROBADO",
+      "notasPublicadas": "0"
+    }
   ],
-  experiments: [
-    { id:"EXP-001", fecha:"23/11/2026", entidad:"Karlos Arguiñano", titular:"Karlos Arguiñano, chef: “El truco del caldo para que las lentejas espesen sin harina”", seccion:"Cocina", rendimiento:"LE FUE MUY BIEN", marfeel:"https://hub.marfeel.com", hallazgos:"Atajo directo sin receta larga logra CTR +4.2%." },
-    { id:"EXP-002", fecha:"23/11/2026", entidad:"Martín Berasategui", titular:"Martín Berasategui: la ciencia de sellar la carne a 230 ºC antes del guiso", seccion:"Cocina", rendimiento:"EXPLOTÓ SEO/DISCOVER", marfeel:"https://hub.marfeel.com", hallazgos:"Grados exactos generan pico en audiencia de sobremesa." },
-    { id:"EXP-003", fecha:"24/11/2026", entidad:"Alan Peiró", titular:"Alan Peiró, adiestrador canino: “Muchos perros sufren más por el mal cuidado ante el clima que por el clima en sí”", seccion:"Perros", rendimiento:"LE FUE MUY BIEN", marfeel:"https://hub.marfeel.com", hallazgos:"Desmentido de sentido común retiene 160 s." },
-    { id:"EXP-004", fecha:"24/11/2026", entidad:"Jordi Cruz", titular:"Jordi Cruz, chef: “Las patatas y cebollas nacen bajo tierra y van en agua fría; las hojas y tallos, en hirviendo”", seccion:"Cocina", rendimiento:"EXPLOTÓ SEO/DISCOVER", marfeel:"https://hub.marfeel.com", hallazgos:"Regla mnemotécnica visual compartida x3 en Discover." },
-    { id:"EXP-005", fecha:"25/11/2026", entidad:"Pablo Ojeda", titular:"Pablo Ojeda, nutricionista: “Comer pan solo en el desayuno activa antes el hambre; acompáñalo de proteína o tuéstalo”", seccion:"Cocina", rendimiento:"REGULAR / DECENTE", marfeel:"https://hub.marfeel.com", hallazgos:"Miércoles saturado: funcionó como píldora corta de desayuno." },
-    { id:"EXP-006", fecha:"25/11/2026", entidad:"Juan Cervantes", titular:"Juan Cervantes, adiestrador canino: “Cuanto más utilizas el nombre de tu perro, menos caso te hace”", seccion:"Perros", rendimiento:"LE FUE MUY BIEN", marfeel:"https://hub.marfeel.com", hallazgos:"Curiosidad inmediata en la franja 17:30 CET." },
-    { id:"EXP-007", fecha:"26/11/2026", entidad:"Mario Sánchez", titular:"Mario Sánchez, tecnólogo de alimentos: “La puerta de la nevera es la zona menos fría y no es sitio para los huevos”", seccion:"Cocina", rendimiento:"EXPLOTÓ SEO/DISCOVER", marfeel:"https://hub.marfeel.com", hallazgos:"Alerta de nevera jueves perfora la saturación política." },
-    { id:"EXP-008", fecha:"26/11/2026", entidad:"María Vetican", titular:"María Vetican, veterinaria: por qué nunca debes darle de comer a tu perro justo antes de salir a pasear o jugar", seccion:"Perros", rendimiento:"LE FUE MUY BIEN", marfeel:"https://hub.marfeel.com", hallazgos:"Alerta preventiva rápida de torsión gástrica." }
+  "experiments": [
+    {
+      "id": "EXP-001",
+      "fecha": "05/11/2026",
+      "entidad": "Cravings Journal",
+      "titular": "Tarta tatin de manzana con hojaldre: cómo hacer el caramelo sin cucharas y voltearla sin que se escapen los jugos",
+      "tipoExp": "Estructura de Titular",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/tarta-tatin-de-manzana-con-hojaldre-como-hacer-el-caramelo-sin-cucharas-y-voltearla-sin-que-se-escapen-los-jugos-3598831",
+      "marfeel": "https://hub.marfeel.com/compass/article/2447645335?article=2447645335&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "No sirve hacer recetas con Youtube"
+    },
+    {
+      "id": "EXP-002",
+      "fecha": "05/11/2026",
+      "entidad": "Ninguno",
+      "titular": "Los gatos cazan alguna araña, pero no frenan una infestación, y la prevención es la clave, según los veterinarios",
+      "tipoExp": "Estructura de Titular",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/cultura/los-gatos-cazan-alguna-arana-pero-no-frenan-una-infestacion-y-la-prevencion-es-la-clave-segun-los-veterinarios-3598747",
+      "marfeel": "https://hub.marfeel.com/compass/article/2447068063?article=2447068063&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "La estructura del titular simplemente es horrendo"
+    },
+    {
+      "id": "EXP-003",
+      "fecha": "06/11/2026",
+      "entidad": "César Millán",
+      "titular": "César Millán, adiestrador canino de 57 años: ‘Un perro no se lanza sobre la comida si se mantiene una energía tranquila y segura, sin gritos’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/cesar-millan-adiestrador-canino-de-57-anos-un-perro-no-se-lanza-sobre-la-comida-si-se-mantiene-una-energia-tranquila-y-segura-sin-gritos-3599106",
+      "marfeel": "https://hub.marfeel.com/compass/article/2451067236?article=2451067236&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Explotó en SEO/Discover",
+      "hallazgos": "La viaje confiable, despierta muy bien en SEO, excelente para remontar"
+    },
+    {
+      "id": "EXP-004",
+      "fecha": "06/11/2026",
+      "entidad": "Anna Terés",
+      "titular": "Anna Terés, cocinera: ‘El pollo guisado queda más sabroso si se dora antes y se cocina con 330 ml de cerveza negra, ajo y laurel’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/anna-teres-cocinera-el-pollo-guisado-queda-mas-sabroso-si-se-dora-antes-y-se-cocina-con-330-ml-de-cerveza-negra-ajo-y-laurel-3599024",
+      "marfeel": "https://hub.marfeel.com/compass/article/2450466997?article=2450466997&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Está intentando despegar pero no ha podido"
+    },
+    {
+      "id": "EXP-005",
+      "fecha": "06/11/2026",
+      "entidad": "Loli Domínguez",
+      "titular": "Loli Domínguez, chef: ‘Un postre de café y almendras, especial para Navidad, pero que siempre apetece’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/loli-dominguez-chef-un-postre-de-cafe-y-almendras-especial-para-navidad-pero-que-siempre-apetece-3599057",
+      "marfeel": "https://hub.marfeel.com/compass/article/2450899411?article=2450899411&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "Le fue mal pese a que tiene historial positivo, los viernes parece ser que no son buenos días para las notas de cocina"
+    },
+    {
+      "id": "EXP-006",
+      "fecha": "09/11/2026",
+      "entidad": "Ferran Adrià",
+      "titular": "Ferran Adrià, chef: ‘A la mermelada de bote le falta frescor, se arregla mezclándola con casi la mitad de fruta fresca y hojas de menta’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/ferran-adria-chef-a-la-mermelada-de-bote-le-falta-frescor-se-arregla-mezclandola-con-casi-la-mitad-de-fruta-fresca-y-hojas-de-menta-3599606",
+      "marfeel": "https://hub.marfeel.com/compass/article/2461019943?article=2461019943&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Explotó en SEO/Discover",
+      "hallazgos": "Cayó al piso después de unos minutos, pero volvió a subir extrañamente, comportamiento volatil e impredecible"
+    },
+    {
+      "id": "EXP-007",
+      "fecha": "09/11/2026",
+      "entidad": "Gorka Barredo",
+      "titular": "Gorka Barredo, cocinero: ‘La tortilla de patata queda cremosa con un relleno de jamón cocido y el doble de queso, no solo con más huevo’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/gorka-barredo-cocinero-la-tortilla-de-patata-queda-cremosa-con-un-relleno-de-jamon-cocido-y-el-doble-de-queso-no-solo-con-mas-huevo-3599677",
+      "marfeel": "https://hub.marfeel.com/compass/article/2461591054?article=2461591054&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Regular",
+      "hallazgos": "No inició bien como la otra"
+    },
+    {
+      "id": "EXP-008",
+      "fecha": "10/11/2026",
+      "entidad": "Coqui",
+      "titular": "Coqui, cocinera: ‘Los huevos revueltos con tomate quedan jugosos con una salsa de maicena y curry, y se preparan en 20 minutos’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/coqui-cocinera-los-huevos-revueltos-con-tomate-quedan-jugosos-con-una-salsa-de-maicena-y-curry-y-se-preparan-en-20-minutos-3599885",
+      "marfeel": "https://hub.marfeel.com/compass/article/2464584533?article=2464584533&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "Cayó en picada, se le dará una oportunidad al publicarse por la mañana"
+    },
+    {
+      "id": "EXP-009",
+      "fecha": "10/11/2026",
+      "entidad": "César Millán",
+      "titular": "César Millán, adiestrador canino de 57 años: ‘Humanizar a los perros es un error, necesitan ejercicio, disciplina y afecto, en ese orden’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/cesar-millan-adiestrador-canino-de-57-anos-humanizar-a-los-perros-es-un-error-necesitan-ejercicio-disciplina-y-afecto-en-ese-orden-3599724",
+      "marfeel": "https://hub.marfeel.com/compass/article/2463613692?article=2463613692&limit=20&model=posts&plotBy=medium&realtimeType=compass&schedule.period=preset&schedule.preset=realtime",
+      "rendimiento": "Explotó en SEO/Discover",
+      "hallazgos": "Nombre éxitoso, volvió a triunfar"
+    },
+    {
+      "id": "EXP-010",
+      "fecha": "11/11/2026",
+      "entidad": "David de Jorge",
+      "titular": "David de Jorge, chef: ‘Los huevos pericos con aguacate se revuelven a fuego muy suave, y el menú sigue con atún refrito y bebida mañanera’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/david-de-jorge-chef-los-huevos-pericos-con-aguacate-se-revuelven-a-fuego-muy-suave-y-el-menu-sigue-con-atun-refrito-y-bebida-mananera-3599929",
+      "marfeel": "https://hub.marfeel.com/compass/article/2467437655?article=2467437655&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Comportamiento regular, muy regular"
+    },
+    {
+      "id": "EXP-011",
+      "fecha": "11/11/2026",
+      "entidad": "José Luis Puchol",
+      "titular": "José Luis Puchol, veterinario de 72 años: ‘Los perros pequeños suelen vivir más años que los de razas grandes y gigantes’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/jose-luis-puchol-veterinario-de-72-anos-los-perros-pequenos-suelen-vivir-mas-anos-que-los-de-razas-grandes-y-gigantes-3600196",
+      "marfeel": "https://hub.marfeel.com/compass/article/2468351307?article=2468351307&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Iba bien pero comenzó a bajar, se sospecha que no es una buena nota para la tarde. Actualización: le comenzó a ir mejor por la mañana"
+    },
+    {
+      "id": "EXP-012",
+      "fecha": "11/11/2026",
+      "entidad": "Dani García",
+      "titular": "Dani García, chef: ‘Las habas congeladas van directo a la sartén, sin aceite ni agua, y con chorizo y tomate salen unos huevos ricos’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/dani-garcia-chef-las-habas-congeladas-van-directo-a-la-sarten-sin-aceite-ni-agua-y-con-chorizo-y-tomate-salen-unos-huevos-ricos-3600181",
+      "marfeel": "https://hub.marfeel.com/compass/article/2468256530?article=2468256530&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "Segunda nota con ese nombre, fue un fracaso, se tacha de una vez"
+    },
+    {
+      "id": "EXP-013",
+      "fecha": "12/11/2026",
+      "entidad": "Santi Vidal",
+      "titular": "Santi Vidal, adiestrador canino con 25 años de experiencia: ‘Un perro que orina en cada esquina no es dominante, está estresado e inseguro’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/santi-vidal-adiestrador-canino-con-25-anos-de-experiencia-un-perro-que-orina-en-cada-esquina-no-es-dominante-esta-estresado-e-inseguro-3600462",
+      "marfeel": "https://hub.marfeel.com/compass/article/2471193629?article=2471193629&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue muy bien",
+      "hallazgos": "Con potencial a crecer"
+    },
+    {
+      "id": "EXP-014",
+      "fecha": "12/11/2026",
+      "entidad": "Mariano Sánchez",
+      "titular": "Mariano Sánchez, carnicero: ‘El caldo casero más sabroso lleva carcasa de pollo y hueso de rodilla de ternera, y los huesos se doran antes al horno’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/mariano-sanchez-carnicero-el-caldo-casero-mas-sabroso-lleva-carcasa-de-pollo-y-hueso-de-rodilla-de-ternera-y-los-huesos-se-doran-antes-al-horno-3600310",
+      "marfeel": "https://hub.marfeel.com/compass/article/2470538010?article=2470538010&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "Fracaso absoluto"
+    },
+    {
+      "id": "EXP-015",
+      "fecha": "12/11/2026",
+      "entidad": "Karlos Arguiñano",
+      "titular": "Karlos Arguiñano, chef: ‘Los filetes empanados llevan más sabor con cebolla deshidratada y orégano en el pan rallado, no con ajo’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/karlos-arguinano-chef-los-filetes-empanados-llevan-mas-sabor-con-cebolla-deshidratada-y-oregano-en-el-pan-rallado-no-con-ajo-3600531",
+      "marfeel": "https://hub.marfeel.com/compass/article/2471597604?article=2471597604&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Regular",
+      "hallazgos": "Se le cambió el titular y funcionó temporalmente, su rendimiento fue regular"
+    },
+    {
+      "id": "EXP-016",
+      "fecha": "13/11/2026",
+      "entidad": "Loli Domínguez",
+      "titular": "Loli Domínguez, cocinera con más de 10 años de experiencia: ‘El calabacín al ajillo se sala al final, así no se deshidrata y conserva la forma’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/loli-dominguez-cocinera-con-mas-de-10-anos-de-experiencia-el-calabacin-al-ajillo-se-sala-al-final-asi-no-se-deshidrata-y-conserva-la-forma-3600632",
+      "marfeel": "https://hub.marfeel.com/compass/article/2475198582?article=2475198582&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Explotó en SEO/Discover",
+      "hallazgos": "Le fue bien, sabia que no me iba a decepcionar"
+    },
+    {
+      "id": "EXP-017",
+      "fecha": "13/11/2026",
+      "entidad": "Mónica Corchado",
+      "titular": "Mónica Corchado, adiestradora canina con más de 25 años de experiencia: ‘Un perro muy estresado no sigue pautas: primero hay que bajarle el estrés’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/monica-corchado-educadora-canina-con-mas-de-25-anos-de-experiencia-un-perro-muy-estresado-no-sigue-pautas-primero-hay-que-bajarle-el-estres-3600728",
+      "marfeel": "https://hub.marfeel.com/compass/article/2475197181?article=2475197181&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Se le cambió el titular, adiestradora funciona mejor que educadora. Funcionó bien al inicio pero está cayendo. Descartar nombre"
+    },
+    {
+      "id": "EXP-018",
+      "fecha": "13/11/2026",
+      "entidad": "Sergio Enciso",
+      "titular": "Sergio Enciso, cocinero con 10 años de experiencia: ‘El pulpo a la murciana queda tierno al horno con cerveza, pimentón y limón de Murcia’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/sergio-enciso-cocinero-con-10-anos-de-experiencia-el-pulpo-a-la-murciana-queda-tierno-al-horno-con-cerveza-pimenton-y-limon-de-murcia-3600769",
+      "marfeel": "https://hub.marfeel.com/compass/article/2475690429?article=2475690429&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "Fracaso absoluto"
+    },
+    {
+      "id": "EXP-019",
+      "fecha": "17/11/2026",
+      "entidad": "Borja Capponi",
+      "titular": "Borja Capponi, adiestrador canino con 30 años de experiencia: ‘Los perros piden que se los deje ser perros y no tratarlos como personas’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/borja-capponi-adiestrador-canino-con-30-anos-de-experiencia-los-perros-piden-que-se-los-deje-ser-perros-y-no-tratarlos-como-personas-3601623",
+      "marfeel": "https://hub.marfeel.com/compass/article/2488938838?article=2488938838&limit=20&model=posts&plotBy=medium&realtimeType=compass&schedule.period=preset&schedule.preset=realtime",
+      "rendimiento": "Le fue muy bien",
+      "hallazgos": "Le fue bastante bien, pero habría que hacer notas por la madrugada"
+    },
+    {
+      "id": "EXP-020",
+      "fecha": "17/11/2026",
+      "entidad": "David de Jorge",
+      "titular": "David de Jorge, cocinero con más de 30 años de experiencia: ‘Los huevos rellenos se cortan a lo ancho, no a lo largo, para una mordida más generosa’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/david-de-jorge-cocinero-con-mas-de-30-anos-de-experiencia-los-huevos-rellenos-se-cortan-a-lo-ancho-no-a-lo-largo-para-una-mordida-mas-generosa-3601621",
+      "marfeel": "https://hub.marfeel.com/compass/article/2489106363?article=2489106363&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Regular",
+      "hallazgos": "Subió pero bajó repentinamente, esperando que suba, si no sube se descarta el nombre para notas editoriales. Actualización: no subió, se descarta nombre"
+    },
+    {
+      "id": "EXP-021",
+      "fecha": "18/11/2026",
+      "entidad": "Manual Manzano",
+      "titular": "Manuel Manzano, veterinario con más de 15 años de experiencia: ‘Las falsas salidas enseñan al perro que su dueño siempre vuelve’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/manuel-manzano-veterinario-con-mas-de-15-anos-de-experiencia-las-falsas-salidas-ensenan-al-perro-que-su-dueno-siempre-vuelve-3601977",
+      "marfeel": "https://hub.marfeel.com/compass/article/2491737471?article=2491737471&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Regular",
+      "hallazgos": "Subió bien pero bajó hasta morir, pero intentó subir y puede que una mala decisión la haya matado. Se le daré otra oportunidad la otra semana."
+    },
+    {
+      "id": "EXP-022",
+      "fecha": "18/11/2026",
+      "entidad": "Karlos Arguiñano",
+      "titular": "Karlos Arguiñano, chef con más de 60 años de experiencia: ‘La sopa de pescado se tritura antes de añadir las almejas, las gambas y el rape’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/karlos-arguinano-chef-con-mas-de-60-anos-de-experiencia-la-sopa-de-pescado-se-tritura-antes-de-anadir-las-almejas-las-gambas-y-el-rape-3601975",
+      "marfeel": "https://hub.marfeel.com/compass/article/2491760428?article=2491760428&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Murió desde su nacimiento, ya es la segunda vez que se hace una nota  y por ende...Alto, comenzó a crecer, en espera de su comportamiento"
+    },
+    {
+      "id": "EXP-023",
+      "fecha": "19/11/2026",
+      "entidad": "Jordi Cruz Mas",
+      "titular": "Jordi Cruz Mas, chef con 34 años de experiencia: ‘El arroz cocido olvidado fuera de la nevera se tira, porque sus esporas resisten la cocción’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/salud/jordi-cruz-mas-chef-con-34-anos-de-experiencia-el-arroz-cocido-olvidado-fuera-de-la-nevera-se-tira-porque-sus-esporas-resisten-la-coccion-3602228",
+      "marfeel": "https://hub.marfeel.com/compass/article/2494323708?article=2494323708&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue muy bien",
+      "hallazgos": "La clave estaba en el nombre y en el titular, funcionó bien"
+    },
+    {
+      "id": "EXP-024",
+      "fecha": "19/11/2026",
+      "entidad": "Juan Cervantes",
+      "titular": "Juan Cervantes, adiestrador canino: ‘Si el perro no responde a su nombre, el error es del dueño que lo repite todo el tiempo’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/juan-cervantes-adiestrador-canino-si-el-perro-no-responde-a-su-nombre-el-error-es-del-dueno-que-lo-repite-todo-el-tiempo-3602225",
+      "marfeel": "https://hub.marfeel.com/compass/article/2494365338?article=2494365338&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Regular",
+      "hallazgos": "Subió pero bajó subitamente, de todas maneras se le dará una segunda oportunidad ya que los jueves son el peor día para hacer notas de mascotas"
+    },
+    {
+      "id": "EXP-025",
+      "fecha": "20/11/2026",
+      "entidad": "César Millán",
+      "titular": "César Millán, adiestrador canino de 57 años: ‘Los perros no solo perciben el cariño, también notan la tristeza de su dueño’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/cesar-millan-adiestrador-canino-de-57-anos-los-perros-no-solo-perciben-el-carino-tambien-notan-la-tristeza-de-su-dueno-3601841",
+      "marfeel": "https://hub.marfeel.com/compass/article/2496774244?article=2496774244&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "SORPRENDENTEMENTE NACIERON MUERTAS, FRACASO TOTAL, PUEDE QUE SE DEBA A UN PROBLEMA EN XALOK, se seguirá publicando notas"
+    },
+    {
+      "id": "EXP-026",
+      "fecha": "20/11/2026",
+      "entidad": "Ferran Adrià",
+      "titular": "Ferran Adrià, chef: ‘Hervir el caldo de pollo horas no le da más sabor, solo reduce el líquido; se compensa con más carcasas y verduras’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/ferran-adria-chef-hervir-el-caldo-de-pollo-horas-no-le-da-mas-sabor-solo-reduce-el-liquido-se-compensa-con-mas-carcasas-y-verduras-3601846",
+      "marfeel": "https://hub.marfeel.com/compass/article/2496778356?article=2496778356&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "SORPRENDENTEMENTE NACIERON MUERTAS, FRACASO TOTAL, PUEDE QUE SE DEBA A UN PROBLEMA EN XALOK, se seguirá publicando notas"
+    },
+    {
+      "id": "EXP-027",
+      "fecha": "21/11/2026",
+      "entidad": "Jorge Rausch",
+      "titular": "Jorge Rausch, chef con más de 30 años de experiencia: ‘El arroz con coco sale bien si la leche de coco se reduce con azúcar y se cocina diez minutos a fuego bajo’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/jorge-rausch-chef-con-mas-de-30-anos-de-experiencia-el-arroz-con-coco-lleva-leche-de-coco-reducida-con-azucar-para-dar-color-y-sabor-3602775",
+      "marfeel": "https://hub.marfeel.com/compass/article/2499581837?article=2499581837&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Primera prueba con un chef colombiano, no le fue mal ni tampoco nació muerta pero no tuvo un muy buen resultado si lo comparamos con chefs españoles"
+    },
+    {
+      "id": "EXP-028",
+      "fecha": "21/11/2026",
+      "entidad": "Borja Capponi",
+      "titular": "Borja Capponi, adiestrador canino con unos 30 años de experiencia: ‘El dueño es responsable de la educación y la conducta de su perro’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/borja-capponi-adiestrador-canino-con-30-anos-de-experiencia-el-dueno-es-responsable-de-la-educacion-y-la-conducta-de-su-perro-3602785",
+      "marfeel": "https://hub.marfeel.com/compass/article/2499576417?article=2499576417&limit=20&model=posts&plotBy=medium&schedule.period=preset&schedule.preset=yesterday",
+      "rendimiento": "Le fue muy bien",
+      "hallazgos": "Muy buen rendimiento, fue un verdadero acierto"
+    },
+    {
+      "id": "EXP-029",
+      "fecha": "23/11/2026",
+      "entidad": "Alan Peiró",
+      "titular": "Alan Peiró, adiestrador canino: ‘Muchos perros sufren más por el mal cuidado ante el clima que por el clima en sí’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Mascotas / Mundo Canino",
+      "url": "https://www.eltiempo.com/vida/mascotas/alan-peiro-adiestrador-canino-muchos-perros-sufren-mas-por-el-mal-cuidado-ante-el-clima-que-por-el-clima-en-si-3603341",
+      "marfeel": "https://hub.marfeel.com/compass/article/2504940444?article=2504940444&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Le fue decente",
+      "hallazgos": "Le fue bien, no excelente, pero le fue decente, puede que el viernes o el sábado valga la pena hacer otra nota con ese nombre."
+    },
+    {
+      "id": "EXP-030",
+      "fecha": "23/11/2026",
+      "entidad": "Loli Domínguez",
+      "titular": "Loli Domínguez, cocinera con más de 10 años de experiencia :‘El pastel de sushi se corta mejor con el cuchillo siempre mojado en agua’",
+      "tipoExp": "Nombre Único / Entidad",
+      "seccion": "Gastronomía",
+      "url": "https://www.eltiempo.com/cultura/recetas/loli-dominguez-cocinera-con-13-anos-de-experiencia-el-pastel-de-sushi-se-corta-mejor-con-el-cuchillo-siempre-mojado-en-agua-3603339",
+      "marfeel": "https://hub.marfeel.com/compass/article/2504910484?article=2504910484&limit=20&model=posts&plotBy=medium",
+      "rendimiento": "Nació totalmente muerta",
+      "hallazgos": "Creció bien y cayó, ya esta vez se descarta el nombre para futuras notas. Decepción total pese a su historial positivo."
+    }
   ]
 };
 
@@ -1566,12 +3045,12 @@ document.addEventListener("click",e=>{
   const day=e.target.closest("[data-day]");if(day){state.selectedDay=day.dataset.day;renderCalendar(filteredRows());return;}
   const pr=e.target.closest(".piece-row[data-piece]");if(pr){const p=findPiece(pr.dataset.piece);if(p)openDrawer(p);return;}
   
-  /* ── pestañas directorios y bitácora ── */
+  /* ── pestañas del ecosistema editorial ── */
   const dTab=e.target.closest("[data-dirtab]");
   if(dTab){
     const t=dTab.dataset.dirtab;
     activeDirTab=t;
-    ["chefs","canino","bitacora"].forEach(k=>{
+    ["bitacora","chefs","canino","matriz"].forEach(k=>{
       const btn=$("tab-btn-"+k);
       const view=$("dir-view-"+k);
       if(btn){
@@ -1580,6 +3059,43 @@ document.addEventListener("click",e=>{
       }
       if(view)view.classList.toggle("hidden",k!==t);
     });
+    // Show/hide experiment filter pills and view switcher based on active tab
+    const pills = $("eco-filter-pills");
+    const vm = $("exp-view-mode");
+    if(pills) pills.classList.toggle("hidden", t !== "bitacora");
+    if(vm) vm.classList.toggle("hidden", t !== "bitacora");
+    renderDirectorios();
+    return;
+  }
+
+  /* ── cambio de vista fichas / tabla en experimentos ── */
+  if(e.target.closest("#btn-mode-cards")){
+    expViewMode = 'cards';
+    $("btn-mode-cards")?.classList.add("on");
+    $("btn-mode-table")?.classList.remove("on");
+    $("exp-cards-container")?.classList.remove("hidden");
+    $("exp-table-container")?.classList.add("hidden");
+    return;
+  }
+  if(e.target.closest("#btn-mode-table")){
+    expViewMode = 'table';
+    $("btn-mode-table")?.classList.add("on");
+    $("btn-mode-cards")?.classList.remove("on");
+    $("exp-cards-container")?.classList.add("hidden");
+    $("exp-table-container")?.classList.remove("hidden");
+    return;
+  }
+
+  /* ── filtros rápidos de experimentos ── */
+  const fPill = e.target.closest("[data-ecofilter]");
+  if(fPill){
+    activeEcoFilter = fPill.dataset.ecofilter;
+    document.querySelectorAll("[data-ecofilter]").forEach(btn => {
+      const isSel = btn.dataset.ecofilter === activeEcoFilter;
+      btn.classList.toggle("btn-primary", isSel);
+      btn.classList.toggle("btn-soft", !isSel);
+    });
+    renderDirectorios();
     return;
   }
   if(e.target.closest("#btn-live-sync")){
@@ -1591,6 +3107,16 @@ document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){closeDrawer();closeModal();hideTip();}
   if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$("piezas").scrollIntoView({behavior:RM?"auto":"smooth"});setTimeout(()=>$("ledger-search").focus(),RM?0:350);}
 });
+
+
+/* buscador en vivo del ecosistema */
+const ecoSearchInput = $("eco-search");
+if(ecoSearchInput){
+  ecoSearchInput.addEventListener("input", e => {
+    ecoSearchQuery = e.target.value;
+    renderDirectorios();
+  });
+}
 
 /* tooltip en chips del calendario */
 $("cal-grid").addEventListener("mouseover",e=>{const c=e.target.closest("[data-piece]");if(!c)return;const p=findPiece(c.dataset.piece);if(p)showTip(pieceTip(p),e.clientX,e.clientY);});
@@ -1630,7 +3156,7 @@ const rev=new IntersectionObserver(entries=>{entries.forEach(en=>{if(en.isInters
 document.querySelectorAll(".reveal").forEach(el=>{if(RM)el.classList.add("in");else rev.observe(el);});
 let resizeRaf=null;const lastW={};
 const ro=new ResizeObserver(entries=>{let changed=false;entries.forEach(en=>{const id=en.target.id,w=Math.round(en.contentRect.width);if(lastW[id]!==w){lastW[id]=w;changed=true;}});if(changed&&!resizeRaf)resizeRaf=requestAnimationFrame(()=>{resizeRaf=null;syncStickyVar();const rows=filteredRows();try{renderDayChart(rows);renderExpChart(rows);}catch(_){}});});
-["day-chart","exp-chart"].forEach(id=>ro.observe($(id)));
+["day-chart","exp-chart"].forEach(id=>{const el=$(id);if(el)ro.observe(el);});
 window.addEventListener("resize",syncStickyVar);
 
 /* leyenda de estados */

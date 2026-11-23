@@ -312,19 +312,16 @@ function processChefsSheet(rows) {
       }
     }
     const notasPub = (r[8] || '').trim();
-    
-    // Solo perfiles con estado Discover registrado
-    if (!estado || estado === '' || estado === '—' || estado === '-') continue;
 
     chefs.push({
       id: `chef-${chefs.length + 1}`,
       nombre: name,
-      canal,
+      canal: canal || 'Canal / Redes',
       url,
-      audiencia,
-      ganchos,
-      estadoDiscover: estado,
-      notasPublicadas: notasPub
+      audiencia: audiencia || '—',
+      ganchos: ganchos || 'Recetas estrella y técnicas culinarias',
+      estadoDiscover: estado && estado !== '—' && estado !== '-' ? estado : 'En evaluación',
+      notasPublicadas: notasPub || '—'
     });
   }
   return chefs;
@@ -357,20 +354,17 @@ function processCaninoSheet(rows) {
     }
     const notasPub = (r[14] || r[9] || '').trim();
 
-    // Solo perfiles con estado Discover registrado
-    if (!estado || estado === '' || estado === '—' || estado === '-') continue;
-
     caninos.push({
       id: `canino-${caninos.length + 1}`,
       nombre: name,
-      rol,
+      rol: rol || 'Especialista Canino',
       pais,
-      canal,
-      audiencia,
-      ganchos,
+      canal: canal || 'Consulta / Redes',
+      audiencia: audiencia || '—',
+      ganchos: ganchos || 'Pautas de conducta y bienestar animal',
       url,
-      estadoDiscover: estado,
-      notasPublicadas: notasPub
+      estadoDiscover: estado && estado !== '—' && estado !== '-' ? estado : 'En evaluación',
+      notasPublicadas: notasPub || '—'
     });
   }
   return caninos;
