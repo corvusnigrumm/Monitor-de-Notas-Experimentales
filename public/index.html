@@ -1337,9 +1337,12 @@ async function syncWithBackend(manual = false){
   const spin = $("syncSpinner");
   if(spin) spin.classList.add("animate-spin");
   try {
-    const res = await fetch("/api/data");
+    const endpoint = manual ? "/api/sync" : `/api/data?t=${Date.now()}`;
+    const opts = manual ? { method: "POST" } : { method: "GET" };
+    const res = await fetch(endpoint, opts);
     if(res.ok){
-      const data = await res.json();
+      const resJson = await res.json();
+      const data = resJson.data || resJson;
       if(data && data.piezas && data.piezas.length > 0){
         state.sheetExtras = {
           chefs: data.chefs && data.chefs.length ? data.chefs : state.sheetExtras.chefs,
@@ -1353,7 +1356,7 @@ async function syncWithBackend(manual = false){
         lastSyncTimestamp = Date.now();
         updateLiveSyncUI();
         renderDirectorios();
-        if(manual) toast(`Google Sheets sincronizado en vivo (${data.piezas.length} piezas activas).`);
+        if(manual) toast(`Google Sheets sincronizado en vivo (${data.piezas.length} piezas, ${data.chefs ? data.chefs.length : 0} chefs, ${data.caninos ? data.caninos.length : 0} caninos).`);
       }
     }
   } catch(e) {
@@ -1582,8 +1585,8 @@ if(!window.d3)$("cdn-warn").classList.remove("hidden");
 syncStickyVar();renderAll();
 
 setInterval(updateLiveSyncUI, 1000);
-setInterval(() => syncWithBackend(false), 60000);
-setTimeout(() => syncWithBackend(false), 1200);
+setInterval(() => syncWithBackend(false), 30000);
+setTimeout(() => syncWithBackend(false), 600);
 
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{syncStickyVar();const rows=filteredRows();try{renderDayChart(rows);renderExpChart(rows);}catch(_){}});
 window.addEventListener("load",()=>{syncStickyVar();const rows=filteredRows();try{renderDayChart(rows);renderExpChart(rows);}catch(_){}});

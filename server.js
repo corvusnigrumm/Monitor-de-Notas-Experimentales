@@ -2,6 +2,7 @@
  * Discover Pulse · Servidor Web Editorial & Monitor Discover España 2026-2027
  * Sincronizado en tiempo real con Google Sheets
  * ID: 1lEY_Dltt9pCsTfbXLQcjLlzIS5vBWyU-TzdV4YuF-YY
+ * Published Base: 2PACX-1vT1aBH7iMlllmZk28CNmqa-iLut7lHkfQH1GFXFIpjW6AJkYLwD9PpwSH7SDRVN5JeE3a7hjuT_HkrO
  * Incluye Keep-Alive automático 24/7 para evitar suspensión por inactividad en Render
  */
 
@@ -13,8 +14,9 @@ const http = require('http');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Google Sheet ID Oficial
+// Google Sheet URLs Oficiales
 const SHEET_ID = '1lEY_Dltt9pCsTfbXLQcjLlzIS5vBWyU-TzdV4YuF-YY';
+const PUB_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT1aBH7iMlllmZk28CNmqa-iLut7lHkfQH1GFXFIpjW6AJkYLwD9PpwSH7SDRVN5JeE3a7hjuT_HkrO/pub?output=csv&gid=';
 
 // GIDs de las pestañas en vivo
 const GIDS = {
@@ -38,7 +40,9 @@ function fetchWithRedirect(url, maxRedirects = 5) {
     const client = url.startsWith('https:') ? https : http;
     client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return resolve(fetchWithRedirect(res.headers.location, maxRedirects - 1));
+        let loc = res.headers.location;
+        if (loc.startsWith('/')) loc = 'https://docs.google.com' + loc;
+        return resolve(fetchWithRedirect(loc, maxRedirects - 1));
       }
       if (res.statusCode !== 200) {
         return reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`));
@@ -82,12 +86,24 @@ function parseCSV(text) {
 }
 
 async function fetchSheetData(gid) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
+  // 1. Intento primario: Publicación oficial web (2PACX) sin restricciones
+  const primaryUrl = `${PUB_BASE}${gid}`;
   try {
-    const csvText = await fetchWithRedirect(url);
+    const csvText = await fetchWithRedirect(primaryUrl);
+    if (csvText && csvText.length > 50) {
+      return parseCSV(csvText);
+    }
+  } catch (err) {
+    console.warn(`Aviso: Error en enlace publicado para GID ${gid} (${err.message}). Intentando fallback...`);
+  }
+
+  // 2. Fallback: Google Visualisation API (gviz)
+  const fallbackUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
+  try {
+    const csvText = await fetchWithRedirect(fallbackUrl);
     return parseCSV(csvText);
   } catch (err) {
-    console.error(`Error al descargar GID ${gid}:`, err.message);
+    console.error(`Error al descargar GID ${gid} en fallback:`, err.message);
     return [];
   }
 }
@@ -270,14 +286,25 @@ function processChefsSheet(rows) {
   for (let i = 4; i < rows.length; i++) {
     const r = rows[i];
     const name = (r[1] || '').trim();
-    if (!name) continue;
+    if (!name || name.toLowerCase().includes('total')) continue;
     const canal = (r[2] || '').trim();
     const url = (r[3] || '').trim();
     const audiencia = (r[4] || '').trim();
     const ganchos = (r[5] || '').trim();
-    const estado = (r[6] || '').trim();
+    
+    // Extraer estado en Discover (col 6 o por coincidencia)
+    let estado = (r[6] || '').trim();
+    if (!estado || estado === '—' || estado === '-') {
+      for (let c = 5; c < r.length; c++) {
+        if (/TOP DISCOVER|ACTIVO|EVALUACI|PROBADO|DESECHADO/i.test(r[c] || '')) {
+          estado = r[c].trim();
+          break;
+        }
+      }
+    }
     const notasPub = (r[8] || '').trim();
-    // REGLA: solo incluir perfiles con estado Discover registrado
+    
+    // Solo perfiles con estado Discover registrado
     if (!estado || estado === '' || estado === '—' || estado === '-') continue;
 
     chefs.push({
@@ -299,25 +326,40 @@ function processCaninoSheet(rows) {
   for (let i = 4; i < rows.length; i++) {
     const r = rows[i];
     const name = (r[1] || '').trim();
-    if (!name) continue;
+    if (!name || name.toLowerCase().includes('total')) continue;
     const rol = (r[2] || '').trim();
-    const pais = (r[3] || '').trim();
+    const pais = (r[3] || '').trim() || 'España';
     const canal = (r[4] || '').trim();
-    const audiencia = (r[5] || '').trim();
-    const ganchos = (r[6] || '').trim();
-    const estado = (r[7] || '').trim();
-    const notasPub = (r[9] || '').trim();
-    // REGLA: solo incluir perfiles con estado Discover registrado
+    const audiencia = (r[7] || r[5] || '').trim();
+    const ganchos = (r[8] || r[6] || '').trim();
+    const url = (r[10] || '').trim();
+    
+    // Extraer estado en Discover (col 12 o búsqueda de etiquetas de estado)
+    let estado = (r[12] || '').trim();
+    if (!estado || estado === '—' || estado === '-' || estado.length > 30) {
+      estado = '';
+      for (let c = 5; c < r.length; c++) {
+        const val = (r[c] || '').trim();
+        if (/^(TOP DISCOVER|ACTIVO \/ PROBADO|EN EVALUACI[ÓO]N|DESECHADO|CAUTELA)/i.test(val)) {
+          estado = val;
+          break;
+        }
+      }
+    }
+    const notasPub = (r[14] || r[9] || '').trim();
+
+    // Solo perfiles con estado Discover registrado
     if (!estado || estado === '' || estado === '—' || estado === '-') continue;
 
     caninos.push({
       id: `canino-${caninos.length + 1}`,
       nombre: name,
       rol,
-      pais: pais || 'España',
+      pais,
       canal,
       audiencia,
       ganchos,
+      url,
       estadoDiscover: estado,
       notasPublicadas: notasPub
     });
@@ -371,6 +413,30 @@ async function buildUnifiedSheetData() {
 
 let cachedData = null;
 let lastFetchTime = 0;
+let isSyncing = false;
+
+async function syncData(force = false) {
+  if (isSyncing) return cachedData;
+  isSyncing = true;
+  try {
+    const data = await buildUnifiedSheetData();
+    if (data && data.piezas && data.piezas.length > 0) {
+      cachedData = data;
+      lastFetchTime = Date.now();
+      console.log(`[Google Sheets] ✅ Sincronizados: ${cachedData.piezas.length} piezas, ${cachedData.experiments.length} exp, ${cachedData.chefs.length} chefs, ${cachedData.caninos.length} caninos.`);
+    }
+  } catch (e) {
+    console.error('[Google Sheets] Error en sincronización:', e.message);
+  } finally {
+    isSyncing = false;
+  }
+  return cachedData;
+}
+
+// Sincronización automática de fondo cada 60 segundos
+setInterval(() => {
+  syncData();
+}, 60 * 1000);
 
 /* ═══════════════════════════════════════════════════════════════════
    4. KEEP-ALIVE 24/7 PARA RENDER
@@ -415,34 +481,31 @@ app.get(['/api/health', '/health', '/ping'], (req, res) => {
     message: 'Discover Pulse Monitor activo 24/7 en Render',
     uptimeSeconds: Math.floor(process.uptime()),
     timestamp: new Date().toISOString(),
+    sheetConnected: !!(cachedData && cachedData.piezas && cachedData.piezas.length > 0),
+    piezasCount: cachedData ? cachedData.piezas.length : 0,
     keepAlive: keepAliveState
   });
 });
 
 app.get('/api/data', async (req, res) => {
   const now = Date.now();
-  if (!cachedData || (now - lastFetchTime) > 30000) {
-    try {
-      cachedData = await buildUnifiedSheetData();
-      lastFetchTime = now;
-    } catch (e) {
-      console.error('Error al actualizar datos de Google Sheets:', e.message);
-    }
+  if (!cachedData || req.query.refresh === '1' || (now - lastFetchTime) > 60000) {
+    await syncData(true);
   }
   res.json(cachedData || { meta: {}, piezas: [], experiments: [], chefs: [], caninos: [] });
 });
 
-app.post('/api/sync', async (req, res) => {
+app.all(['/api/sync', '/api/refresh'], async (req, res) => {
   try {
-    cachedData = await buildUnifiedSheetData();
-    lastFetchTime = Date.now();
+    await syncData(true);
     res.json({
       success: true,
-      piezasCount: cachedData.piezas.length,
-      experimentsCount: cachedData.experiments.length,
-      chefsCount: cachedData.chefs.length,
-      caninosCount: cachedData.caninos.length,
-      syncTime: cachedData.meta.syncTime
+      piezasCount: cachedData ? cachedData.piezas.length : 0,
+      experimentsCount: cachedData ? cachedData.experiments.length : 0,
+      chefsCount: cachedData ? cachedData.chefs.length : 0,
+      caninosCount: cachedData ? cachedData.caninos.length : 0,
+      syncTime: cachedData ? cachedData.meta.syncTime : new Date().toISOString(),
+      data: cachedData
     });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
@@ -458,12 +521,6 @@ app.get('*', (req, res) => {
    ═══════════════════════════════════════════════════════════════════ */
 app.listen(PORT, async () => {
   console.log(`🚀 Discover Pulse corriendo en puerto ${PORT}`);
-  console.log(`📊 Conectado a Google Sheet: ${SHEET_ID}`);
-  try {
-    cachedData = await buildUnifiedSheetData();
-    lastFetchTime = Date.now();
-    console.log(`✅ Sincronizados: ${cachedData.piezas.length} piezas de calendario, ${cachedData.experiments.length} experimentos, ${cachedData.chefs.length} chefs y ${cachedData.caninos.length} especialistas caninos.`);
-  } catch (e) {
-    console.error('Error en sincronización inicial:', e.message);
-  }
+  console.log(`📊 Conectado a Google Sheet oficial: ${PUB_BASE}`);
+  await syncData(true);
 });
