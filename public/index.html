@@ -1417,7 +1417,10 @@ function renderLedger(){
 /* ═══════════ DIRECTORIOS & BITÁCORA ═══════════ */
 let lastSyncTimestamp = Date.now();
 let isSyncing = false;
-let activeDirTab = 'chefs';
+let activeDirTab = 'bitacora';
+let activeEcoFilter = 'all';
+let ecoSearchQuery = '';
+let expViewMode = 'cards';
 
 state.sheetExtras = {
   "chefs": [
