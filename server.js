@@ -295,7 +295,7 @@ function processChefsSheet(rows) {
   for (let i = 4; i < rows.length; i++) {
     const r = rows[i];
     const name = (r[1] || '').trim();
-    if (!name || name.toLowerCase().includes('total')) continue;
+    if (!name || name.toLowerCase().includes('total') || /^(chef|creador|nombre)/i.test(name)) continue;
     const canal = (r[2] || '').trim();
     const url = (r[3] || '').trim();
     const audiencia = (r[4] || '').trim();
@@ -332,7 +332,7 @@ function processCaninoSheet(rows) {
   for (let i = 4; i < rows.length; i++) {
     const r = rows[i];
     const name = (r[1] || '').trim();
-    if (!name || name.toLowerCase().includes('total')) continue;
+    if (!name || name.toLowerCase().includes('total') || /^(experto|nombre|especialista)/i.test(name)) continue;
     const rol = (r[2] || '').trim();
     const pais = (r[3] || '').trim() || 'España';
     const canal = (r[4] || '').trim();

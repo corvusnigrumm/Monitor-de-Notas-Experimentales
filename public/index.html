@@ -3049,17 +3049,21 @@ function renderDirectorios(){
   }
   const cBody = $("dir-chefs-tbody");
   if(cBody){
-    cBody.innerHTML = filteredChefs.map(c => `
-      <tr>
-        <td class="font-medium text-ink whitespace-nowrap">${esc(c.nombre)}</td>
-        <td class="num text-[11.5px] text-muted">${esc(c.canal)}</td>
-        <td class="num font-semibold text-terra whitespace-nowrap">${esc(c.audiencia)}</td>
-        <td class="text-muted text-[12px] max-w-[340px]">${esc(c.ganchos)}</td>
-        <td><span class="badge ${(c.estadoDiscover||'').includes('TOP')?'b-discover':'b-publicada'}">${esc(c.estadoDiscover)}</span></td>
-        <td class="num text-faint text-center">${esc(c.notasPublicadas||'—')}</td>
-        <td class="r">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener" class="btn btn-soft !py-0.5 !px-2 !text-[11px]">Canal ↗</a>` : '<span class="text-faint">—</span>'}</td>
-      </tr>
-    `).join('');
+    if(filteredChefs.length === 0){
+      cBody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-muted text-[13px]">No se encontraron chefs con los criterios de búsqueda actuales.</td></tr>';
+    } else {
+      cBody.innerHTML = filteredChefs.map(c => `
+        <tr>
+          <td class="font-medium text-ink whitespace-nowrap">${esc(c.nombre)}</td>
+          <td class="num text-[11.5px] text-muted">${esc(c.canal)}</td>
+          <td class="num font-semibold text-terra whitespace-nowrap">${esc(c.audiencia)}</td>
+          <td class="text-muted text-[12px] max-w-[340px]">${esc(c.ganchos)}</td>
+          <td><span class="badge ${(c.estadoDiscover||'').includes('TOP')?'b-discover':'b-publicada'}">${esc(c.estadoDiscover)}</span></td>
+          <td class="num text-faint text-center">${esc(c.notasPublicadas||'—')}</td>
+          <td class="r">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener" class="btn btn-soft !py-0.5 !px-2 !text-[11px]">Canal ↗</a>` : '<span class="text-faint">—</span>'}</td>
+        </tr>
+      `).join('');
+    }
   }
 
   // 4. RENDER CANINOS (50 perfiles sin excluir por filtros)
@@ -3076,18 +3080,22 @@ function renderDirectorios(){
   }
   const knBody = $("dir-canino-tbody");
   if(knBody){
-    knBody.innerHTML = filteredCaninos.map(x => `
-      <tr>
-        <td class="font-medium text-ink whitespace-nowrap">${esc(x.nombre)}</td>
-        <td class="text-muted text-[12px] whitespace-nowrap">${esc(x.rol)}</td>
-        <td class="num text-[11px] text-faint whitespace-nowrap">${esc(x.pais||'España')}</td>
-        <td class="num text-[11.5px] text-muted">${esc(x.canal)}</td>
-        <td class="num font-semibold text-forest text-[11.5px] max-w-[150px]">${esc(x.audiencia)}</td>
-        <td class="text-muted text-[12px] max-w-[320px]">${esc(x.ganchos)}</td>
-        <td><span class="badge ${(x.estadoDiscover||'').includes('TOP')?'b-discover':'b-publicada'}">${esc(x.estadoDiscover)}</span></td>
-        <td class="r">${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener" class="btn btn-soft !py-0.5 !px-2 !text-[11px]">Perfil ↗</a>` : '<span class="text-faint">—</span>'}</td>
-      </tr>
-    `).join('');
+    if(filteredCaninos.length === 0){
+      knBody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-muted text-[13px]">No se encontraron especialistas caninos con los criterios de búsqueda actuales.</td></tr>';
+    } else {
+      knBody.innerHTML = filteredCaninos.map(x => `
+        <tr>
+          <td class="font-medium text-ink whitespace-nowrap">${esc(x.nombre)}</td>
+          <td class="text-muted text-[12px] whitespace-nowrap">${esc(x.rol)}</td>
+          <td class="num text-[11px] text-faint whitespace-nowrap">${esc(x.pais||'España')}</td>
+          <td class="num text-[11.5px] text-muted">${esc(x.canal)}</td>
+          <td class="num font-semibold text-forest text-[11.5px] max-w-[150px]">${esc(x.audiencia)}</td>
+          <td class="text-muted text-[12px] max-w-[320px]">${esc(x.ganchos)}</td>
+          <td><span class="badge ${(x.estadoDiscover||'').includes('TOP')?'b-discover':'b-publicada'}">${esc(x.estadoDiscover)}</span></td>
+          <td class="r">${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener" class="btn btn-soft !py-0.5 !px-2 !text-[11px]">Perfil ↗</a>` : '<span class="text-faint">—</span>'}</td>
+        </tr>
+      `).join('');
+    }
   }
 }
 
