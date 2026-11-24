@@ -897,7 +897,7 @@ const SF_MAP={R:"Receta paso a paso",T:"Truco 1 ingrediente",P:"Paradoja culinar
 const ST_MAP={D:"discover",P:"publicada",S:"programada",H:"retenida",N:"pendiente"};
 const ST_LABEL={discover:"En Discover",publicada:"Publicada",programada:"Programada",retenida:"Retenida 48–72 h",pendiente:"Pendiente"};
 const BREVE_SET=new Set(["Truco 1 ingrediente","Paradoja culinaria","Alerta nevera · sanitaria"]);
-const VC={cocina:"#D94E34",perros:"#1E5641"};
+const VC={cocina:"#D94E34",perros:"#1E5641",forest:"#1E5641"};
 const DIAS=["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],DIAS_L=["lunes","martes","miércoles","jueves","viernes","sábado","domingo"],MESES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],MESES_L=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
 const MONTHS=[{y:2026,m:10,label:"Noviembre 2026"},{y:2026,m:11,label:"Diciembre 2026"},{y:2027,m:0,label:"Enero 2027"}];
 const EXP_META={
@@ -1236,7 +1236,7 @@ function renderQuotas(rows){
     const pN=wr.filter(p=>p.vertical==="perros").length;
     const pub=wr.filter(p=>p.ejecutada).length;
     const segs=[];
-    [["cocina",VC.cocina],["perros",VC.forest]].forEach(([v,col])=>{
+    [["cocina",VC.cocina],["perros",VC.perros]].forEach(([v,col])=>{
       const vr=wr.filter(p=>p.vertical===v);
       const pu=vr.filter(p=>p.ejecutada).length;
       const q=vr.filter(p=>!p.ejecutada).length;

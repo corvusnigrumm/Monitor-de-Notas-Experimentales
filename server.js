@@ -184,7 +184,7 @@ function inferDateByIndex(idx, totalRows) {
 }
 
 function processCalendarSheet(rows) {
-  const dataRows = rows.slice(4).filter(r => r.length > 5 && (r[1] || r[2]));
+  const dataRows = rows.slice(4).filter(r => r.length > 5 && r[1] && !r[1].toUpperCase().includes("DÍA") && (r[2] || r[3]));
   const piezas = [];
 
   dataRows.forEach((r, idx) => {
